@@ -32,12 +32,12 @@ on:
         type: boolean
         default: false
       test_settings:
-        description: 'JSON object of VS Code settings for the test build (e.g. {"chat.experimental.smoothStreaming.enabled": true})'
+        description: 'JSON object of tysh settings for the test build (e.g. {"chat.experimental.smoothStreaming.enabled": true})'
         required: false
         type: string
         default: ""
       baseline_settings:
-        description: 'JSON object of VS Code settings for the baseline build'
+        description: 'JSON object of tysh settings for the baseline build'
         required: false
         type: string
         default: ""
@@ -347,7 +347,7 @@ jobs:
       - name: Clean up temporary build artifacts
         if: always() && steps.scenarios.outputs.skip != 'true'
         run: |
-          # Clean up tmp dirs used by VS Code instances
+          # Clean up tmp dirs used by tysh instances
           rm -rf /tmp/vscode-chat-simulation 2>/dev/null || true
           # Remove the production build to free space for artifact upload
           rm -rf ../VSCode-* 2>/dev/null || true

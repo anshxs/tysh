@@ -39,7 +39,7 @@
 	"files.exclude": {
 		".git": true,
 		".build": true,
-		".profile-oss": true,
+		".profiletysh": true,
 		"**/*.tsbuildinfo": true,
 		"**/.DS_Store": true,
 		".vscode-test": true,

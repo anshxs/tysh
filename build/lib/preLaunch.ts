@@ -51,7 +51,20 @@ async function isExpectedElectronInstalled(): Promise<boolean> {
 		const { getElectronVersion } = await import('./electronVersion.ts');
 		const { electronVersion } = getElectronVersion();
 		const installedVersion = (await fs.readFile(path.join(rootDir, '.build', 'electron', 'version'), 'utf8')).trim().replace(/^v/, '');
-		return installedVersion === electronVersion;
+		if (installedVersion !== electronVersion) {
+			return false;
+		}
+		const product = JSON.parse(await fs.readFile(path.join(rootDir, 'product.json'), 'utf8'));
+		let exePath: string;
+		if (process.platform === 'darwin') {
+			exePath = path.join(rootDir, '.build', 'electron', `${product.nameLong}.app`, 'Contents', 'MacOS', product.nameShort);
+		} else if (process.platform === 'win32') {
+			exePath = path.join(rootDir, '.build', 'electron', `${product.nameShort}.exe`);
+		} else {
+			exePath = path.join(rootDir, '.build', 'electron', product.applicationName);
+		}
+		await fs.stat(exePath);
+		return true;
 	} catch {
 		return false;
 	}
@@ -73,7 +86,7 @@ async function main() {
 	await getBuiltInExtensions();
 }
 
-if (import.meta.main) {
+if (import.meta.main || (process.argv[1] && path.resolve(process.argv[1]) === import.meta.filename)) {
 	main().catch(err => {
 		console.error(err);
 		process.exit(1);

@@ -394,7 +394,7 @@ export interface IRestrictedTelemetryContext {
 	readonly isInternal?: boolean;
 	/** GitHub login returned by `/copilot_internal/user`. */
 	readonly userName?: string;
-	/** Whether the token identifies a VS Code team member. */
+	/** Whether the token identifies a tysh team member. */
 	readonly isVscodeTeamMember?: boolean;
 	/** Whether content exclusion is enabled; undefined when discovery could not determine it. */
 	readonly copilotIgnoreEnabled?: boolean;

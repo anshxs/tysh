@@ -12,11 +12,11 @@ import { AGENT_HOST_SCHEME, fromAgentHostUri } from '../../platform/agentHost/co
 import { Schemas } from '../../base/common/network.js';
 
 /**
- * Resolves the VS Code remote authority for the given session provider,
+ * Resolves the tysh remote authority for the given session provider,
  * e.g. `ssh-remote+myhost` or `tunnel+myTunnel`.
  *
  * Returns `undefined` for local or WebSocket-only providers where no
- * VS Code remote extension can handle the connection.
+ * tysh remote extension can handle the connection.
  */
 export function resolveRemoteAuthority(
 	providerId: string,
@@ -61,7 +61,7 @@ export function resolveRemoteAgentHostEntryAuthority(entry: IRemoteAgentHostEntr
 	}
 }
 
-/** Resolves an Agent Host folder to the URI understood by its VS Code remote extension. */
+/** Resolves an Agent Host folder to the URI understood by its tysh remote extension. */
 export function resolveRemoteFolderUri(
 	folderUri: URI,
 	providerId: string,

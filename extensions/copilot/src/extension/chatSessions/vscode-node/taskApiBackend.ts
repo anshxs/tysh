@@ -46,7 +46,7 @@ const TASK_SESSION_POLL_TIMEOUT_MS = 60_000;
 /**
  * Agent integration slugs that identify the Copilot cloud coding agent. CMC/CAPI returns
  * `copilot-developer`; the monolith uses `copilot-swe-agent` for the same agent. Tasks owned by
- * any other surface — `copilot-developer-cli` (Copilot CLI), `vscode-chat` (VS Code) or
+ * any other surface — `copilot-developer-cli` (Copilot CLI), `vscode-chat` (tysh) or
  * `jetbrains-chat` (JetBrains) — are local clients mirrored into Mission Control and must not
  * appear in the cloud sessions list. See github-ui `agent-helpers.ts` (`isCopilotCodingAgent`) and
  * `agent-profile.ts`.
@@ -64,7 +64,7 @@ interface TaskAgentCollaborator {
 
 /**
  * Whether a task is owned by the Copilot cloud coding agent rather than a local client surface
- * (Copilot CLI / VS Code / JetBrains). The owning surface is identified by the agent integration
+ * (Copilot CLI / tysh / JetBrains). The owning surface is identified by the agent integration
  * slug on the task's `agent_collaborators`; tasks without a recognized cloud slug are treated as
  * non-cloud and excluded from the cloud sessions list.
  */

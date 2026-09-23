@@ -12,15 +12,15 @@ import { applyEvidenceStartTool, applyEvidenceTools } from './evidenceTools.js';
 
 export async function getServer(appService: ApplicationService): Promise<Server> {
 	const server = new McpServer({
-		name: 'VS Code Automation Server',
+		name: 'tysh Automation Server',
 		version: '1.0.0',
-		title: 'An MCP Server that can interact with a local build of VS Code. Used for verifying UI behavior.'
+		title: 'An MCP Server that can interact with a local build of tysh. Used for verifying UI behavior.'
 	}, { capabilities: { logging: {} } });
 	const evidenceService = new EvidenceService(appService);
 
 	server.tool(
 		'vscode_automation_start',
-		'Start VS Code Build. If workspacePath is not provided, VS Code will open with the last used workspace or an empty window.',
+		'Start tysh Build. If workspacePath is not provided, tysh will open with the last used workspace or an empty window.',
 		{
 			recordVideo: z.boolean().optional().describe('Whether to record a video of the session'),
 			workspacePath: z.string().optional().describe('Optional path to a workspace or folder to open. If not provided, opens the last used workspace.')
@@ -31,7 +31,7 @@ export async function getServer(appService: ApplicationService): Promise<Server>
 			return {
 				content: [{
 					type: 'text' as const,
-					text: app ? `VS Code started successfully${workspacePath ? ` with workspace: ${workspacePath}` : ''}` : `Failed to start VS Code`
+					text: app ? `tysh started successfully${workspacePath ? ` with workspace: ${workspacePath}` : ''}` : `Failed to start tysh`
 				}]
 			};
 		}
@@ -39,7 +39,7 @@ export async function getServer(appService: ApplicationService): Promise<Server>
 	applyEvidenceStartTool(server, evidenceService);
 	applyEvidenceTools(server, evidenceService);
 
-	// Apply all VS Code automation tools using the modular structure
+	// Apply all tysh automation tools using the modular structure
 	const registeredTools = applyAllTools(server, appService);
 	const app = appService.application;
 	if (app) {

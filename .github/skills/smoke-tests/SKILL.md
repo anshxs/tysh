@@ -1,11 +1,11 @@
 ---
 name: smoke-tests
-description: Use when running VS Code smoke tests or working on smoke-test CI steps. Covers npm run smoketest / smoketest-no-compile, grep filtering tests, and a temporary repeat-loop technique for tracking down flaky smoke tests in CI.
+description: Use when running tysh smoke tests or working on smoke-test CI steps. Covers npm run smoketest / smoketest-no-compile, grep filtering tests, and a temporary repeat-loop technique for tracking down flaky smoke tests in CI.
 ---
 
 # Running Smoke Tests
 
-Smoke tests live in `test/smoke/` and drive a full VS Code instance (Electron, web, or remote) through end-to-end user flows.
+Smoke tests live in `test/smoke/` and drive a full tysh instance (Electron, web, or remote) through end-to-end user flows.
 
 ## Scripts
 
@@ -33,7 +33,7 @@ npm run smoketest
 npm run smoketest -- -g "<suite name>" --tracing
 
 # Run against a packaged build (CI style)
-npm run smoketest-no-compile -- --tracing --build "/path/to/VSCode-darwin-arm64/Code - OSS.app"
+npm run smoketest-no-compile -- --tracing --build "/path/to/VSCode-darwin-arm64/TYSH.app"
 ```
 
 The `-g` pattern matches against test/suite titles. For example, `-g "Agents Window"` matches all three Agents Window suites (`Agents Window`, `Agents Window (local AgentHost)`, and `Agents Window (local AgentHost, SDK sandbox)`); use whatever substring identifies the suite(s) you care about.
@@ -128,7 +128,7 @@ az pipelines runs artifact download \
   --path ./logs
 ```
 
-For the VS Code build that is `--org https://dev.azure.com/monacotools --project Monaco`; see the `azure-pipelines` skill for finding the `<BUILD_ID>`.
+For the tysh build that is `--org https://dev.azure.com/monacotools --project Monaco`; see the `azure-pipelines` skill for finding the `<BUILD_ID>`.
 
 ### Inside the artifact
 
@@ -139,7 +139,7 @@ Under `smoke-tests-<suite>/` (`smoke-tests-electron/`, `smoke-tests-browser/`, o
 - `<N>_suite_<Suite_Name>/window2/exthost/<extension>/…log` — per-suite extension-host logs (e.g. `GitHub.copilot-chat/GitHub Copilot Chat.log`). Many diagnostics are gated behind a setting the suite enables in its `before` hook, so check the suite's setup if an expected log line is missing.
 - `<N>_suite_<Suite_Name>/playwright-screenshot-*.png` — last-frame screenshot captured when a test fails (only when the suite ran with `--tracing`).
 
-`<Suite_Name>` is the mocha suite title with non-word characters replaced by `_`. See also the `code-oss-logs` skill.
+`<Suite_Name>` is the mocha suite title with non-word characters replaced by `_`. See also the `codetysh-logs` skill.
 
 
 

@@ -133,11 +133,11 @@ Add `ClaudeAgent.truncateSession`, serialized through the existing `_sessionSequ
 The agent-host Claude path is node-side; the realistic E2E for the conversation truncation is the **live SDK round-trip** (see Manual). The workbench-side Restore Checkpoint UI can additionally be exercised with the discovered skills:
 
 - **Launch skill**: `launch` (`.claude/skills/launch`) — boots Code OSS from source into an isolated profile, drivable via Playwright.
-- **Log skill**: `code-oss-logs` (`.github/skills/code-oss-logs`) — locates and reads dev-build logs (search for `[Claude:` / `[AgentHost]` lines).
+- **Log skill**: `codetysh-logs` (`.github/skills/codetysh-logs`) — locates and reads dev-build logs (search for `[Claude:` / `[AgentHost]` lines).
 - **Scenario** (optional, UI-level smoke — requires a configured Claude session):
   1. Use `launch` to open Code OSS and open the Agents window on a Claude-backed session with ≥2 turns.
   2. Invoke "Restore Checkpoint" on an earlier request, then send a new message.
-  3. Use `code-oss-logs` to confirm a `[Claude:<id>] … resume … resumeSessionAt=<uuid>` rebuild line and that the next turn's reconstructed history excludes the dropped turns.
+  3. Use `codetysh-logs` to confirm a `[Claude:<id>] … resume … resumeSessionAt=<uuid>` rebuild line and that the next turn's reconstructed history excludes the dropped turns.
 
 ### Manual (task 1 — gates implementation)
 Live `ClaudeAgentSession` round-trip (needs Claude auth + a real model turn):
@@ -161,7 +161,7 @@ Minor, deferrable to implementation:
 - Context entries: CONTEXT M7 (`getSessionMessages`), M9 (lifecycle: resume vs fresh, provisional/materialize), M10 (steering & truncation — **to be corrected**: `resumeSessionAt` is the in-place primitive it claims doesn't exist)
 - Copilot reference: [copilotAgent.ts](../copilot/copilotAgent.ts) `truncateSession` (~1987), `copilotAgentSession.truncateAtEventId`
 - SDK: [sdk.d.ts](../../../../../../extensions/copilot/node_modules/@anthropic-ai/claude-agent-sdk/sdk.d.ts) `Options.resumeSessionAt` (~1356), `Options.resume`
-- E2E skills used: `launch`, `code-oss-logs`
+- E2E skills used: `launch`, `codetysh-logs`
 
 ## Implementation Notes
 

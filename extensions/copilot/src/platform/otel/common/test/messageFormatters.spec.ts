@@ -474,7 +474,7 @@ describe('toToolDefinitions', () => {
 		}]);
 	});
 
-	it('maps VS Code inputSchema → parameters', () => {
+	it('maps tysh inputSchema → parameters', () => {
 		const result = toToolDefinitions([{
 			name: 'runInTerminal',
 			description: 'Run a command',

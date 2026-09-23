@@ -672,7 +672,7 @@ export const enum GitHubSignInProvider {
 /**
  * The subset of {@link GitHubSignInProvider} that GitHub's own OAuth authorize
  * endpoint understands as a `provider=` parameter. Microsoft is deliberately
- * excluded: it is brokered by VS Code through a token exchange and never
+ * excluded: it is brokered by tysh through a token exchange and never
  * reaches an authorize URL.
  */
 export type GitHubOAuthSignInProvider = GitHubSignInProvider.Google | GitHubSignInProvider.Apple;

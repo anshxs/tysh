@@ -140,11 +140,11 @@ changes — no new env vars, no enumeration query, no proxy edits.
 
 ### E2E
 - **Launch skill**: `launch` (`.agents/skills/launch`). **Log skill**:
-  `code-oss-logs` (`.github/skills/code-oss-logs`).
+  `codetysh-logs` (`.github/skills/codetysh-logs`).
 - **Scenario:** launch Code OSS `--agents`, sign in to Copilot, open the Agents
   window with **Claude** selected, open the model picker → confirm the list,
   default ordering, and cost-multiplier rendering are **identical to today**
-  (this phase must not change proxied behavior). `code-oss-logs` → agent host
+  (this phase must not change proxied behavior). `codetysh-logs` → agent host
   log shows the usual CAPI `models()` fetch, no SDK enumeration subprocess.
 
 ### Manual
@@ -165,7 +165,7 @@ changes — no new env vars, no enumeration query, no proxy edits.
 - Roadmap: [roadmap.md](./roadmap.md) (Phase 18 revised; Phase 19 builds the native branch + flips the flag)
 - Context glossary: [CONTEXT.md](./CONTEXT.md) — *Claude Agent*, *Claude Proxy*, *CAPI*
 - SDK bug repro (outside repo): `~/claude-sdk-model-discovery-repro`
-- E2E skills: `launch`, `code-oss-logs`, `unit-tests`
+- E2E skills: `launch`, `codetysh-logs`, `unit-tests`
 
 ## Implementation Notes
 
@@ -205,7 +205,7 @@ changes — no new env vars, no enumeration query, no proxy edits.
   unchanged proxied model suite (list, default ordering, multiplier/policy
   metadata, stale-write guard).
 - **Validation** — `npm run typecheck-client` clean; `npm run valid-layers-check`
-  clean. E2E launch (`launch` + `code-oss-logs`) intentionally skipped: proxied
+  clean. E2E launch (`launch` + `codetysh-logs`) intentionally skipped: proxied
   behavior is byte-identical to today (the workaround only adds an unreachable
   native branch), so the existing proxied model suite + manual parity are the
   effective regression gate.

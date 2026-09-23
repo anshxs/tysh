@@ -4896,7 +4896,7 @@ suite('AgentHostChatContribution', () => {
 			trustController.result = false;
 			const repoRoot = URI.file('/repo');
 			const outside = URI.file('/elsewhere/checkout');
-			// The base repo is trusted, but the working directory is not a VS Code
+			// The base repo is trusted, but the working directory is not a tysh
 			// worktree (not under `<repo>.worktrees`), so trust must not be inherited.
 			trustController.trustedUris.add(repoRoot.toString());
 
@@ -11662,7 +11662,7 @@ suite('AgentHostChatContribution', () => {
 		});
 
 		test('handler does not clobber picker-set session config on eager-create path', () => runWithFakedTimers({ useFakeTimers: true }, async () => {
-			// Repro for the VS Code chat-input picker bug: the user picks
+			// Repro for the tysh chat-input picker bug: the user picks
 			// "Worktree" via the chip, the picker dispatches
 			// SessionConfigChanged({ isolation: 'worktree' }) directly
 			// against the provisional backend, then sends a message. The
@@ -11692,7 +11692,7 @@ suite('AgentHostChatContribution', () => {
 
 			const registered = chatAgentService.registeredAgents.get('agent-host-copilot')!;
 			// No `agentHostSessionConfig` on the request — this models the
-			// VS Code workbench path where the picker dispatches directly.
+			// tysh workbench path where the picker dispatches directly.
 			const turnPromise = registered.impl.invoke(
 				makeRequest({ message: 'Pick worktree and send', sessionResource }),
 				() => { }, [], CancellationToken.None,

@@ -5,7 +5,7 @@
 
 //! Shared multi-host discovery helpers for `code agent ps|logs|stop`.
 //!
-//! `code agent host` supervisors (standalone) and running VS Code windows
+//! `code agent host` supervisors (standalone) and running tysh windows
 //! (editor) each publish a live entry to the shared local agent-host
 //! endpoint registry (schema v2; see
 //! [`crate::tunnels::agent_host_registry`]). When the user doesn't pin a

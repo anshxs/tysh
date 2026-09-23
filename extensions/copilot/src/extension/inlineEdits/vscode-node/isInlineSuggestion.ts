@@ -13,7 +13,7 @@ export interface InlineSuggestionEdit {
 /**
  * Determines whether an edit can be displayed as an inline suggestion (ghost text).
  * If so, returns the (possibly adjusted) range and text that touches the cursor position,
- * which is required for VS Code to render ghost text.
+ * which is required for tysh to render ghost text.
  */
 export function toInlineSuggestion(cursorPos: Position, doc: TextDocument, range: Range, newText: string, advanced: boolean = true): InlineSuggestionEdit | undefined {
 	if (range.start.line === range.end.line && range.start.line === cursorPos.line) {

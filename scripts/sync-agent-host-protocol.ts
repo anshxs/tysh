@@ -19,7 +19,7 @@
 //   3. Formats with the project's tsfmt.json settings.
 //   4. Adds Microsoft copyright header.
 //
-// URI stays as `string` (the protocol's canonical representation). VS Code code
+// URI stays as `string` (the protocol's canonical representation). tysh code
 // should call `URI.parse()` at point-of-use where a URI class is needed.
 
 import * as fs from 'fs';
@@ -83,7 +83,7 @@ const EXCLUDE_DIR_NAMES = new Set([
 const EXCLUDE_FILE_NAMES = new Set([
 	'tsconfig.json',
 	'message-checks.ts',
-	'index.ts', // protocol's public entry point — VS Code has its own re-export layout
+	'index.ts', // protocol's public entry point — tysh has its own re-export layout
 ]);
 
 /**
@@ -248,7 +248,7 @@ function processFile(src: string, dest: string): void {
 function main() {
 	if (!fs.existsSync(TYPES_DIR)) {
 		console.error(`ERROR: Cannot find ${TYPES_DIR}`);
-		console.error('Clone agent-host-protocol as a sibling of the VS Code repo:');
+		console.error('Clone agent-host-protocol as a sibling of the tysh repo:');
 		console.error('  git clone git@github.com:microsoft/agent-host-protocol.git ../agent-host-protocol');
 		process.exit(1);
 	}

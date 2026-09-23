@@ -1,13 +1,13 @@
 ---
 name: otel
-description: OpenTelemetry guidance for VS Code agent experiences. Use when changing Agent Host telemetry, local Copilot Chat telemetry, provider-native spans or metrics, OTel settings and managed policy, trace persistence/export, or monitoring documentation.
+description: OpenTelemetry guidance for tysh agent experiences. Use when changing Agent Host telemetry, local Copilot Chat telemetry, provider-native spans or metrics, OTel settings and managed policy, trace persistence/export, or monitoring documentation.
 ---
 
-# OpenTelemetry in VS Code
+# OpenTelemetry in tysh
 
-Start by identifying the execution surface. VS Code has separate OTel pipelines with different owners and configuration:
+Start by identifying the execution surface. tysh has separate OTel pipelines with different owners and configuration:
 
-| Surface | Process and producer | Configuration | Authoritative VS Code document |
+| Surface | Process and producer | Configuration | Authoritative tysh document |
 |---|---|---|---|
 | Agent Host sessions (Copilot, Claude, Codex) | Provider-native telemetry routed by the Agent Host utility process | `chat.agentHost.otel.*` | [`src/vs/platform/agentHost/OTEL.md`](../../../src/vs/platform/agentHost/OTEL.md) |
 | Local Copilot Chat | Copilot Chat extension host and `IOTelService` | `github.copilot.chat.otel.*` | [`extensions/copilot/docs/monitoring/agent_monitoring.md`](../../../extensions/copilot/docs/monitoring/agent_monitoring.md) |
@@ -24,14 +24,14 @@ Local Copilot Chat remains a separate user-visible extension-host surface. Its f
 
 ## Runtime version discipline
 
-Copilot's native OTel signal contract lives in `github/copilot-agent-runtime`, not in VS Code's TypeScript attribute constants. Before auditing or changing the integration:
+Copilot's native OTel signal contract lives in `github/copilot-agent-runtime`, not in tysh's TypeScript attribute constants. Before auditing or changing the integration:
 
 1. Read the versions of `@github/copilot-sdk` and `@github/copilot` from the root `package-lock.json`.
 2. Resolve the matching immutable runtime tag and commit.
 3. Read the runtime monitoring reference and implementation at that revision.
 4. Use runtime `main` only after confirming that the relevant files are unchanged from the bundled revision.
 
-The runtime's `docs/developer-docs/monitor.md` is exhaustive for native Copilot spans, attributes, span events, metrics, protocols, environment variables, content capture, TLS, and managed settings. Read it at the revision corresponding to the bundled package and link to that immutable revision in investigation or review evidence rather than copying its signal tables into VS Code documentation.
+The runtime's `docs/developer-docs/monitor.md` is exhaustive for native Copilot spans, attributes, span events, metrics, protocols, environment variables, content capture, TLS, and managed settings. Read it at the revision corresponding to the bundled package and link to that immutable revision in investigation or review evidence rather than copying its signal tables into tysh documentation.
 
 ## Ownership map
 
@@ -107,7 +107,7 @@ When changing local Copilot Chat configuration:
 3. Update `agent_monitoring.md`.
 4. Add focused configuration tests.
 
-Never add a new VS Code setting merely to mirror a new runtime-owned managed setting. Follow the runtime-managed-settings ownership rules.
+Never add a new tysh setting merely to mirror a new runtime-owned managed setting. Follow the runtime-managed-settings ownership rules.
 
 ## Signal and routing checklist
 
@@ -115,7 +115,7 @@ For Agent Host provider-native signals:
 
 1. Make the signal change in the provider/runtime repository that owns it.
 2. Update that provider's authoritative signal reference.
-3. Update VS Code only when routing, normalization, persistence, parent context, or host-produced metadata changes.
+3. Update tysh only when routing, normalization, persistence, parent context, or host-produced metadata changes.
 4. Confirm pass-through and DB mode behavior separately.
 5. Confirm whether the signal is a trace, metric, or log. Only traces enter the Agent Host loopback and SQLite store.
 6. Test the exact bundled provider version.
@@ -189,8 +189,8 @@ For documentation-only changes, verify:
 ## Anti-patterns
 
 - Treating deprecated extension-host Copilot CLI code as the current architecture.
-- Copying the runtime's exhaustive signal catalog into VS Code docs.
-- Assuming runtime `main` matches the package bundled by VS Code.
+- Copying the runtime's exhaustive signal catalog into tysh docs.
+- Assuming runtime `main` matches the package bundled by tysh.
 - Describing Agent Host and local Copilot Chat settings as interchangeable.
 - Sending metrics or logs through the trace-only Agent Host loopback.
 - Claiming all providers support the same OTLP protocols.

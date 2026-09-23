@@ -11,13 +11,13 @@
  *
  * The library form is what `produce.ts` calls during the per-platform
  * "Dictation runtime: build + upload" pipeline step; the CLI form is for local
- * one-off builds and requires `VSS_NUGET_ACCESSTOKEN` for the VS Code NuGet feed.
+ * one-off builds and requires `VSS_NUGET_ACCESSTOKEN` for the tysh NuGet feed.
  *
  * The addon is copied from the pinned `foundry-local-sdk` package's `prebuilds/`
  * (which ships every target), and the core libraries are fetched from NuGet for
  * the requested target's RID via `fetchCoreLibraries` (NOT the SDK's host-locked
  * installer), so ANY build host can produce ANY target's tarball. This is what
- * lets VS Code's ARM64 desktop builds — which run on x64 pools — publish their
+ * lets tysh's ARM64 desktop builds — which run on x64 pools — publish their
  * `linux-arm64`/`win32-arm64` runtimes.
  *
  * The produced tarball's internal layout mirrors the runtime cache layout so the

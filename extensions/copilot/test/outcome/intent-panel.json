@@ -462,7 +462,7 @@
 		]
 	},
 	{
-		"name": "intent [panel] - [relaxed] [builtin] How to change colour theme in VS Code?",
+		"name": "intent [panel] - [relaxed] [builtin] How to change colour theme in tysh?",
 		"requests": [
 			"09588d8be53a0f1d1805ee37c19df787533a1c6e17eb48a3107f77028487a631"
 		]
@@ -1314,7 +1314,7 @@
 		]
 	},
 	{
-		"name": "intent [panel] - [strict] [builtin] How to change colour theme in VS Code?",
+		"name": "intent [panel] - [strict] [builtin] How to change colour theme in tysh?",
 		"requests": [
 			"09588d8be53a0f1d1805ee37c19df787533a1c6e17eb48a3107f77028487a631"
 		]

@@ -151,12 +151,16 @@ export class ExtensionManagementService extends AbstractExtensionManagementServi
 			const manifest = await getManifest(path.resolve(location.fsPath));
 			const extensionId = getGalleryExtensionId(manifest.publisher, manifest.name);
 			if (manifest.engines && manifest.engines.vscode && !isEngineValid(manifest.engines.vscode, this.productService.version, this.productService.date)) {
-				throw new Error(nls.localize('incompatible', "Unable to install extension '{0}' as it is not compatible with VS Code '{1}'.", extensionId, this.productService.version));
+				throw new Error(nls.localize('incompatible', "Unable to install extension '{0}' as it is not compatible with tysh '{1}'.", extensionId, this.productService.version));
 			}
 
 			const allowedToInstall = this.allowedExtensionsService.isAllowed({ id: extensionId, version: manifest.version, publisherDisplayName: undefined });
 			if (allowedToInstall !== true) {
 				throw new Error(nls.localize('notAllowed', "This extension cannot be installed because {0}", allowedToInstall.value));
+			}
+
+			if (manifest.contributes?.themes?.length || manifest.categories?.some(c => c.toLowerCase() === 'themes')) {
+				throw new Error(nls.localize('themeInstallBlocked', "Theme extensions cannot be installed."));
 			}
 
 			const results = await this.installExtensions([{ manifest, extension: location, options }]);
@@ -178,6 +182,9 @@ export class ExtensionManagementService extends AbstractExtensionManagementServi
 		const local = await this.extensionsScanner.scanUserExtensionAtLocation(location);
 		if (!local || !local.manifest.name || !local.manifest.version) {
 			throw new Error(`Cannot find a valid extension from the location ${location.toString()}`);
+		}
+		if (local.manifest.contributes?.themes?.length || local.manifest.categories?.some(c => c.toLowerCase() === 'themes')) {
+			throw new Error(nls.localize('themeInstallBlocked', "Theme extensions cannot be installed."));
 		}
 		await this.addExtensionsToProfile([[local, { source: 'resource' }]], profileLocation);
 		this.logService.info('Successfully installed extension', local.identifier.id, profileLocation.toString());
@@ -1100,7 +1107,7 @@ class InstallExtensionInProfileTask extends AbstractExtensionTask<ILocalExtensio
 					try {
 						await this.extensionsScanner.deleteExtension(existingExtension, 'existing');
 					} catch (e) {
-						throw new Error(nls.localize('restartCode', "Please restart VS Code before reinstalling {0}.", this.manifest.displayName || this.manifest.name));
+						throw new Error(nls.localize('restartCode', "Please restart tysh before reinstalling {0}.", this.manifest.displayName || this.manifest.name));
 					}
 				}
 			}
@@ -1112,7 +1119,7 @@ class InstallExtensionInProfileTask extends AbstractExtensionTask<ILocalExtensio
 				try {
 					await this.extensionsScanner.deleteExtension(existingWithSameVersion, 'existing');
 				} catch (e) {
-					throw new Error(nls.localize('restartCode', "Please restart VS Code before reinstalling {0}.", this.manifest.displayName || this.manifest.name));
+					throw new Error(nls.localize('restartCode', "Please restart tysh before reinstalling {0}.", this.manifest.displayName || this.manifest.name));
 				}
 			}
 

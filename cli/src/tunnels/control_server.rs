@@ -106,7 +106,7 @@ struct HandlerContext {
 	socket_tx: mpsc::Sender<SocketSignal>,
 	/// Configured launcher paths.
 	launcher_paths: LauncherPaths,
-	/// Connected VS Code Server
+	/// Connected tysh Server
 	code_server: CodeServerCell,
 	/// Potentially many "websocket" connections to client
 	server_bridges: ServerMultiplexer,
@@ -114,7 +114,7 @@ struct HandlerContext {
 	code_server_args: CodeServerArgs,
 	/// port forwarding functionality
 	port_forwarding: Option<PortForwarding>,
-	/// install platform for the VS Code server
+	/// install platform for the tysh server
 	platform: Platform,
 	/// http client to make download/update requests
 	http: Arc<FallbackSimpleHttp>,
@@ -844,7 +844,7 @@ async fn handle_serve(
 	csa.install_extensions.extend(params.extensions);
 
 	// Mix in the agent-host bridge info now that we actually need to spawn
-	// the VS Code server. `active_agent_host` is genuinely lazy (see the
+	// the tysh server. `active_agent_host` is genuinely lazy (see the
 	// comment in `serve()`), so awaiting it here is what first drives the
 	// supervisor to start. If it failed we still serve — the renderer
 	// just won't see `agentHostProxy`.

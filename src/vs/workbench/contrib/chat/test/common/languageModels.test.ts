@@ -2029,7 +2029,7 @@ suite('LanguageModels - Provider Deprecation Notice', function () {
 			},
 			new class extends mock<IQuickInputService>() { },
 			new TestSecretStorageService(),
-			new class extends mock<IProductService>() { override readonly version = '1.100.0'; override readonly urlProtocol = 'code-oss'; },
+			new class extends mock<IProductService>() { override readonly version = '1.100.0'; override readonly urlProtocol = 'codetysh'; },
 			new class extends mock<IRequestService>() { },
 			notifications,
 			new class extends mock<IOpenerService>() {
@@ -2086,7 +2086,7 @@ suite('LanguageModels - Provider Deprecation Notice', function () {
 		assert.strictEqual(prompt.options?.neverShowAgain?.id, 'chat.providerDeprecation.ollama');
 
 		prompt.choices[0].run();
-		assert.deepStrictEqual(opened, ['code-oss:extension/Ollama.ollama']);
+		assert.deepStrictEqual(opened, ['codetysh:extension/Ollama.ollama']);
 	});
 
 	test('shows the deprecation notice at most once per session', async function () {

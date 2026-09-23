@@ -207,7 +207,7 @@ class TestProtocolTransport extends Disposable implements IProtocolTransport {
 	}
 
 	fireExtensionRequest(id: number, method: string, params: Record<string, unknown>): void {
-		// VS Code-private reverse requests intentionally are not part of the public AHP ProtocolMessage union.
+		// tysh-private reverse requests intentionally are not part of the public AHP ProtocolMessage union.
 		this._onMessage.fire({ jsonrpc: '2.0', id, method, params } as unknown as ProtocolMessage);
 	}
 
@@ -1853,7 +1853,7 @@ suite('AgentHostProtocolClient', () => {
 		await assertRemoteProtocolError(request, error);
 	});
 
-	test('removeSessionArtifact sends the VS Code extension request', async () => {
+	test('removeSessionArtifact sends the tysh extension request', async () => {
 		const { client, transport } = createClient();
 		const session = URI.parse('copilotcli:/session-1');
 		const resultPromise = client.removeSessionArtifact(session, 'artifact-1');

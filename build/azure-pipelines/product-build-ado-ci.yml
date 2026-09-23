@@ -73,7 +73,7 @@ parameters:
     displayName: "Use legacy OSS Notice"
     type: boolean
     default: false
-  # SDK -> VS Code integration: override Copilot dependencies with versions
+  # SDK -> tysh integration: override Copilot dependencies with versions
   # already published to the private feed. 'none' = use the OSS SDK version.
   # See microsoft/vscode-engineering specs/sdk-vscode-integration.spec.md.
   - name: VSCODE_SDK_CANARY_VERSION

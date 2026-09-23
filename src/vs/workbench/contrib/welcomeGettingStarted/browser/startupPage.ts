@@ -136,7 +136,7 @@ export class StartupPageRunnerContribution extends Disposable implements IWorkbe
 		}
 
 		const enabled = isStartupPageEnabled(this.configurationService, this.contextService, this.environmentService);
-		if (enabled && this.lifecycleService.startupKind !== StartupKind.ReloadedWindow) {
+		if ((enabled || !this.environmentService.isBuilt) && this.lifecycleService.startupKind !== StartupKind.ReloadedWindow) {
 
 			// Open the welcome even if we opened a set of default editors
 			if (!this.editorService.activeEditor || this.layoutService.openedDefaultEditors) {
@@ -246,24 +246,29 @@ export class StartupPageRunnerContribution extends Disposable implements IWorkbe
 			return; // experimental onboarding is disabled
 		}
 
-		if (this.chatEntitlementService.sentiment.hidden) {
-			return; // AI features are hidden, do not show AI-focused onboarding
-		}
+		// During development (!isBuilt), always show the onboarding screen so developers can iterate on theme picker / sign in screens
+		if (this.environmentService.isBuilt) {
+			if (this.chatEntitlementService.sentiment.hidden) {
+				return; // AI features are hidden, do not show AI-focused onboarding
+			}
 
-		if (!this.storageService.isNew(StorageScope.APPLICATION)) {
-			return; // only show onboarding for new users who have never used the product before
-		}
+			if (!this.storageService.isNew(StorageScope.APPLICATION)) {
+				return; // only show onboarding for new users who have never used the product before
+			}
 
-		if (this.storageService.getBoolean(ONBOARDING_STORAGE_KEY, StorageScope.APPLICATION)) {
-			return; // onboarding already completed
+			if (this.storageService.getBoolean(ONBOARDING_STORAGE_KEY, StorageScope.APPLICATION)) {
+				return; // onboarding already completed
+			}
 		}
 
 		// Show the onboarding overlay on top of the welcome page
 		this.onboardingService.show();
 
-		// Mark onboarding as completed when dismissed
+		// Mark onboarding as completed when dismissed (only persist in built production product)
 		this._register(this.onboardingService.onDidDismiss(() => {
-			this.storageService.store(ONBOARDING_STORAGE_KEY, true, StorageScope.APPLICATION, StorageTarget.USER);
+			if (this.environmentService.isBuilt) {
+				this.storageService.store(ONBOARDING_STORAGE_KEY, true, StorageScope.APPLICATION, StorageTarget.USER);
+			}
 		}));
 	}
 }

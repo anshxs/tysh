@@ -19,7 +19,7 @@ use super::CommandContext;
 ///
 /// Only ever considers `standalone` entries (see
 /// [`agent_host_registry::list_live_standalone_endpoints`]): `editor`
-/// entries are owned by running VS Code windows and must never be killed
+/// entries are owned by running tysh windows and must never be killed
 /// by this command. If exactly one live standalone host is registered it
 /// is killed directly, matching prior single-instance behavior. If more
 /// than one exists, `--instance-id` selects one non-interactively;

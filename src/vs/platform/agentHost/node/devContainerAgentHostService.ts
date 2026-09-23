@@ -240,13 +240,13 @@ export abstract class DevContainerAgentHostService extends Disposable implements
 				throw new Error(localize('devContainerAgentHost.unsupportedPlatform', "Unsupported Dev Container platform: {0} {1}", unameS.trim(), unameM.trim()));
 			}
 
-			const serverDataFolderName = this._productService.serverDataFolderName ?? '.vscode-server-oss';
+			const serverDataFolderName = this._productService.serverDataFolderName ?? '.vscode-servertysh';
 			const quality = this._productService.quality || 'insider';
 			const cliInstallation = await ensureRemoteAgentHostCliInstalled(exec, platform, {
 				serverDataFolderName,
 				quality,
 				commit: this._productService.commit,
-				reportInstalling: () => this._logService.info(`${LOG_PREFIX} Installing VS Code CLI in Dev Container...`),
+				reportInstalling: () => this._logService.info(`${LOG_PREFIX} Installing tysh CLI in Dev Container...`),
 				logService: this._logService,
 				logPrefix: LOG_PREFIX,
 			});

@@ -400,7 +400,7 @@ function createMockSession(
 
 /**
  * Builds a {@link SessionsRecentWorkspacesService} and waits for its initial
- * (asynchronous) VS Code recents fetch to complete, so a picker constructed
+ * (asynchronous) tysh recents fetch to complete, so a picker constructed
  * against it afterwards restores against a fully-populated recents list
  * instead of racing the fetch (as happens when {@link createTestPicker}
  * builds its own service inline).
@@ -1076,7 +1076,7 @@ suite('WorkspacePicker - Connection Status', () => {
 		});
 	});
 
-	test('restore prioritizes the sessions\' own history over VS Code\'s global recents', async () => {
+	test('restore prioritizes the sessions\' own history over tysh\'s global recents', async () => {
 		const localProvider = createMockProvider('local-1');
 		providersService.setProviders([localProvider]);
 
@@ -1115,7 +1115,7 @@ suite('WorkspacePicker - Connection Status', () => {
 		});
 	});
 
-	test('restore selects the most recent VS Code workspace when own history is empty', async () => {
+	test('restore selects the most recent tysh workspace when own history is empty', async () => {
 		const localProvider = createMockProvider('local-1');
 		providersService.setProviders([localProvider]);
 
@@ -1143,7 +1143,7 @@ suite('WorkspacePicker - Connection Status', () => {
 		});
 	});
 
-	test('restore selects a VS Code recent that finishes loading after picker creation', async () => {
+	test('restore selects a tysh recent that finishes loading after picker creation', async () => {
 		const localProvider = createMockProvider('local-1');
 		providersService.setProviders([localProvider]);
 
@@ -1168,7 +1168,7 @@ suite('WorkspacePicker - Connection Status', () => {
 		});
 	});
 
-	test('late VS Code recents do not override an explicit workspace selection', async () => {
+	test('late tysh recents do not override an explicit workspace selection', async () => {
 		const localProvider = createMockProvider('local-1');
 		providersService.setProviders([localProvider]);
 
@@ -1387,7 +1387,7 @@ suite('WorkspacePicker - Connection Status', () => {
 		});
 	});
 
-	test('shows manually picked worktree folders but filters them from VS Code recents', async () => {
+	test('shows manually picked worktree folders but filters them from tysh recents', async () => {
 		const provider = createMockProvider('provider');
 		providersService.setProviders([provider]);
 

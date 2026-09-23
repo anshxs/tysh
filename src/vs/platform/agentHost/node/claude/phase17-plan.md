@@ -4,9 +4,9 @@
 > Last updated: 2026-06-23 after council-plan + grill session.
 
 **Status:** **Phase 17 complete.** Part A (hooks) **shipped** as PR #322637 — unit-tested,
-E2E-verified (launch + code-oss-logs), council-reviewed (one consensus dedupe finding fixed).
+E2E-verified (launch + codetysh-logs), council-reviewed (one consensus dedupe finding fixed).
 Part B (native plugins) **shipped** as PR #322766 — all steps implemented, unit + automated
-end-to-end tested, council-reviewed, and **live-E2E verified** (launch + code-oss-logs): the real
+end-to-end tested, council-reviewed, and **live-E2E verified** (launch + codetysh-logs): the real
 `telegram@claude-plugins-official` plugin surfaces in the Agents-window customization modal
 ("Plugins 1", status *Loaded*, resolved to its real `~/.claude/plugins/cache/.../0.0.6/` root),
 and a workspace-`settings.local.json` disable makes it disappear via the watcher and reappear on
@@ -314,7 +314,7 @@ Launch + log skills discovered in this workspace (project scope):
 - **Launch skill**: `launch` (`.agents/skills/launch/SKILL.md`) — Playwright-driven Code
   OSS automation against the Agents window; see the macOS short-`TMPDIR` gotcha in repo
   memory.
-- **Log skill**: `code-oss-logs` (`.github/skills/code-oss-logs/SKILL.md`) — find/read
+- **Log skill**: `codetysh-logs` (`.github/skills/codetysh-logs/SKILL.md`) — find/read
   agent-host + renderer dev-build logs.
 - **Repo runbook**: `/memories/repo/e2e-claude-checklist.md` — exact launch command, the
   two-`Claude` picker selection, the Monaco `editContext` input method, and the
@@ -361,7 +361,7 @@ Launch + log skills discovered in this workspace (project scope):
 - Phase 16 plan: `./phase16-plan.md` (disk-scan resolver, `mapDiscoveredCustomizations`)
 - Claude Code docs: hooks (`/en/hooks`), plugins-reference (`/en/plugins-reference`),
   agent-sdk plugins/hooks
-- E2E skills: `launch`, `code-oss-logs`; runbook `/memories/repo/e2e-claude-checklist.md`
+- E2E skills: `launch`, `codetysh-logs`; runbook `/memories/repo/e2e-claude-checklist.md`
 
 ## Implementation Notes
 
@@ -406,7 +406,7 @@ Launch + log skills discovered in this workspace (project scope):
 - `scanClaudeHooks` dedupes candidate files via `ResourceSet` (URI-identity set) rather than a
   hand-rolled `Set<string>` + `toString()`.
 
-**E2E (launch + code-oss-logs):** Agents window, Claude → **Local Agent Host**, against the
+**E2E (launch + codetysh-logs):** Agents window, Claude → **Local Agent Host**, against the
 vscode repo with a workspace hook seeded in the gitignored `.claude/settings.json` and the
 real user hook in `~/.claude/settings.json`. Confirmed: composer shows **"Hooks 2"**; the
 **"Agent Customizations for Claude [Agent Host]"** modal shows a **Hooks, 2 items** section
@@ -656,7 +656,7 @@ container, never as duplicate standalone rows (Decision PB-8). **Both** resolver
 - **Regression:** `claudeSdkOptions.test.ts` passes **unmodified**.
 - Gate before done: `npm run typecheck-client`, eslint, `npm run valid-layers-check`.
 
-**E2E (launch + code-oss-logs; runbook `/memories/repo/e2e-claude-checklist.md`):**
+**E2E (launch + codetysh-logs; runbook `/memories/repo/e2e-claude-checklist.md`):**
 - With `telegram@claude-plugins-official` enabled in `~/.claude/settings.json`, open a Claude →
   Local Agent Host session: the plugin + its bundled skills appear in the customization list with
   real URIs; it is present in the captured `init.plugins` (auto-loaded) with **no** host-added
@@ -763,7 +763,7 @@ finding (unreachable — native Claude plugins are only Claude/Open-Plugins form
 `parsePlugin` would mis-detect a bare manifest under `.claude` regardless) and the trailing-slash
 path-fallback nit (mitigated — `source` is the primary match key).
 
-**Status of E2E:** **verified** (launch + code-oss-logs, 2026-06-23). Agents window → Claude
+**Status of E2E:** **verified** (launch + codetysh-logs, 2026-06-23). Agents window → Claude
 (Local Agent Host): composer Customizations bar showed **Plugins 1** (alongside Part A's
 **Hooks 1**); the "Agent Customizations for Claude [Agent Host]" modal listed a **Plugins, 1
 items** section with **`telegram@claude-plugins-official`** (status *Loaded*); the renderer log

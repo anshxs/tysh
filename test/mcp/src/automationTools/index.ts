@@ -29,7 +29,7 @@ import { applyWindowTools } from './windows.js';
 import { ApplicationService } from '../../../scenario';
 
 /**
- * Apply all VS Code automation tools to the MCP server
+ * Apply all tysh automation tools to the MCP server
  * @param server - The MCP server instance
  * @param appService - The application service instance
  * @returns The registered tools from the server

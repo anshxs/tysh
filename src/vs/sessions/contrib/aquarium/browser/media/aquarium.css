@@ -72,9 +72,11 @@
 	0% {
 		transform: translate3d(0, 0, 0) scale(1);
 	}
+
 	50% {
 		transform: translate3d(8%, 6%, 0) scale(1.05);
 	}
+
 	100% {
 		transform: translate3d(-5%, 10%, 0) scale(0.97);
 	}
@@ -84,9 +86,11 @@
 	0% {
 		transform: translate3d(0, 0, 0) scale(1);
 	}
+
 	50% {
 		transform: translate3d(-6%, -8%, 0) scale(1.03);
 	}
+
 	100% {
 		transform: translate3d(5%, -4%, 0) scale(1.07);
 	}
@@ -135,7 +139,7 @@
 	overflow: visible;
 }
 
-/* Each strip is a clipped vertical slice of the VS Code logo; staggered
+/* Each strip is a clipped vertical slice of the tysh logo; staggered
  * translateY produces a sine wave traveling along the body (the swim).
  * Front strips (--agents-aquarium-strip-index ~ 0) keep the species color;
  * back strips mix toward white for depth shading. 720ms / 8 strips = 90ms
@@ -152,15 +156,19 @@
 	0% {
 		transform: translateY(0);
 	}
+
 	25% {
 		transform: translateY(3.5px);
 	}
+
 	50% {
 		transform: translateY(0);
 	}
+
 	75% {
 		transform: translateY(-3.5px);
 	}
+
 	100% {
 		transform: translateY(0);
 	}
@@ -214,6 +222,7 @@
 .monaco-workbench button.agents-aquarium-toggle:focus {
 	outline: none;
 }
+
 .monaco-workbench button.agents-aquarium-toggle:focus-visible {
 	opacity: 1;
 	outline: 1px solid var(--vscode-focusBorder);
@@ -224,6 +233,7 @@
 	opacity: 1;
 	color: var(--vscode-icon-foreground, var(--vscode-foreground, #cccccc));
 }
+
 .agents-aquarium-toggle .codicon {
 	font-size: var(--vscode-codiconFontSize);
 }
@@ -279,21 +289,27 @@
 	0% {
 		transform: rotate(0deg) scale(1);
 	}
+
 	1.5% {
 		transform: rotate(-12deg) scale(1.08);
 	}
+
 	3% {
 		transform: rotate(10deg) scale(1.08);
 	}
+
 	4.5% {
 		transform: rotate(-8deg) scale(1.05);
 	}
+
 	6% {
 		transform: rotate(6deg) scale(1.03);
 	}
+
 	7% {
 		transform: rotate(0deg) scale(1);
 	}
+
 	100% {
 		transform: rotate(0deg) scale(1);
 	}
@@ -302,6 +318,7 @@
 /* --- Reduced motion --- */
 
 @media (prefers-reduced-motion: reduce) {
+
 	.agents-aquarium-fish-strip,
 	.agents-aquarium-water::before,
 	.agents-aquarium-water::after,

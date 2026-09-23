@@ -671,7 +671,7 @@ export class AgentHostGitService implements IAgentHostGitService {
 		}
 
 		// Keep only the ignored files that match one of the configured
-		// `git.worktreeIncludeFiles` glob patterns (VS Code glob semantics),
+		// `git.worktreeIncludeFiles` glob patterns (tysh glob semantics),
 		// and — in the same pass — tally which wholly-ignored directories
 		// contain an ignored file that cannot be copied (and therefore cannot be
 		// collapsed). `git ls-files --directory` reports a wholly-ignored

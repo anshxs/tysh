@@ -39,7 +39,7 @@ Wire customizations (skills + plugins) end-to-end for the Claude provider so the
 - Phase 10.5 collapsed materialization into `ClaudeAgentSession.materialize(ctx)`; the session is the natural owner of per-session customization state and the place to drain pending reloads.
 - `IAgentPluginManager` DI singleton exists at `src/vs/platform/agentHost/common/agentPluginManager.ts` and ships `syncCustomizations(clientId, customizations, progress?)`. Injected into the session via DI (not the agent), same way `IClaudeAgentSdkService` is injected into the session today.
 - SDK `Query.reloadPlugins()`, `Query.supportedCommands()`, and `Options.plugins` are available on the pinned `@anthropic-ai/claude-agent-sdk` version.
-- Workspace E2E skills available: `launch` (Playwright/CDP), `code-oss-logs`, `chat-customizations-editor`.
+- Workspace E2E skills available: `launch` (Playwright/CDP), `codetysh-logs`, `chat-customizations-editor`.
 
 ## Approach
 
@@ -141,18 +141,18 @@ Mirror the `clientTools/` pattern exactly. Add a sibling `customizations/` folde
 ### E2E
 
 - **Launch skill**: `launch` — Playwright/CDP automation of `./scripts/code.sh --agents`.
-- **Log skill**: `code-oss-logs` — read `agenthost.log` and per-session log.
+- **Log skill**: `codetysh-logs` — read `agenthost.log` and per-session log.
 - **Customizations UI skill**: `chat-customizations-editor` — domain expert on the customizations editor surface.
 - **Scenario**:
   1. Launch Code OSS with `--agents`; open a Claude session under `Local Agent Host`.
-  2. From the chat-customizations editor, add a customization with a simple skill plugin; send a turn that uses the skill; confirm via `code-oss-logs` that `agenthost.log` shows `[Claude] session ...: enableFileCheckpointing=true isResume=false` followed by a successful turn that references the plugin.
+  2. From the chat-customizations editor, add a customization with a simple skill plugin; send a turn that uses the skill; confirm via `codetysh-logs` that `agenthost.log` shows `[Claude] session ...: enableFileCheckpointing=true isResume=false` followed by a successful turn that references the plugin.
   3. Disable the same customization; send another turn; confirm logs show `[Claude] session ...: resume rebuild` (any plugin-set change is a yield-restart — there is no `reloadPlugins` fast path).
   4. Add a second customization; send a turn; confirm logs show another `resume rebuild` and that the new plugin is in `Options.plugins`.
   5. Confirm dirty bit clears between turns (no spurious second rebind) and no Claude subprocess leaks (`ps aux | grep claude | grep -v grep`).
 
 ### Manual
 
-- If the customization picker has UI affordances that the `launch` skill cannot reliably drive (Monaco-focus issues seen in Phase 10.5 E2E), document manual click-through with screenshots into `/tmp/code-oss-screenshots/<timestamp>/` and confirm each scenario above.
+- If the customization picker has UI affordances that the `launch` skill cannot reliably drive (Monaco-focus issues seen in Phase 10.5 E2E), document manual click-through with screenshots into `/tmp/codetysh-screenshots/<timestamp>/` and confirm each scenario above.
 
 ## Open Questions
 
@@ -165,4 +165,4 @@ None.
 - Prior plan: `./phase10.5-plan.md` (per-session ownership pattern + yield-restart primitive)
 - Reference extension: `extensions/copilot/src/extension/chatSessions/claude/node/claudeCodeAgent.ts` — `_pendingPluginReload`, `_toolsMatch`, `_setCustomizations`, `_loadPlugins`, `_destroyAndRecreateQuery`
 - CopilotAgent for IAgent surface shape only: `src/vs/platform/agentHost/node/copilot/copilotAgent.ts` lines 311, 315, 998, 1026 (note: Copilot uses a provider-wide `PluginController`; Claude deliberately diverges to per-session ownership)
-- E2E skills used: `launch`, `code-oss-logs`, `chat-customizations-editor`
+- E2E skills used: `launch`, `codetysh-logs`, `chat-customizations-editor`

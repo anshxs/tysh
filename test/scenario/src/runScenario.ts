@@ -54,7 +54,7 @@ function wait(milliseconds: number): Promise<void> {
  */
 
 export interface ScenarioContext {
-	/** The running VS Code instance. */
+	/** The running tysh instance. */
 	readonly app: Application;
 	/** Feature-specific automation (editors, settings editor, terminal, ...). */
 	readonly workbench: Workbench;
@@ -177,7 +177,7 @@ export async function runScenario(scenario: Scenario): Promise<{ runPath: string
 			await evidence.step(step.id, step.title, 'started');
 			const app = await appService.getApplicationIfRunning();
 			if (!app) {
-				throw new Error('VS Code is no longer running.');
+				throw new Error('tysh is no longer running.');
 			}
 			const context: ScenarioContext = {
 				app,
@@ -238,7 +238,7 @@ if (require.main === module) {
 	const scenarioArgument = process.argv.slice(2).find(argument => !argument.startsWith('--'));
 	if (!scenarioArgument) {
 		console.error('Usage: node test/scenario/out/runScenario.js <scenario.cjs> [--build <app-root> | --dev]');
-		console.error('  (no target)      run the installed VS Code Insiders, else Stable');
+		console.error('  (no target)      run the installed tysh Insiders, else Stable');
 		console.error('  --build <path>   run a specific installed build');
 		console.error('  --dev            run the build from this checkout');
 		process.exit(2);

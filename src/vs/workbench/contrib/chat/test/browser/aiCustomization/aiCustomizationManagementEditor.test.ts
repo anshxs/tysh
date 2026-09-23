@@ -1422,14 +1422,14 @@ suite('aiCustomizationManagementEditor', () => {
 
 			assert.deepStrictEqual({ userData, prompts }, {
 				userData: {
-					message: 'They are stored in user data, which only VS Code reads. Move them to \'~/.copilot\' so both VS Code and this harness can use them, keeping their name, type, and content.',
+					message: 'They are stored in user data, which only tysh reads. Move them to \'~/.copilot\' so both tysh and this harness can use them, keeping their name, type, and content.',
 					consequence: 'Migrated files aren\'t currently included in Settings Sync.',
 					bannerHidden: false,
 					descriptionHidden: true,
 					linkInBanner: true,
 				},
 				prompts: {
-					message: 'Prompts are no longer supported by Copilot. Convert them to skills to keep them available in both VS Code and this harness.',
+					message: 'Prompts are no longer supported by Copilot. Convert them to skills to keep them available in both tysh and this harness.',
 					consequence: '',
 					bannerHidden: false,
 					descriptionHidden: true,
@@ -1865,13 +1865,13 @@ suite('aiCustomizationManagementEditor', () => {
 		const context = editor.getMigrationActivityContext(PromptsStorage.user);
 		editor.recordMigrationActivity(category, context, [{
 			label: 'first',
-			sourceLabel: 'VS Code profile/first.prompt.md',
+			sourceLabel: 'tysh profile/first.prompt.md',
 			targetLabel: '~/.agents/skills/first/SKILL.md',
 			operation: 'converted',
 		}]);
 		editor.recordMigrationActivity(category, context, [{
 			label: 'second',
-			sourceLabel: 'VS Code profile/second.prompt.md',
+			sourceLabel: 'tysh profile/second.prompt.md',
 			targetLabel: '~/.agents/skills/second/SKILL.md',
 			operation: 'converted',
 		}]);
@@ -1893,7 +1893,7 @@ suite('aiCustomizationManagementEditor', () => {
 					storage: PromptsStorage.user,
 					items: [{
 						label: 'second',
-						sourceLabel: 'VS Code profile/second.prompt.md',
+						sourceLabel: 'tysh profile/second.prompt.md',
 						targetLabel: '~/.agents/skills/second/SKILL.md',
 						operation: 'converted',
 					}],
@@ -1904,7 +1904,7 @@ suite('aiCustomizationManagementEditor', () => {
 					storage: PromptsStorage.user,
 					items: [{
 						label: 'first',
-						sourceLabel: 'VS Code profile/first.prompt.md',
+						sourceLabel: 'tysh profile/first.prompt.md',
 						targetLabel: '~/.agents/skills/first/SKILL.md',
 						operation: 'converted',
 					}],

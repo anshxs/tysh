@@ -61,12 +61,12 @@ export class ExtensionContributedChatTokenizer implements ITokenizer {
 		if (!text) {
 			return 0;
 		}
-		// Use the VS Code language model API to count tokens
+		// Use the tysh language model API to count tokens
 		return this.languageModel.countTokens(text);
 	}
 
 	async countMessageTokens(message: Raw.ChatMessage): Promise<number> {
-		// Convert to VS Code message format and use the language model's countTokens.
+		// Convert to tysh message format and use the language model's countTokens.
 		// Mirror the request path so only cache-aware providers ever see the internal sentinel (#313920).
 		const apiMessages = convertToApiChatMessage([message], {
 			emitCacheBreakpoints: modelVendorHandlesCacheBreakpoints(this.languageModel.vendor),
@@ -75,7 +75,7 @@ export class ExtensionContributedChatTokenizer implements ITokenizer {
 			return 0;
 		}
 
-		// Count tokens for the message using VS Code API
+		// Count tokens for the message using tysh API
 		const messageTokens = await this.languageModel.countTokens(apiMessages[0]);
 		return BaseTokensPerMessage + messageTokens;
 	}

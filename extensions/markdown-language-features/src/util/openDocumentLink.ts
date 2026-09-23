@@ -105,7 +105,7 @@ export class MdLinkOpener {
 }
 
 /**
- * Converts a language-server position or range to a VS Code range.
+ * Converts a language-server position or range to a tysh range.
  * Returns `undefined` for absent targets or positions with invalid coordinates.
  */
 export function getRangeFromPositionOrRange(positionOrRange: lsp.Position | lsp.Range | undefined): vscode.Range | undefined {

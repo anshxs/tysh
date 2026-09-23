@@ -46,7 +46,7 @@ suite('htmlToMarkdown', () => {
 				[
 					convertHtmlToMarkdown('<a href="vscode-file://vscode-app/c:/Users/user/AppData/Local/Programs/Microsoft%20VS%20Code/resources/app/out/vs/code/electron-browser/workbench/workbench.html">foo-bar.md</a>'),
 					convertHtmlToMarkdown('<a href="file:///home/user/project/DefaultMeshInterpolator.java#46,62">mx:text</a>'),
-					convertHtmlToMarkdown('<a href="code-oss://file/c:/repo/src/config.ts">src/config.ts</a>'),
+					convertHtmlToMarkdown('<a href="codetysh://file/c:/repo/src/config.ts">src/config.ts</a>'),
 					convertHtmlToMarkdown('<a href="http://_vscodecontentref_/0">index.ts</a>'),
 					// The agent host prompt asks models for bare absolute paths.
 					convertHtmlToMarkdown('<a href="/Users/me/repo/src/a.ts">a.ts</a>'),
@@ -223,7 +223,7 @@ suite('htmlToMarkdown', () => {
 	test('handles a realistic web page snippet', () => {
 		const html = `
 			<h1>Getting Started</h1>
-			<p>Welcome to <strong>VS Code</strong>. Visit <a href="https://code.visualstudio.com">the website</a> for more info.</p>
+			<p>Welcome to <strong>tysh</strong>. Visit <a href="https://code.visualstudio.com">the website</a> for more info.</p>
 			<ul>
 				<li>Fast</li>
 				<li>Extensible</li>
@@ -231,7 +231,7 @@ suite('htmlToMarkdown', () => {
 		`;
 		const md = convertHtmlToMarkdown(html);
 		assert.ok(md.includes('# Getting Started'));
-		assert.ok(md.includes('**VS Code**'));
+		assert.ok(md.includes('**tysh**'));
 		assert.ok(md.includes('[the website](https://code.visualstudio.com)'));
 		assert.ok(md.includes('- Fast'));
 		assert.ok(md.includes('- Extensible'));

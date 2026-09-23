@@ -143,7 +143,7 @@ export abstract class AbstractEnvService implements IEnvService {
  * that identify the host editor and the Copilot plugin to the backend.
  *
  * Implemented as a free function taking any {@link IEnvService} so that it works for every
- * environment (VS Code, the standalone chat-lib/CLI host, tests) - including implementations
+ * environment (tysh, the standalone chat-lib/CLI host, tests) - including implementations
  * that do not extend {@link AbstractEnvService}.
  */
 export function getEditorVersionHeaders(envService: IEnvService): { [key: string]: string } {

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Launch Code OSS (VS Code from sources) with:
+# Launch Code OSS (tysh from sources) with:
 #   - a fresh, slimmed copy of the authenticated user-data-dir (so Copilot/GitHub auth works)
-#   - an isolated --shared-data-dir (otherwise two instances share ~/.vscode-oss-shared and crash each other)
+#   - an isolated --shared-data-dir (otherwise two instances share ~/.vscodetysh-shared and crash each other)
 #   - unique debug ports for renderer (CDP), extension host, main process, and agent host
 #
 # Auth on macOS comes from the OS keychain (per-app, shared automatically) plus
@@ -29,14 +29,14 @@
 #                       use with content you trust.
 #
 # Defaults:
-#   --source-user-data-dir  $CODE_OSS_DEV_AUTHED_USER_DATA_DIR  (else ~/.vscode-oss-dev)
+#   --source-user-data-dir  $CODE_OSS_DEV_AUTHED_USER_DATA_DIR  (else ~/.tysh)
 #   --repo                  $PWD if it looks like a vscode checkout; otherwise pass it explicitly
 
 set -euo pipefail
 umask 077
 
 AGENTS=0
-SOURCE_UDD="${CODE_OSS_DEV_AUTHED_USER_DATA_DIR:-$HOME/.vscode-oss-dev}"
+SOURCE_UDD="${CODE_OSS_DEV_AUTHED_USER_DATA_DIR:-$HOME/.tysh}"
 REPO=""
 EXTRA_ARGS=()
 CLONE_EXTENSIONS=0
@@ -110,7 +110,7 @@ read -r CDP_PORT EXTHOST_PORT MAIN_PORT AGENTHOST_PORT <<< "$PORTS"
 
 STAMP=$(date +%Y%m%d-%H%M%S)-$$
 # mktemp fills in the X's only when they trail the template; elsewhere they stay literal.
-RUN_NAME="code-oss-dev-$STAMP-XXXXXX"
+RUN_NAME="tysh-$STAMP-XXXXXX"
 RUN_BASE="${TMPDIR:-/tmp}"
 # Electron's main IPC socket ("<run-dir>/user-data/<version>-main.sock") must fit
 # the ~103-byte unix socket limit, which macOS's default TMPDIR alone overflows.
@@ -128,7 +128,7 @@ DEST_UDD="$RUN_DIR/user-data"
 SHARED_DATA_DIR="$RUN_DIR/shared-data"
 mkdir -p "$DEST_UDD" "$SHARED_DATA_DIR"
 
-# Excludes (deny-list, so future VS Code additions copy through by default).
+# Excludes (deny-list, so future tysh additions copy through by default).
 # Anchored excludes (starting with /) match only at the top level so we don't
 # accidentally strip files inside subdirs that share a name.
 EXCLUDES=(
@@ -196,7 +196,7 @@ if [[ -n "$SESSION_TITLE" ]]; then
 fi
 PROFILE_READY_MS=$(monotonic_ms)
 
-# Strip host-only process configuration commonly inherited from VS Code's
+# Strip host-only process configuration commonly inherited from tysh's
 # integrated terminal and agent runtimes.
 unset ELECTRON_RUN_AS_NODE GIT_CONFIG_COUNT GIT_CONFIG_PARAMETERS
 

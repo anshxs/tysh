@@ -30,7 +30,7 @@ parameters:
     default: []
 
 jobs:
-  # Compiles and packages VS Code exactly once for this platform. The Unit,
+  # Compiles and packages tysh exactly once for this platform. The Unit,
   # Integration and Smoke jobs below all depend on this job and reuse its
   # output (downloaded from pipeline artifacts) instead of rebuilding, so we
   # only pay for a from-source build once per platform, not once per test type.
@@ -79,7 +79,7 @@ jobs:
             sbomEnabled: false
             isProduction: false
     steps:
-      # Build VS Code from source. No VSCODE_RUN_*_TESTS flags are passed, so the
+      # Build tysh from source. No VSCODE_RUN_*_TESTS flags are passed, so the
       # compile template builds the client/server but skips compiling the test
       # suites and skips the unit/integration/smoke test template entirely — the
       # test jobs below compile whichever suites they need and run them.

@@ -7,13 +7,13 @@ import { existsSync, promises as fs } from 'fs';
 import * as path from 'path';
 
 /**
- * Roots under VS Code's app root that may hold its bundled `node_modules`, in
+ * Roots under tysh's app root that may hold its bundled `node_modules`, in
  * priority order.
  *
- * In a packaged build VS Code's `node_modules` is bundled into a
+ * In a packaged build tysh's `node_modules` is bundled into a
  * `node_modules.asar` archive and any native binaries are extracted alongside it
  * into `node_modules.asar.unpacked`. In development they live in a plain
- * `node_modules`. Consumers that reach into VS Code's own modules for native
+ * `node_modules`. Consumers that reach into tysh's own modules for native
  * binaries (ripgrep, node-pty, the MXC sandbox binaries, …) must therefore probe
  * both roots, preferring the physical `node_modules.asar.unpacked` path because
  * Electron's ASAR filesystem can report the virtual `node_modules` path as
@@ -22,7 +22,7 @@ import * as path from 'path';
 export const APP_NODE_MODULES_ROOTS = ['node_modules.asar.unpacked', 'node_modules'] as const;
 
 /**
- * Resolves a path to one of VS Code's bundled module resources, checking both
+ * Resolves a path to one of tysh's bundled module resources, checking both
  * the plain `node_modules` (dev) and `node_modules.asar.unpacked` (packaged)
  * roots. Returns the first existing path, or the plain `node_modules` path when
  * neither exists so callers still get a stable default.

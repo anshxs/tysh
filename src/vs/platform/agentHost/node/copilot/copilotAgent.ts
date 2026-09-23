@@ -644,7 +644,7 @@ const CHAT_DISCOVERY_RETRY_DELAYS_MS = [250, 1_000, 5_000];
  */
 const MAX_STARTUP_CONFIG_RETRIES = 1;
 
-/** `origin` value written by the VS Code extension-host Copilot CLI feature. */
+/** `origin` value written by the tysh extension-host Copilot CLI feature. */
 const EXTENSION_HOST_CLI_MARKER_ORIGIN = 'vscode';
 
 /** File name of the marker written beside a Copilot CLI session's SDK event log. */
@@ -677,12 +677,12 @@ function parseExtensionHostCliMarker(raw: string): IExtensionHostCliMarker | und
 }
 
 /**
- * Whether a marker identifies a chat created by the VS Code extension host —
+ * Whether a marker identifies a chat created by the tysh extension host —
  * the only chats migration ever adopts.
  *
  * Mirrors the extension host's `getSessionOrigin`: honor an explicit `origin`
  * (the GitHub Copilot app writes `other`), else guess `vscode` only when older
- * origin-less markers carry VS Code-specific properties.
+ * origin-less markers carry tysh-specific properties.
  */
 function isExtensionHostCliMarker(marker: IExtensionHostCliMarker | undefined): boolean {
 	if (!marker || Object.keys(marker).length === 0) {
@@ -2297,7 +2297,7 @@ export class CopilotAgent extends Disposable implements IAgent {
 		const startClient = async () => {
 			this._logService.info('[Copilot] Starting CopilotClient...');
 
-			// Build a clean env for the CLI subprocess, stripping Electron/VS Code vars
+			// Build a clean env for the CLI subprocess, stripping Electron/tysh vars
 			// that can interfere with the Node.js process the SDK spawns.
 			const env = this._createCopilotCliEnvironment(startupConfig.skillCharBudget);
 			// Family aliases are host-side (prompt and tool-profile routing) and
@@ -2323,7 +2323,7 @@ export class CopilotAgent extends Disposable implements IAgent {
 				env['COPILOT_CLI_ENABLED_FEATURE_FLAGS'] = [...flags].join(',');
 			}
 
-			// Identify VS Code's agent host traffic in CAPI
+			// Identify tysh's agent host traffic in CAPI
 			env['GITHUB_COPILOT_INTEGRATION_ID'] = COPILOT_INTEGRATION_ID;
 			this._logService.info(`[Copilot] Set CLI env: GITHUB_COPILOT_INTEGRATION_ID=${COPILOT_INTEGRATION_ID}`);
 
@@ -2351,13 +2351,13 @@ export class CopilotAgent extends Disposable implements IAgent {
 			const { runtimePath } = await resolveCopilotRuntimePaths(nodeModulesUri);
 
 			// The SDK's sandbox auto-detection looks for `<MXC_BIN_DIR>/<arch>/wxc-exec.exe`
-			// (and the Linux/macOS equivalents). VS Code core ships the MXC sandbox binaries
+			// (and the Linux/macOS equivalents). tysh core ships the MXC sandbox binaries
 			// at `<nodeModules>/@microsoft/mxc-sdk/bin/<arch>/`, so point `MXC_BIN_DIR` there.
 			// The @github/copilot package's own `mxc-bin/` is excluded from the product build
 			// (see build/.moduleignore), mirroring `CopilotCLISDK.getPackage` in the extension.
 			env['MXC_BIN_DIR'] = URI.joinPath(nodeModulesUri, '@microsoft', 'mxc-sdk', 'bin').fsPath;
 
-			// Add VS Code's built-in ripgrep to PATH so the CLI subprocess can find it.
+			// Add tysh's built-in ripgrep to PATH so the CLI subprocess can find it.
 			const resolvedRgDiskPath = await rgDiskPath();
 			const rgDir = dirname(resolvedRgDiskPath);
 			// On Windows the env key is typically "Path" (not "PATH"). Since we copied
@@ -3613,7 +3613,7 @@ export class CopilotAgent extends Disposable implements IAgent {
 	/**
 	 * Whether the user archived this session in the extension host list, or
 	 * `undefined` when the current state cannot be established (unreadable or
-	 * malformed marker, or one that no longer identifies a VS Code legacy chat).
+	 * malformed marker, or one that no longer identifies a tysh legacy chat).
 	 * Callers that would commit to the state must not treat that as unarchived.
 	 */
 	private async _isExtensionHostCliSessionArchived(sessionId: string): Promise<boolean | undefined> {
@@ -3768,7 +3768,7 @@ export class CopilotAgent extends Disposable implements IAgent {
 			// Only migrate legacy EH Copilot CLI sessions — never other Copilot SDK
 			// sessions (standalone CLI, Local agent, …) that share `~/.copilot`.
 			if (!(await this._isExtensionHostCliSession(sessionId))) {
-				this._logService.info(`[Copilot] Adoption declined for ${sessionId}: not a legacy extension-host Copilot CLI chat (no VS Code marker in its SDK session directory)`);
+				this._logService.info(`[Copilot] Adoption declined for ${sessionId}: not a legacy extension-host Copilot CLI chat (no tysh marker in its SDK session directory)`);
 				return { adopted: false, eligible: false, reason: 'notLegacyChat' };
 			}
 			const client = await this._ensureClient();
@@ -3801,7 +3801,7 @@ export class CopilotAgent extends Disposable implements IAgent {
 				await projectFromCopilotContext({ cwd: (adoptedWorktree?.repositoryRoot ?? workingDirectory).fsPath }, this._gitService),
 				sessionId,
 			);
-			// Title precedence mirrors the extension's getSessionTitleImpl: the CLI `name`, then the VS Code staged title, then the summary.
+			// Title precedence mirrors the extension's getSessionTitleImpl: the CLI `name`, then the tysh staged title, then the summary.
 			const customTitle = await this._readExtensionHostCliCustomTitle(sessionId);
 			// The SDK's typed metadata omits `name`; it is present at runtime as the `workspace.yaml` title.
 			const sdkName = (sdkMetadata as { readonly name?: string } | undefined)?.name;
@@ -3816,7 +3816,7 @@ export class CopilotAgent extends Disposable implements IAgent {
 				this._logService.warn(`[Copilot] Adoption skipped for ${sessionId}: its extension-host marker could not be re-read, so the archived state is unknown`);
 				return { adopted: false, eligible: true, reason: 'markerUnavailable' };
 			}
-			// Seed VS Code-layer metadata only — the SDK event log on disk is
+			// Seed tysh-layer metadata only — the SDK event log on disk is
 			// untouched. Writing `agentSessionData/<sanitizedId>/session.db` here
 			// is also what makes the legacy extension-host Copilot CLI list stop
 			// showing this session (it dedups against agent-host-owned session ids).
@@ -3894,7 +3894,7 @@ export class CopilotAgent extends Disposable implements IAgent {
 	 *
 	 * Only ever called from {@link ensureChatAdopted} once a legacy extension-host
 	 * Copilot CLI session has passed every eligibility gate and is actually being
-	 * migrated — no native or non-VS Code Copilot session's usage is read or written.
+	 * migrated — no native or non-tysh Copilot session's usage is read or written.
 	 */
 	private async _adoptLegacyTurnUsage(session: URI, sessionId: string): Promise<void> {
 		// Absent for sessions predating the extension host's credit tracking, so a

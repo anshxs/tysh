@@ -678,7 +678,7 @@ Procedure:
    level.
 2. Launch the dev build (`./scripts/code.sh --agents` or
    `Run Agents`) and authenticate.
-3. Use the **code-oss-logs** skill to read `agenthost.log` from the
+3. Use the **codetysh-logs** skill to read `agenthost.log` from the
    most recent run; grep for the proxy line; extract `baseUrl` +
    `nonce`.
 4. From a separate terminal:
@@ -745,7 +745,7 @@ tests before the next begins.
 Captured here so they aren't lost. None of these block Phase 2.
 
 - **HTTP proxy support** (`HTTP_PROXY` / `HTTPS_PROXY` env vars,
-  VS Code's `http.proxy` setting, PAC files, proxy auth). The Phase 2
+  tysh's `http.proxy` setting, PAC files, proxy auth). The Phase 2
   proxy talks to CAPI through `ICopilotApiService`, so any outbound
   proxying is inherited from whatever HTTP client that service uses.
   If the agent host needs to honor user proxy configuration we'll

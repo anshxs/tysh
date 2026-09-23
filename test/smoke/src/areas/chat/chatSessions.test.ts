@@ -16,7 +16,7 @@ import { runInTerminalScenario, shellEchoResponseMatcher, shellEchoScenario } fr
  * previous response is mistakenly accepted as the current one. We send two
  * prompts per session to also exercise the follow-up message path.
  *
- * `kind` selects between the two chat surfaces in the VS Code window:
+ * `kind` selects between the two chat surfaces in the tysh window:
  *  - 'editor': the chat opens as an editor tab (Copilot CLI).
  *  - 'view':   the default chat panel in the sidebar / aux bar (Local).
  */
@@ -59,7 +59,7 @@ const SHELL_SESSIONS: readonly ShellSessionConfig[] = [
 ];
 
 /**
- * Write all activation-sensitive settings before VS Code starts. Pre-seeding
+ * Write all activation-sensitive settings before tysh starts. Pre-seeding
  * only the enablement migration can activate Copilot Chat before its mock
  * endpoints are configured.
  */

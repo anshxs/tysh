@@ -17,7 +17,7 @@ Verification:
   - Plain-text send + result round-trip.
   - Full client-tool round-trip end-to-end: Claude requested `openBrowserPage` → permission prompt fired through workbench UI → user approval → workbench opened the page → `tool_result` (`Page Title: Example Domain`) fed back to SDK → final `result for sdkUuid=...`.
   - 0 occurrences of legacy failure patterns (`Cannot materialize unknown provisional session`, `rebind: no rematerializer attached`).
-  - Visual proof: screenshots at `/tmp/code-oss-screenshots/2026-05-21T13-05-33/` (01-launched, 02-session-type-picker, 03-after-select-claude, 04-prompt-typed, 05-permission-prompt, 06-tool-completed).
+  - Visual proof: screenshots at `/tmp/codetysh-screenshots/2026-05-21T13-05-33/` (01-launched, 02-session-type-picker, 03-after-select-claude, 04-prompt-typed, 05-permission-prompt, 06-tool-completed).
 - Live but not driven via UI this run (covered by unit + integration tests): built-in tool turn, mid-session client-tool change/`rebindForClientTools`, subagent spawn, abort mid-turn, UI dispose. Playwright type-into-Monaco hit focus-sync edge cases on the new-session form; refactor-sensitive plumbing was already proven by the browser-tool scenario above.
 - Pre-existing UX note: sessions list shows the same Claude session twice (`agent-host-claude:/<id>` and `claude-code:/<id>`) because both providers index the same on-disk JSONL store — NOT a Phase 10.5 regression.
 
@@ -49,7 +49,7 @@ Replace Claude's dual-map session lifecycle (`_provisionalSessions` + `_sessions
 - Phase 10 merged and green (race regression tests already present).
 - Agent host test suite runnable via:
   `./scripts/test.sh --runGlob "**/agentHost/test/**/*.test.js"`.
-- Local E2E automation skills available: `launch` and `code-oss-logs`.
+- Local E2E automation skills available: `launch` and `codetysh-logs`.
 - Workspace builds transpile cleanly for touched files before E2E validation.
 
 ## Approach
@@ -144,13 +144,13 @@ Use an incremental, bisectable refactor where each step stays testable and rever
 ### E2E
 
 - **Launch skill**: `launch` - drives Agents window UI and Claude session turns in local Code OSS.
-- **Log skill**: `code-oss-logs` - reads `agenthost.log` and related logs to validate runtime behavior.
+- **Log skill**: `codetysh-logs` - reads `agenthost.log` and related logs to validate runtime behavior.
 - **Scenario**:
   1. Use `launch` to start `./scripts/code.sh --agents` and open a new session with the `Claude` entry under `Local Agent Host`.
   2. Before first send, change model; send turn 1; send turn 2.
   3. Trigger client-tools change and send turn 3.
   4. Abort an in-flight turn, then dispose the session.
-  5. Use `code-oss-logs` to confirm expected lifecycle lines and absence of legacy failures.
+  5. Use `codetysh-logs` to confirm expected lifecycle lines and absence of legacy failures.
   6. Confirm no leaked Claude subprocesses.
 
 Expected checks after each run:
@@ -178,7 +178,7 @@ None.
 - Roadmap: `./roadmap.md` (phase 10.5)
 - Context: `./CONTEXT.md`
 - Prior plan: `./phase10-plan.md`
-- E2E skills used: `launch`, `code-oss-logs`
+- E2E skills used: `launch`, `codetysh-logs`
 - Launch guide: `../../../../../.agents/skills/launch/references/agents-window-guide.md`
 - Rationale source: Roguski, Code Rule #01 (avoid private-method clusters)
 

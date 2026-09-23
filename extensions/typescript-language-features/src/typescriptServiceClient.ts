@@ -668,7 +668,7 @@ export default class TypeScriptServiceClient extends Disposable implements IType
 					this.hasServerFatallyCrashedTooManyTimes = true;
 					if (pluginsForCrashPrompt.length) {
 						prompt = vscode.window.showErrorMessage<vscode.MessageItem>(
-							vscode.l10n.t("The JS/TS language service immediately crashed 5 times. The service will not be restarted.\nThis may be caused by a plugin contributed by one of these extensions: {0}.\nPlease try disabling these extensions before filing an issue against VS Code.", pluginExtensionList));
+							vscode.l10n.t("The JS/TS language service immediately crashed 5 times. The service will not be restarted.\nThis may be caused by a plugin contributed by one of these extensions: {0}.\nPlease try disabling these extensions before filing an issue against tysh.", pluginExtensionList));
 					} else if (!plugins.length) {
 						prompt = vscode.window.showErrorMessage(
 							vscode.l10n.t("The JS/TS language service immediately crashed 5 times. The service will not be restarted."),
@@ -689,7 +689,7 @@ export default class TypeScriptServiceClient extends Disposable implements IType
 					if (!this._isPromptingAfterCrash) {
 						if (pluginsForCrashPrompt.length) {
 							prompt = vscode.window.showWarningMessage<vscode.MessageItem>(
-								vscode.l10n.t("The JS/TS language service crashed 5 times in the last 5 Minutes.\nThis may be caused by a plugin contributed by one of these extensions: {0}\nPlease try disabling these extensions before filing an issue against VS Code.", pluginExtensionList));
+								vscode.l10n.t("The JS/TS language service crashed 5 times in the last 5 Minutes.\nThis may be caused by a plugin contributed by one of these extensions: {0}\nPlease try disabling these extensions before filing an issue against tysh.", pluginExtensionList));
 						} else if (!plugins.length) {
 							prompt = vscode.window.showWarningMessage(
 								vscode.l10n.t("The JS/TS language service crashed 5 times in the last 5 Minutes."),
@@ -697,13 +697,13 @@ export default class TypeScriptServiceClient extends Disposable implements IType
 						}
 					}
 				}
-			} else if (['vscode-insiders', 'code-oss'].includes(vscode.env.uriScheme)) {
+			} else if (['vscode-insiders', 'codetysh'].includes(vscode.env.uriScheme)) {
 				// Prompt after a single restart
 				this.numberRestarts = 0;
 				if (!this._isPromptingAfterCrash) {
 					if (pluginsForCrashPrompt.length) {
 						prompt = vscode.window.showWarningMessage<vscode.MessageItem>(
-							vscode.l10n.t("The JS/TS language service crashed.\nThis may be caused by a plugin contributed by one of these extensions: {0}.\nPlease try disabling these extensions before filing an issue against VS Code.", pluginExtensionList));
+							vscode.l10n.t("The JS/TS language service crashed.\nThis may be caused by a plugin contributed by one of these extensions: {0}.\nPlease try disabling these extensions before filing an issue against tysh.", pluginExtensionList));
 					} else if (!plugins.length) {
 						prompt = vscode.window.showWarningMessage(
 							vscode.l10n.t("The JS/TS language service crashed."),

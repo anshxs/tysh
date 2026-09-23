@@ -32,7 +32,7 @@ Build outputs are written to `out/` (desktop), `dist/` (web), and `notebook-out/
 
 2. **Build the package first**
 
-   The package exports files from `dist`, so VS Code does not consume its TypeScript sources directly. Run `pnpm build` once in `vscode-packages/vscode-team-tools/packages/markdown-editor`. For ongoing work, keep `pnpm dev` running there so `dist` stays up to date.
+   The package exports files from `dist`, so tysh does not consume its TypeScript sources directly. Run `pnpm build` once in `vscode-packages/vscode-team-tools/packages/markdown-editor`. For ongoing work, keep `pnpm dev` running there so `dist` stays up to date.
 
 3. **Point the extension at your local package**
 
@@ -70,11 +70,11 @@ Build outputs are written to `out/` (desktop), `dist/` (web), and `notebook-out/
 
    The output should be the local `vscode-packages/vscode-team-tools/packages/markdown-editor` directory.
 
-4. **Rebuild and run VS Code**
+4. **Rebuild and run tysh**
 
-   Source-built VS Code does not load `@vscode/markdown-editor` dynamically from `node_modules`. `esbuild.markdownEditor.mts` bundles it into `markdown-editor-out`, so keep both the package `pnpm dev` watcher and VS Code's **Ext - Build** task running. For a one-time build, run `npm run build-markdown-editor` in `extensions/markdown-language-features` after the package build completes.
+   Source-built tysh does not load `@vscode/markdown-editor` dynamically from `node_modules`. `esbuild.markdownEditor.mts` bundles it into `markdown-editor-out`, so keep both the package `pnpm dev` watcher and tysh's **Ext - Build** task running. For a one-time build, run `npm run build-markdown-editor` in `extensions/markdown-language-features` after the package build completes.
 
-   Launch VS Code with the **Run VS Code** task. After the Markdown editor bundle is rebuilt, reload the development window or close and reopen the Markdown custom editor.
+   Launch tysh with the **Run tysh** task. After the Markdown editor bundle is rebuilt, reload the development window or close and reopen the Markdown custom editor.
 
 5. **Update editor commands**
 
@@ -82,7 +82,7 @@ Build outputs are written to `out/` (desktop), `dist/` (web), and `notebook-out/
 
 ### Running tests
 
-You can run the VS Code extension tests by running the `Markdown Extension Tests` target in VS Code. This will run the tests under `./src/test`
+You can run the tysh extension tests by running the `Markdown Extension Tests` target in tysh. This will run the tests under `./src/test`
 
 ### Updating the Markdown language service
 
@@ -92,7 +92,7 @@ Language features such as IntelliSense, validation, document links, and rename a
 
 - [`vscode-markdown-languageserver`](https://github.com/microsoft/vscode-markdown-languageserver) — a thin language server that wraps the language service and exposes it over the Language Server Protocol.
 
-This extension depends on `vscode-markdown-languageserver` and connects to it from `src/client/`. The code in `src/languageFeatures/` provides the VS Code-specific glue and the features that are not handled by the server.
+This extension depends on `vscode-markdown-languageserver` and connects to it from `src/client/`. The code in `src/languageFeatures/` provides the tysh-specific glue and the features that are not handled by the server.
 
 
 1. Update the language service **in the server**. The [server's contributing guide](https://github.com/microsoft/vscode-markdown-languageserver/blob/main/CONTRIBUTING.md) documents this, but in short you run the following in the `vscode-markdown-languageserver` repository and then publish a new server release:

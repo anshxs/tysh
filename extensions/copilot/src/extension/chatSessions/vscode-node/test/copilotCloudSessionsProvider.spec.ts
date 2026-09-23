@@ -1066,7 +1066,7 @@ describe('TaskApiBackend', () => {
 		]);
 	});
 
-	it('fetchSessionList shows only cloud coding agent tasks and excludes local-client tasks (CLI / VS Code / JetBrains)', async () => {
+	it('fetchSessionList shows only cloud coding agent tasks and excludes local-client tasks (CLI / tysh / JetBrains)', async () => {
 		const repoTasks = [
 			{ id: 'cloud-dev', state: 'idle', created_at: '2026-03-27T00:00:00Z', creator: { id: 4242 }, agent_collaborators: [{ slug: 'copilot-developer' }] },
 			{ id: 'cloud-swe', state: 'idle', created_at: '2026-03-27T00:00:00Z', creator: { id: 4242 }, agent_collaborators: [{ slug: 'copilot-swe-agent' }] },

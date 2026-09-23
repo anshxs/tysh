@@ -13,7 +13,7 @@
  * each surface:
  *   - {@link shellEchoScenario} matches SDK-based sessions (Copilot CLI,
  *     Claude, AgentHost), which expose `bash` / `pwsh` / `powershell` tools.
- *   - {@link runInTerminalScenario} matches the VS Code built-in chat agent
+ *   - {@link runInTerminalScenario} matches the tysh built-in chat agent
  *     (used by the "Local" session), which exposes the `run_in_terminal`
  *     tool.
  *

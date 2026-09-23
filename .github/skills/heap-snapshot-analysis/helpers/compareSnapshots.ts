@@ -10,7 +10,7 @@
  * - Top object groups by size increase
  * - Top object groups by count increase
  * - New object groups (only in "after")
- * - VS Code-specific class changes
+ * - tysh-specific class changes
  */
 
 import { parseSnapshot, collectNodeIds, type SnapshotData } from './parseSnapshot.ts';

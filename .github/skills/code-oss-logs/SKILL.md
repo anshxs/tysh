@@ -1,5 +1,5 @@
 ---
-name: code-oss-logs
+name: codetysh-logs
 description: 'Find and read timestamped process logs from Code OSS dev builds, including main.log, renderer.log, extension host logs, and agenthost.log. For bundles produced by Export Agent Host Debug Logs, use agent-host-logs.'
 ---
 
@@ -11,8 +11,8 @@ Find and display logs from the most recent Code OSS or Agents app dev run.
 
 | App | Default User Data Dir | Logs Path |
 |-----|-----------------------|-----------|
-| Code OSS | `$HOME/.vscode-oss-dev` | `$HOME/.vscode-oss-dev/logs/` |
-| Agents app | `$HOME/.vscode-oss-dev` | `$HOME/.vscode-oss-dev/logs/` |
+| Code OSS | `$HOME/.tysh` | `$HOME/.tysh/logs/` |
+| Agents app | `$HOME/.tysh` | `$HOME/.tysh/logs/` |
 
 If Code OSS was launched with `--user-data-dir=<dir>`, use `<dir>/logs/` instead of the defaults above. Launch and debugging helpers often create temporary user data dirs under `.build/`; always prefer the exact user data dir from the launch command when it is known.
 
@@ -23,7 +23,7 @@ Each run creates a timestamped folder like `20260330T163430`. The most recent fo
 1. **Identify which app** the user is asking about: Code OSS or Agents app. If unclear, check both.
 2. **Find the most recent log folder**:
     ```bash
-    ls -lt "$HOME/.vscode-oss-dev/logs" | head -5
+    ls -lt "$HOME/.tysh/logs" | head -5
     # or for a custom user data dir:
     ls -lt "<user-data-dir>/logs" | head -5
     ```

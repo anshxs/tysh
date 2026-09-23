@@ -357,7 +357,7 @@ suite('Parsing .gitignore files', () => {
 			yarn-error.log
 			vscode.lsif
 			vscode.db
-			/.profile-oss`;
+			/.profiletysh`;
 
 		const included = [
 			'/inner/extensions/dist',
@@ -377,7 +377,7 @@ suite('Parsing .gitignore files', () => {
 			'/inner/out2/',
 			'/inner/out2/test',
 
-			'/inner/.profile-oss',
+			'/inner/.profiletysh',
 
 			// Files.
 			'/extensions/dist',
@@ -403,7 +403,7 @@ suite('Parsing .gitignore files', () => {
 			'/out2/',
 			'/out2/test',
 
-			'/.profile-oss',
+			'/.profiletysh',
 		];
 
 		for (const include of included) {

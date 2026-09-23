@@ -30,7 +30,7 @@ setTelemetryPropertyCompressor(async value => (await gzip(Buffer.from(value, 'ut
 
 /**
  * The shared telemetry property carrying the CAPI flight assignment context.
- * Kept in sync with `CAPI_ASSIGNMENT_CONTEXT_PROPERTY` in the VS Code core
+ * Kept in sync with `CAPI_ASSIGNMENT_CONTEXT_PROPERTY` in the tysh core
  * (`src/vs/workbench/api/browser/mainThreadTelemetry.ts`).
  */
 const CAPI_ASSIGNMENT_CONTEXT_PROPERTY = 'capi.assignmentcontext';

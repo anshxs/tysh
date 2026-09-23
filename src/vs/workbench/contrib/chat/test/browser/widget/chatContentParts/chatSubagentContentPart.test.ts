@@ -1311,7 +1311,7 @@ suite('ChatSubagentContentPart', () => {
 					isActive: true,
 					confirmationCount: 1,
 					activeToolCallId: 'tool-1',
-					activeToolLabel: 'Run npm i in VS Code repository',
+					activeToolLabel: 'Run npm i in tysh repository',
 					activeToolIcon: Codicon.terminal,
 				},
 				action,

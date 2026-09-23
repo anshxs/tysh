@@ -307,14 +307,14 @@ commercial-metadata overlay.
 ### E2E
 - **Launch skill**: `launch` (`.agents/skills/launch`) — Playwright-drive Code
   OSS `--agents` with isolated profile.
-- **Log skill**: `code-oss-logs` (`.github/skills/code-oss-logs`) — read the
+- **Log skill**: `codetysh-logs` (`.github/skills/codetysh-logs`) — read the
   agent host log from the latest dev run.
 - **Scenario (native):**
   1. With a real `ANTHROPIC_API_KEY` (or `claude login`) in the environment,
      set `claudeUseCopilotProxy` to `false` in `agent-host-config.json` (or via
      an AHP client `updateRootConfig`). Use `launch` to open Code OSS
      `--agents`, select **Claude**, open the model picker.
-  2. Use `code-oss-logs` to read the agent host log: confirm **no**
+  2. Use `codetysh-logs` to read the agent host log: confirm **no**
      `ClaudeProxyService.start` line, **no** CAPI `models()` fetch, and a
      `supportedModels` enumeration instead; confirm the SDK subprocess has no
      `ANTHROPIC_BASE_URL` (e.g. `lsof`/log inspection) and the `system/init`
@@ -351,7 +351,7 @@ commercial-metadata overlay.
 - Roadmap: [roadmap.md](./roadmap.md) (Phase 19; Phase 18 for the SDK-bug background)
 - Context glossary: [CONTEXT.md](./CONTEXT.md) — *Claude Agent*, *Claude Proxy*, *CAPI*, *Materialization* (M9), *M8* (usage asymmetry), *M11* (Options↔Query duality)
 - SDK types: [sdk.d.ts](../../../../../../extensions/copilot/node_modules/@anthropic-ai/claude-agent-sdk/sdk.d.ts) — `ModelInfo` (903), `Query.supportedModels` (1808), `WarmQuery` (4796), `SDKSystemMessage.apiKeySource` (2944)
-- E2E skills: `launch`, `code-oss-logs`
+- E2E skills: `launch`, `codetysh-logs`
 
 ## Implementation Notes
 
@@ -389,7 +389,7 @@ commercial-metadata overlay.
   Sonnet, Sonnet (1M context), Haiku, Opus` (the user's subscription **Opus**
   surfaced) with **no Claude proxy start** (the only "Auth token updated" line
   is the sibling `[Copilot]` agent). Drove via `launch` + `@playwright/cli`;
-  read via `code-oss-logs`.
+  read via `codetysh-logs`.
 
 ### avoid-private-methods
 - **Clean.** The new private methods (`_resolveTransportMode`, `_fetchNativeModels`, `_fetchProxyModels`, `_ensureAuthenticated`) are thin single-purpose orchestration; all genuinely testable logic is already extracted as pure exported functions (`fromSdkModelInfo`, `resolveClaudeModelList`, `buildModelEnumerationOptions`, `buildSubprocessEnv`) and unit-tested directly. No findings.

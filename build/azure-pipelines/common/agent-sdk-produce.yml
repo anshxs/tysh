@@ -7,7 +7,7 @@ parameters:
       - alpine
       - win32
 
-# Builds the agent SDK tarballs for ONE VS Code build, and (on real
+# Builds the agent SDK tarballs for ONE tysh build, and (on real
 # publish runs) uploads them to the CDN, emits
 # `##vso[task.setvariable variable=AGENT_SDK_RESULTS_FILE]<path>`, and
 # leaves the downstream gulp packaging step to stamp product.agentSdks.

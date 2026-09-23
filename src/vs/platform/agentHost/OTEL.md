@@ -22,7 +22,7 @@ contains `requestId`, `provider`, optional backend `agentSessionId` / `chatId`,
 `firstResponseTextMs`, and `totalElapsedMs`. The log additionally retains
 `sessionId`, identical to `agentSessionId`, for compatibility, and includes
 `turnId`, identical to `requestId`, for AHP joins. The telemetry property uses
-`agentSessionId` to avoid colliding with the common VS Code `sessionID` property.
+`agentSessionId` to avoid colliding with the common tysh `sessionID` property.
 Durations use a local monotonic clock starting at agent invocation, before
 trust/authentication/session preparation.
 `invocationKind` is `newTurn`, `existingTurn`, `subagent`, or `unknown` before
@@ -90,7 +90,7 @@ Agent Host owns transport routing, optional interception and persistence, resour
 - **Claude:** the Claude runtime's native OTel implementation and launch environment.
 - **Codex:** the Codex app-server's native OTel implementation and launch overrides.
 
-Do not copy provider-native span, event, metric, or environment-variable catalogs into this document. Keep this reference focused on the VS Code-owned integration boundary. The extension-host Copilot CLI bridge under `extensions/copilot/src/extension/chatSessions/copilotcli/` is a deprecated compatibility path and is not the Agent Host architecture.
+Do not copy provider-native span, event, metric, or environment-variable catalogs into this document. Keep this reference focused on the tysh-owned integration boundary. The extension-host Copilot CLI bridge under `extensions/copilot/src/extension/chatSessions/copilotcli/` is a deprecated compatibility path and is not the Agent Host architecture.
 
 ## Two Modes
 
@@ -155,7 +155,7 @@ Agent Host is one logical system with several native OTel producers. Agent Host-
 | Claude runtime | `claude-code` |
 | Codex app-server | `codex-app-server` |
 
-Unrelated inherited resource attributes are preserved. A conflicting inherited `service.namespace` is replaced only inside Agent Host-owned telemetry and provider launch environments; no global VS Code namespace is set. Provider launch environments do not inherit a host `OTEL_SERVICE_NAME`.
+Unrelated inherited resource attributes are preserved. A conflicting inherited `service.namespace` is replaced only inside Agent Host-owned telemetry and provider launch environments; no global tysh namespace is set. Provider launch environments do not inherit a host `OTEL_SERVICE_NAME`.
 
 Claude honors these standard resource variables for traces, logs, and metrics while retaining its native `claude-code` service name. The current Codex app-server hardcodes `codex-app-server` and does not consume standard resource overrides; Agent Host preserves that native name and adds the shared namespace to intercepted traces. Direct Codex logs/metrics cannot carry the namespace until Codex adds standard resource-attribute support.
 
@@ -176,7 +176,7 @@ When content capture is enabled, the agent host emits a zero-duration `vscode.ag
 Title text is user-derived content, so these spans are emitted only when `chat.agentHost.otel.captureContent` is enabled. Host-produced title spans copy `OTEL_SERVICE_NAME` and `OTEL_RESOURCE_ATTRIBUTES` so collectors group them with the SDK telemetry. They are persisted in DB mode and use the configured OTLP, file, or console forwarder. Synthetic OTLP forwarding currently uses OTLP/HTTP JSON; when `http/protobuf` or gRPC is configured, title spans remain available in DB mode but are not sent to that external endpoint.
 
 
-## VS Code Settings
+## tysh Settings
 
 Open **Settings** (`Ctrl+,`) and search for `agentHost otel`:
 
@@ -209,9 +209,9 @@ The workbench-side starter translates the settings above into the following env 
 | `OTEL_RESOURCE_ATTRIBUTES` | (inherited or enterprise policy) | Extra resource attributes (`k=v,k2=v2`); set from the managed `telemetry.resourceAttributes`. |
 | `OTEL_EXPORTER_OTLP_HEADERS` | (inherited) | Auth headers (for example, `Authorization=<value>`). **Not** delivered from managed settings — env delivery would leak the secret to tool subprocesses; managed headers apply to the Copilot Chat extension only. |
 
-Inside Agent Host, OTel activates when `COPILOT_OTEL_ENABLED` or `COPILOT_OTEL_DB_SPAN_EXPORTER_ENABLED` is truthy, or when an OTLP endpoint or file-exporter path is non-empty. This allows inherited environment configuration to enable OTel without a local VS Code setting.
+Inside Agent Host, OTel activates when `COPILOT_OTEL_ENABLED` or `COPILOT_OTEL_DB_SPAN_EXPORTER_ENABLED` is truthy, or when an OTLP endpoint or file-exporter path is non-empty. This allows inherited environment configuration to enable OTel without a local tysh setting.
 
-> **Activation timing.** Env vars are bound at agent host **spawn time**. Changing a setting while the agent host is already running has no effect until the host respawns — restart VS Code or reload the window if you change these settings mid-session.
+> **Activation timing.** Env vars are bound at agent host **spawn time**. Changing a setting while the agent host is already running has no effect until the host respawns — restart tysh or reload the window if you change these settings mid-session.
 
 ## Local SQLite Span Store
 
@@ -290,4 +290,4 @@ This matches the path-handling rules of the official OpenTelemetry SDKs and ensu
 
 ## Spawn-Time Env Binding
 
-The agent host inherits its env vars at fork time. `IAgentHostOTelService` reads `process.env` once in its constructor and caches the resolved config. Changing a `chat.agentHost.otel.*` setting at runtime therefore has **no effect** on the currently-running agent host — the host must respawn (reload window / restart VS Code) to pick up the new value. This is the same model used by the rest of the agent host service surface.
+The agent host inherits its env vars at fork time. `IAgentHostOTelService` reads `process.env` once in its constructor and caches the resolved config. Changing a `chat.agentHost.otel.*` setting at runtime therefore has **no effect** on the currently-running agent host — the host must respawn (reload window / restart tysh) to pick up the new value. This is the same model used by the rest of the agent host service surface.

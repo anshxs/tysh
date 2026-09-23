@@ -753,9 +753,9 @@ async function loadSchema(): Promise<{ source: string; resolved: string; ok: boo
 }
 
 /**
- * Prefer the schema checkout beside the primary VS Code checkout. Git worktrees
+ * Prefer the schema checkout beside the primary tysh checkout. Git worktrees
  * point their `.git` file back to that checkout, so this also finds repositories
- * such as `/Users/name/git/copilot-agent-runtime` when VS Code is running from a
+ * such as `/Users/name/git/copilot-agent-runtime` when tysh is running from a
  * nested worktree.
  */
 function resolveDefaultSchemaSource(): string {

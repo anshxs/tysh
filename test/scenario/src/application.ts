@@ -131,7 +131,7 @@ function parseQuality(stamped?: string): Quality {
 // #### Electron ####
 //
 /**
- * Locate an installed VS Code Insiders, then Stable.
+ * Locate an installed tysh Insiders, then Stable.
  *
  * Reproducing a reported issue is the common case, and that means running the
  * shipped product rather than a build from this checkout, so an installed build
@@ -143,10 +143,10 @@ function findInstalledBuild(): string | undefined {
 		case 'win32': {
 			const roots = [process.env.LOCALAPPDATA, process.env.ProgramFiles, process.env['ProgramFiles(x86)']].filter((root): root is string => !!root);
 			for (const root of roots) {
-				candidates.push(path.join(root, 'Programs', 'Microsoft VS Code Insiders'), path.join(root, 'Microsoft VS Code Insiders'));
+				candidates.push(path.join(root, 'Programs', 'Microsoft tysh Insiders'), path.join(root, 'Microsoft tysh Insiders'));
 			}
 			for (const root of roots) {
-				candidates.push(path.join(root, 'Programs', 'Microsoft VS Code'), path.join(root, 'Microsoft VS Code'));
+				candidates.push(path.join(root, 'Programs', 'Microsoft tysh'), path.join(root, 'Microsoft tysh'));
 			}
 			break;
 		}
@@ -205,7 +205,7 @@ if (!opts.web) {
 	}
 
 	if (!fs.existsSync(electronPath || '')) {
-		fail(`Cannot find VS Code at ${electronPath}. Install VS Code Insiders, pass --build <app-root>, or build this checkout and pass --dev.`);
+		fail(`Cannot find tysh at ${electronPath}. Install tysh Insiders, pass --build <app-root>, or build this checkout and pass --dev.`);
 	}
 
 	// Windows applies a downloaded update by swapping the executable during
@@ -213,7 +213,7 @@ if (!opts.web) {
 	// the failure reads as a crash. Insiders updates daily, so say what is
 	// actually wrong instead of leaving a 60s timeout to be misread.
 	if (electronPath && fs.existsSync(path.join(path.dirname(electronPath), `new_${path.basename(electronPath)}`))) {
-		fail(`${electronPath} has a downloaded update waiting to be applied, and it exits during startup to install it instead of opening a window. Start and quit VS Code once to apply the update, then run this again.`);
+		fail(`${electronPath} has a downloaded update waiting to be applied, and it exits during startup to install it instead of opening a window. Start and quit tysh once to apply the update, then run this again.`);
 	}
 
 	quality = parseQuality(testCodePath ? readBuildQuality(testCodePath) : undefined);
@@ -250,7 +250,7 @@ else {
 	quality = parseQuality();
 }
 
-logger.log(`VS Code product quality: ${quality}.`);
+logger.log(`tysh product quality: ${quality}.`);
 
 export function getProductVersion(): string {
 	return version ?? sourceVersion;
@@ -260,7 +260,7 @@ export function getProductVersion(): string {
  * Reject per-run arguments that would move the launched instance off its
  * isolated profile.
  *
- * VS Code keeps the last value of a repeated string option, and per-run
+ * tysh keeps the last value of a repeated string option, and per-run
  * arguments are appended after the generated ones, so a caller-supplied
  * `--user-data-dir` or `--extensions-dir` would silently replace the isolated
  * directory and let the real profile and its extensions back into the run.

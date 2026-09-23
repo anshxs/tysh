@@ -72,6 +72,10 @@ export abstract class CommontExtensionManagementService extends Disposable imple
 	}
 
 	async canInstall(extension: IGalleryExtension): Promise<true | IMarkdownString> {
+		if (extension.categories?.some(c => c.toLowerCase() === 'themes') || extension.tags?.some(t => t.toLowerCase() === 'theme')) {
+			return new MarkdownString(nls.localize('themeInstallBlocked', "Theme extensions cannot be installed."));
+		}
+
 		const allowedToInstall = this.allowedExtensionsService.isAllowed({ id: extension.identifier.id, publisherDisplayName: extension.publisherDisplayName });
 		if (allowedToInstall !== true) {
 			return new MarkdownString(nls.localize('not allowed to install', "This extension cannot be installed because {0}", allowedToInstall.value));
@@ -738,6 +742,10 @@ export abstract class AbstractExtensionManagementService extends CommontExtensio
 		const manifest = await this.galleryService.getManifest(compatibleExtension, CancellationToken.None);
 		if (manifest === null) {
 			throw new ExtensionManagementError(`Missing manifest for extension ${compatibleExtension.identifier.id}`, ExtensionManagementErrorCode.Invalid);
+		}
+
+		if (manifest.contributes?.themes?.length || manifest.categories?.some(c => c.toLowerCase() === 'themes')) {
+			throw new ExtensionManagementError(nls.localize('themeInstallBlocked', "Theme extensions cannot be installed."), ExtensionManagementErrorCode.NotAllowed);
 		}
 
 		if (manifest.version !== compatibleExtension.version) {

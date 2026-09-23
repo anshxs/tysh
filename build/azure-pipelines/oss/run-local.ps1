@@ -54,7 +54,7 @@ if (-not (Test-Path (Join-Path $RepoRoot 'node_modules'))) {
 New-Item -ItemType Directory -Force -Path $OutDir | Out-Null
 
 # Run a .ts pipeline script via tsx (handles ESM + .js import specifiers).
-function Invoke-OssScript {
+function InvoketyshScript {
     param([string]$Script, [string[]]$ScriptArgs)
     Push-Location $ossDir
     try {
@@ -82,7 +82,7 @@ if (-not $SkipScan) {
     if ($CgNotice -and (Test-Path $CgNotice)) {
         $scanArgs += @('--cg', $CgNotice)
     }
-    Invoke-OssScript -Script 'scan-licenses.ts' -ScriptArgs $scanArgs
+    InvoketyshScript -Script 'scan-licenses.ts' -ScriptArgs $scanArgs
 }
 else {
     Write-Host "Skipping scan (reusing $extNotices)" -ForegroundColor Yellow
@@ -99,7 +99,7 @@ else {
     Write-Warning "No CG cache (-CgNotice) - merging without a CG base. Inject/stale logic still validated."
 }
 $mergeArgs += '--provenance'
-Invoke-OssScript -Script 'merge-notices.ts' -ScriptArgs $mergeArgs
+InvoketyshScript -Script 'merge-notices.ts' -ScriptArgs $mergeArgs
 
 # --- 3. focused summary ----------------------------------------------------
 Write-Host "`n===== LOCAL RUN SUMMARY =====" -ForegroundColor Magenta

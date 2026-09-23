@@ -33,7 +33,7 @@ export function getCopilotCLIWorkspaceFile(sessionId: string) {
 }
 
 /**
- * Path of the shared bulk metadata cache file. This file is shared by all VS Code
+ * Path of the shared bulk metadata cache file. This file is shared by all tysh
  * installs (Stable, Insiders, OSS, Exploration) and the Agents application.
  */
 export function getCopilotBulkMetadataFile(): string {

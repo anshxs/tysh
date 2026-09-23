@@ -303,7 +303,7 @@ describe('ChatDebugFileLoggerService', () => {
 		const globalTmpDir = await fs.promises.mkdtemp(path.join(os.tmpdir(), 'chatdebug-global-'));
 		try {
 			// No workspace open: storageUri is undefined, only globalStorageUri is
-			// available (e.g. an empty VS Code window). Workspace-scoped storage is
+			// available (e.g. an empty tysh window). Workspace-scoped storage is
 			// preferred whenever a folder is open; this fallback only applies when
 			// no workspace is open.
 			const noWorkspaceService = new ChatDebugFileLoggerService(

@@ -37,7 +37,7 @@ export async function launch(options: LaunchOptions): Promise<{ electronProcess:
 async function launchElectron(configuration: IElectronConfiguration, options: LaunchOptions) {
 	const { logger, tracing, snapshots } = options;
 
-	// The recording canvas is fixed, but VS Code sizes its own window (1440x900
+	// The recording canvas is fixed, but tysh sizes its own window (1440x900
 	// with a workspace, 1200x800 empty), so the capture would otherwise show the
 	// window in the top-left corner of a larger frame. The window is resized to
 	// match below, which also renders reliably when it is larger than the screen.

@@ -108,7 +108,7 @@ export default {
 			},
 			{
 				// Built-in color theme JSON files use JSONC (comments / trailing
-				// commas), so import them as raw strings and let VS Code's
+				// commas), so import them as raw strings and let tysh's
 				// JSON parser handle them.
 				test: /[\\/]extensions[\\/]theme-[^\\/]+[\\/]themes[\\/].*\.json$/,
 				type: 'asset/source',

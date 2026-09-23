@@ -128,14 +128,14 @@ Build a Claude-specific disk resolver that reuses the shared frontmatter/MCP par
 - Type/layer/hygiene: `npm run typecheck-client`, `npm run valid-layers-check`, gulp `hygiene` clean.
 
 ### E2E
-Workspace skills (project scope): `launch` (drive Code OSS Agents window), `code-oss-logs` (read `agenthost.log`).
+Workspace skills (project scope): `launch` (drive Code OSS Agents window), `codetysh-logs` (read `agenthost.log`).
 - **Scenario:**
   1. Put a real customization on disk (e.g. `~/.claude/agents/explore.md` with frontmatter + a body).
   2. `launch` the Agents window, authenticate, pick **Claude**, create a session, and **without sending a message** open the customization list.
   3. Confirm `explore` appears and **opening it opens the real `~/.claude/agents/explore.md`** (with its body) — not an empty stub.
   4. Send a message (materialize). Add a deliberately-broken `~/.claude/agents/broken.md` the SDK won't load; confirm it is **hidden** post-materialize while `explore` remains.
   5. Edit `explore.md` on disk; confirm the list refreshes (watcher).
-  6. `code-oss-logs`: confirm no `[Claude]` customization warnings and the scan ran without the stub bundler.
+  6. `codetysh-logs`: confirm no `[Claude]` customization warnings and the scan ran without the stub bundler.
 
 ### Manual
 - Confirm an MCP server declared in `~/.claude/settings.json` appears (config) pre-materialize and shows live status post-materialize.
@@ -151,7 +151,7 @@ _None — both resolved during grill (2026-06-17): D1 (Claude-specific resolver 
 - CopilotAgent disk-scan reference: [sessionCustomizationDiscovery.ts](../copilot/sessionCustomizationDiscovery.ts), [copilotAgent.ts](../copilot/copilotAgent.ts) (`toDiscoveredChildCustomization` ~L2258)
 - Shared parsers: [pluginParsers.ts](../../../agentPlugins/common/pluginParsers.ts)
 - Protocol type: [state.ts](../../common/state/protocol/channels-session/state.ts) (`Customization`, `DirectoryCustomization`, `McpServerCustomization`)
-- E2E skills used: `launch`, `code-oss-logs`
+- E2E skills used: `launch`, `codetysh-logs`
 
 ## Implementation Notes
 
@@ -192,7 +192,7 @@ Must-fixes found and **resolved**:
 
 ### Steps 4–5 (SDK filter + session wiring)
 - **Step 4** lives in `claudeSessionCustomizationDiscovery.ts` as `buildDiscoveredCustomizations(discovered, mcpServers, userHome, sdk?)` rather than inside the projector: `sdk` undefined → full mapped set; `sdk` present → disk filtered by `(name, type)` against the SDK agent/command sets, SDK-known-not-on-disk added as **non-editable** entries via `nonEditableUri('agent'|'skill'|'mcp', name)` (`claude-internal:` scheme), `CLAUDE_SDK_DEFAULT_AGENT_NAME` ('general-purpose') hidden, MCP state enriched via `deriveMcpState(status)`. `projectSessionCustomizations` was widened to take `discovered: readonly Customization[]` (was a single optional) and just spreads them.
-- **Step 5**: `ClaudeAgentSession` constructor gained required `@IFileService` + `@INativeEnvironmentService` (VS Code DI has **no `optional` decorator** — confirmed; an `@optional` attempt was reverted). `getSessionCustomizations` now scans disk (project + user) in parallel, pulls the SDK snapshot when a pipeline exists (swallowing failures → unfiltered fallback), builds, and projects. `_sdkBundler` field + its construction removed.
+- **Step 5**: `ClaudeAgentSession` constructor gained required `@IFileService` + `@INativeEnvironmentService` (tysh DI has **no `optional` decorator** — confirmed; an `@optional` attempt was reverted). `getSessionCustomizations` now scans disk (project + user) in parallel, pulls the SDK snapshot when a pipeline exists (swallowing failures → unfiltered fallback), builds, and projects. `_sdkBundler` field + its construction removed.
 - **Test harness**: added a `claudeFileEnvServices(disposables)` helper (in-memory `FileService` on `Schemas.file` + mock `INativeEnvironmentService` with `userHome = /mock-home`) spread into the `createTestContext` and `buildCtxWith` `ServiceCollection`s. Nothing is seeded under the mock home, so the disk scan is deterministically empty → existing projection tests still assert `length === 1` (client-pushed only).
 
 ### Tests (Steps 4–5)
@@ -202,7 +202,7 @@ Must-fixes found and **resolved**:
 ### Step 6 (watcher)
 - `ClaudeCustomizationWatcher extends Disposable` added to the discovery module: recursive watch on both `.claude` roots + a non-recursive `<cwd>` watch whose trigger is narrowed to `<cwd>/.mcp.json` (so unrelated workspace-root edits don't re-scan). `affects()` matches descendants, so any change under a `.claude` root triggers; debounce via `RunOnceScheduler` (300ms default, last constructor arg overridable → tests use 5ms). Failed `fileService.watch` calls are warn-logged, not fatal.
 - Wired in the session ctor (`new ClaudeCustomizationWatcher(this.workingDirectory, userHome, this._fileService, this._logService)`), both the watcher and its `onDidChange` subscription `_register`ed.
-- **DI note:** VS Code's `InstantiationService` injects `undefined` for an unregistered service rather than throwing — so adding the watcher (which reads `userHome` at construction) surfaced 4 more session-constructing test `ServiceCollection`s that lacked the env service (previously only the 2 `getSessionCustomizations` tests failed). Wired `claudeFileEnvServices` into those 4 blocks (2007 / 3122 / 3173 / 3530).
+- **DI note:** tysh's `InstantiationService` injects `undefined` for an unregistered service rather than throwing — so adding the watcher (which reads `userHome` at construction) surfaced 4 more session-constructing test `ServiceCollection`s that lacked the env service (previously only the 2 `getSessionCustomizations` tests failed). Wired `claudeFileEnvServices` into those 4 blocks (2007 / 3122 / 3173 / 3530).
 - Test: *watcher fires once (debounced) for changes under watched roots and ignores unrelated edits* — **green** (9 total in the discovery suite). `claudeAgent.test.ts` back to **124 green**.
 
 ### Step 7 (retire bundler + agent-name resolution)

@@ -31,7 +31,7 @@ export interface IRemoteAgentHostCliInstallResult {
 }
 
 /**
- * Ensure that a VS Code CLI suitable for launching an Agent Host is installed
+ * Ensure that a tysh CLI suitable for launching an Agent Host is installed
  * on a remote execution target.
  */
 export async function ensureRemoteAgentHostCliInstalled(

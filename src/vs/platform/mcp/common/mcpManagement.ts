@@ -110,7 +110,7 @@ export type RemoteTransport = (StreamableHttpTransport | SseTransport) & {
 	readonly variables?: Record<string, IMcpServerInput>;
 };
 
-/** Rewrites declared placeholders to fixed values or VS Code inputs without reinterpreting replacement text. */
+/** Rewrites declared placeholders to fixed values or tysh inputs without reinterpreting replacement text. */
 export function replaceMcpServerVariableReferences(value: string, variables: Readonly<Record<string, IMcpServerInput>> = {}): string {
 	const variableIds = Object.keys(variables);
 	if (!variableIds.length) {

@@ -6,7 +6,7 @@
 /**
  * Agent host end-to-end tests (Copilot customizations, mocked LLM).
  *
- * agent host log file: ~/.vscode-insiders/tmp/tmp_vscode_1/ahp-customizations-home-mock-ZBucPX/Library/Application Support/Code - OSS Dev/logs/20260701T192836/agenthost-server.log
+ * agent host log file: ~/.vscode-insiders/tmp/tmp_vscode_1/ahp-customizations-home-mock-ZBucPX/Library/Application Support/TYSH Dev/logs/20260701T192836/agenthost-server.log
  */
 
 import assert from 'assert';
@@ -592,7 +592,7 @@ suite('Agent Host Provider Integration — Copilot Customizations', function () 
 		const pluginUserInstructionFile = join(pluginDir, 'rules', 'bundled-user.instructions.md');
 		const pluginExtensionInstructionFile = join(pluginDir, 'rules', 'bundled-extension.instructions.md');
 		const pluginUri = URI.file(pluginDir).toString();
-		const configuredCustomizations = [{ uri: pluginUri, displayName: 'VS Code Synced Data' }];
+		const configuredCustomizations = [{ uri: pluginUri, displayName: 'tysh Synced Data' }];
 
 		await Promise.all([
 			mkdir(workspaceAgentsDir, { recursive: true }),
@@ -609,7 +609,7 @@ suite('Agent Host Provider Integration — Copilot Customizations', function () 
 				'---',
 				'You are a workspace test agent.',
 			].join('\n')),
-			writeFile(pluginManifestFile, JSON.stringify({ name: 'VS Code Synced Data', description: 'Customization data synced from VS Code' }, undefined, 2)),
+			writeFile(pluginManifestFile, JSON.stringify({ name: 'tysh Synced Data', description: 'Customization data synced from tysh' }, undefined, 2)),
 			writeFile(pluginAgentFile, [
 				'---',
 				'name: Bundled User Agent',

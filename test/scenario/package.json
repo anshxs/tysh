@@ -1,7 +1,7 @@
 {
   "name": "vscode-scenario-runner",
   "version": "0.1.0",
-  "description": "Runs UI validation scenarios against VS Code and records evidence",
+  "description": "Runs UI validation scenarios against tysh and records evidence",
   "license": "MIT",
   "main": "./out/index.js",
   "private": true,

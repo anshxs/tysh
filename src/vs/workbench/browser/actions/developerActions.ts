@@ -721,9 +721,9 @@ function managedSettingsPipeline(rawLabel: string, raw: unknown | undefined, nor
 	content += raw === undefined ? `*${markdownText(rawUnavailableMessage ?? 'Unavailable')}*\n\n` : markdownJsonBlock(raw);
 	content += '**Normalized bag**\n\n';
 	content += markdownJsonBlock(normalized);
-	content += '**VS Code policy projection**\n\n';
+	content += '**tysh policy projection**\n\n';
 	content += markdownJsonBlock(projected);
-	return markdownDetails('Source, normalized, and VS Code projection', content);
+	return markdownDetails('Source, normalized, and tysh projection', content);
 }
 
 function formatDiagnosticValue(value: unknown): string {
@@ -1012,7 +1012,7 @@ class PolicyDiagnosticsAction extends Action2 {
 				[
 					['Active sources (precedence order)', activeSources],
 					['Supplied keys', String(pick.resolutions.size)],
-					['Effective VS Code policy keys', String(effectiveKeyCount)]
+					['Effective tysh policy keys', String(effectiveKeyCount)]
 				]
 			);
 			content += '*Precedence is resolved per key: native MDM wins over the server endpoint, which wins over the file on disk. A key left unset by a higher channel is still filled in by a lower one. For sandbox.enabled, any managed true wins regardless of channel precedence, matching the runtime sandbox floor.*\n\n';
@@ -1043,7 +1043,7 @@ class PolicyDiagnosticsAction extends Action2 {
 				content += '*No managed-settings keys are supplied by any channel.*\n\n';
 			}
 			content += markdownDetails('Merged normalized bag', markdownJsonBlock(pick.values));
-			content += markdownDetails('Effective VS Code policy bag', markdownJsonBlock(effective));
+			content += markdownDetails('Effective tysh policy bag', markdownJsonBlock(effective));
 
 			content += `### Normalization and Parse Issues (${parseErrors.length})\n\n`;
 			if (parseErrors.length > 0) {
@@ -1117,13 +1117,13 @@ class PolicyDiagnosticsAction extends Action2 {
 			}
 
 			content += markdownDetails(
-				'VS Code managed-settings schema',
-				'*Only keys declared here can reach VS Code policy callbacks. Runtime-owned keys may still be enforced by the Copilot runtime even when absent from the projections above.*\n\n' +
+				'tysh managed-settings schema',
+				'*Only keys declared here can reach tysh policy callbacks. Runtime-owned keys may still be enforced by the Copilot runtime even when absent from the projections above.*\n\n' +
 				markdownJsonBlock(declaredDefinitions)
 			);
 
 			content += '### Agent Runtime Resolution\n\n';
-			content += '*Resolved independently by each provider through its own SDK/runtime. This may include runtime-owned keys that VS Code does not declare as configuration policies.*\n\n';
+			content += '*Resolved independently by each provider through its own SDK/runtime. This may include runtime-owned keys that tysh does not declare as configuration policies.*\n\n';
 			if (!agentHostEnablementService.enabled.get()) {
 				summary.agentRuntime = 'Agent Host disabled';
 				content += '*Agent Host is disabled; runtime managed-settings diagnostics were not queried.*\n\n';
@@ -1325,7 +1325,7 @@ class PolicyDiagnosticsAction extends Action2 {
 			content += `*Error retrieving authentication information: ${markdownText(getErrorMessage(error))}*\n\n`;
 		}
 
-		const report = '# VS Code Policy Diagnostics\n\n' +
+		const report = '# tysh Policy Diagnostics\n\n' +
 			'*WARNING: This file may contain sensitive information.*\n\n' +
 			'## Summary\n\n' +
 			markdownTable(

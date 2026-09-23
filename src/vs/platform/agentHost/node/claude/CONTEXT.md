@@ -465,7 +465,7 @@ Procedure (manual, run at the end of Phase 2 implementation):
    minted, and log the resulting `baseUrl` and `nonce` at info level.
 2. Launch the dev build (`./scripts/code.sh --agents` or
    `Run Agents`) and authenticate.
-3. Use the **code-oss-logs** skill to read `agenthost.log` from the
+3. Use the **codetysh-logs** skill to read `agenthost.log` from the
    most recent run; grep for the proxy line; extract `baseUrl` +
    `nonce`.
 4. From a separate terminal:
@@ -493,7 +493,7 @@ subprocess (Phase 4), multi-tenant token isolation (Phase 4+), proxy
 
 Captured here so they aren't lost. None of these block Phase 2.
 
-- **HTTP proxy support** (`HTTP_PROXY` / `HTTPS_PROXY` env vars, VS Code's
+- **HTTP proxy support** (`HTTP_PROXY` / `HTTPS_PROXY` env vars, tysh's
   `http.proxy` setting, PAC files, proxy auth). The Phase 2 proxy talks
   to CAPI through `ICopilotApiService`, so any outbound proxying is
   inherited from whatever HTTP client that service uses. If the agent
@@ -2125,7 +2125,7 @@ Two filters apply to the result:
 - **No-sidecar filter (CopilotAgent only).** Sessions without sidecar
   metadata are *dropped* — so Copilot's `listSessions` returns only
   sessions this host has seen before. Sessions created on another
-  machine or in another VS Code install are invisible until they've
+  machine or in another tysh install are invisible until they've
   been re-opened through this host. **Claude does NOT inherit this
   filter** — the Claude SDK's session list includes external
   Claude-CLI-created sessions that have no host-side sidecar but

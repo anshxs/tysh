@@ -16,7 +16,7 @@
 //!
 //! The standalone `code agent host` CLI only publishes a `standalone`/`tcp`
 //! entry; it must never publish or select an `editor` entry (owned by running
-//! VS Code windows).
+//! tysh windows).
 
 use std::collections::HashMap;
 use std::fs::{self, OpenOptions};
@@ -708,7 +708,7 @@ pub async fn list_live_endpoints(
 }
 
 /// Like [`list_live_endpoints`], but restricted to `standalone` entries;
-/// `editor` entries are owned by running VS Code windows and must never be
+/// `editor` entries are owned by running tysh windows and must never be
 /// selected, replaced, or killed by the standalone CLI.
 pub async fn list_live_standalone_endpoints(
 	log: &log::Logger,

@@ -46,9 +46,9 @@ steps:
   - task: AzureKeyVault@2
     displayName: "Azure Key Vault: Get Secrets"
     inputs:
-      azureSubscription: vscode-oss-build-secrets
-      KeyVaultName: vscode-oss-build-secrets
-      SecretsFilter: "github-token-code-oss"
+      azureSubscription: vscodetysh-build-secrets
+      KeyVaultName: vscodetysh-build-secrets
+      SecretsFilter: "github-token-codetysh"
 
   - powershell: node build/setup-npm-registry.ts $env:NPM_REGISTRY
     condition: and(succeeded(), ne(variables['NPM_REGISTRY'], 'none'))
@@ -110,7 +110,7 @@ steps:
         npm_config_logs_dir: $(Build.SourcesDirectory)/.build/logs/npm
       ELECTRON_SKIP_BINARY_DOWNLOAD: 1
       PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
-      GITHUB_TOKEN: "$(github-token-code-oss)"
+      GITHUB_TOKEN: "$(github-token-codetysh)"
     retryCountOnTaskFailure: 5
     displayName: Install dependencies
     condition: and(succeeded(), ne(variables.NODE_MODULES_RESTORED, 'true'))
@@ -177,7 +177,7 @@ steps:
 
   - powershell: npm run gulp core-ci
     env:
-      GITHUB_TOKEN: "$(github-token-code-oss)"
+      GITHUB_TOKEN: "$(github-token-codetysh)"
     displayName: Compile
 
   - script: node build/azure-pipelines/common/extract-telemetry.ts
@@ -189,7 +189,7 @@ steps:
         $ErrorActionPreference = "Stop"
         exec { npm run compile --prefix test/smoke }
         exec { npm run compile --prefix test/integration/browser }
-      displayName: Compile test suites (non-OSS)
+      displayName: Compile test suites (nontysh)
       condition: and(succeeded(), eq(variables['VSCODE_STEP_ON_IT'], 'false'))
 
   - ${{ if ne(parameters.VSCODE_CIBUILD, true) }}:
@@ -230,7 +230,7 @@ steps:
       echo "##vso[task.setvariable variable=BUILT_CLIENT]true"
       echo "##vso[task.setvariable variable=CodeSigningFolderPath]$(Agent.BuildDirectory)/VSCode-win32-$(VSCODE_ARCH)"
     env:
-      GITHUB_TOKEN: "$(github-token-code-oss)"
+      GITHUB_TOKEN: "$(github-token-codetysh)"
       AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
     displayName: Build client
 
@@ -262,7 +262,7 @@ steps:
       echo "##vso[task.setvariable variable=BUILT_SERVER]true"
       echo "##vso[task.setvariable variable=CodeSigningFolderPath]$(CodeSigningFolderPath),$(Agent.BuildDirectory)/vscode-server-win32-$(VSCODE_ARCH)"
     env:
-      GITHUB_TOKEN: "$(github-token-code-oss)"
+      GITHUB_TOKEN: "$(github-token-codetysh)"
       AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
     displayName: Build server
 
@@ -281,7 +281,7 @@ steps:
       echo "##vso[task.setvariable variable=BUILT_WEB]true"
       echo "##vso[task.setvariable variable=CodeSigningFolderPath]$(CodeSigningFolderPath),$(Agent.BuildDirectory)/vscode-server-win32-$(VSCODE_ARCH)-web"
     env:
-      GITHUB_TOKEN: "$(github-token-code-oss)"
+      GITHUB_TOKEN: "$(github-token-codetysh)"
       AZURE_DEVOPS_EXT_PAT: $(System.AccessToken)
     displayName: Build server (web)
 
@@ -296,7 +296,7 @@ steps:
         artifact: unsigned_vscode_cli_win32_$(VSCODE_ARCH)_cli
         patterns: "**"
         path: $(Build.ArtifactStagingDirectory)/cli
-      displayName: Download VS Code CLI
+      displayName: Download tysh CLI
 
     - powershell: |
         . build/azure-pipelines/win32/exec.ps1
@@ -308,7 +308,7 @@ steps:
         $CliAppName = $AppProductJson.tunnelApplicationName
         $AppName = $AppProductJson.applicationName
         Move-Item -Path "$(Build.ArtifactStagingDirectory)/cli/$AppName.exe" -Destination "$(Agent.BuildDirectory)/VSCode-win32-$(VSCODE_ARCH)/bin/$CliAppName.exe"
-      displayName: Move VS Code CLI
+      displayName: Move tysh CLI
 
     - task: UseDotNet@2
       inputs:

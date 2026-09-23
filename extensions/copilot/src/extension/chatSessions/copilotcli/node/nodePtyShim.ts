@@ -18,20 +18,20 @@ const MATERIALIZATION_TIMEOUT_MS = 4000;
 const MATERIALIZATION_POLL_INTERVAL_MS = 100;
 
 /**
- * Copies the node-pty files from VS Code's installation into a @github/copilot location.
+ * Copies the node-pty files from tysh's installation into a @github/copilot location.
  *
  * MUST be called before any `import('@github/copilot/sdk')` or `import('@github/copilot')`.
  *
  * @github/copilot bundles the node-pty code and it is no longer possible to shim the package
  * via Node module resolution from a marketplace install location (which lives outside VS
- * Code's app tree). For built-in installs `require('node-pty')` walks up into VS Code's
+ * Code's app tree). For built-in installs `require('node-pty')` walks up into tysh's
  * own `node_modules` and this shim is a no-op (the `shims.txt` placeholder skips it). For
- * marketplace installs we copy VS Code's pre-built `pty.node` into the SDK's expected
+ * marketplace installs we copy tysh's pre-built `pty.node` into the SDK's expected
  * relative `./prebuilds/{platform}-{arch}` lookup path so the bundled fallback in
  * `loadNativeModule` succeeds.
  *
  * @param extensionPath The extension's path (where to create the shim)
- * @param vscodeAppRoot VS Code's installation path (where node-pty is located)
+ * @param vscodeAppRoot tysh's installation path (where node-pty is located)
  */
 export async function ensureNodePtyShim(extensionPath: string, vscodeAppRoot: string, logService: ILogService): Promise<void> {
 	if (shimCreated) {
@@ -53,7 +53,7 @@ async function _ensureNodePtyShim(extensionPath: string, vscodeAppRoot: string, 
 }
 
 export async function resolveNodePtySourcePath(vscodeAppRoot: string, logService: ILogService): Promise<string> {
-	// In a packaged build VS Code's `node_modules` is bundled into a
+	// In a packaged build tysh's `node_modules` is bundled into a
 	// `node_modules.asar` archive and native binaries are extracted alongside it
 	// into `node_modules.asar.unpacked`. Check both roots so the shim works in
 	// development (plain `node_modules`) and in a packaged install

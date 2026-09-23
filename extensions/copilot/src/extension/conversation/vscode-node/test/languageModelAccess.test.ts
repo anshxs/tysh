@@ -533,7 +533,7 @@ suite('LanguageModelAccess model info', () => {
 						{ report: () => { } },
 						CancellationToken.None,
 					),
-					/only available to VS Code core/,
+					/only available to tysh core/,
 				);
 			}
 		} finally {

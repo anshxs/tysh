@@ -9,9 +9,9 @@ applyTo: 'build/next/**'
 
 ## Important: Validating Changes
 
-**The `VS Code - Build` task is NOT needed to validate changes in the `build/` folder!**
+**The `tysh - Build` task is NOT needed to validate changes in the `build/` folder!**
 
-Build scripts in `build/` are TypeScript files that run directly with `node` (e.g., `node build/next/index.ts`). They are not compiled by the main VS Code build.
+Build scripts in `build/` are TypeScript files that run directly with `node` (e.g., `node build/next/index.ts`). They are not compiled by the main tysh build.
 
 To test changes:
 ```bash
@@ -224,7 +224,7 @@ node build/next/index.ts bundle --nls --target server-web --out out-vscode-reh-w
 npm run gulp vscode-reh-web-darwin-arm64-min
 
 # Run server
-./vscode-server-darwin-arm64-web/bin/code-server-oss --connection-token dev-token
+./vscode-server-darwin-arm64-web/bin/code-servertysh --connection-token dev-token
 
 # Open browser - should connect without "Unauthorized client refused"
 ```
@@ -419,7 +419,7 @@ console.log(c.originalPositionFor({line: 1, column: XXXX}));
 
 ## Self-hosting Setup
 
-The default `VS Code - Build` task now runs three parallel watchers:
+The default `tysh - Build` task now runs three parallel watchers:
 
 | Task | What it does | Script |
 |------|-------------|--------|
@@ -431,6 +431,6 @@ The default `VS Code - Build` task now runs three parallel watchers:
 
 - **`build/lib/compilation.ts`**: `watchTypeCheckTask()` runs tsgo with `noEmit: true` in response to source changes, alongside Monaco declaration generation.
 - **`build/gulpfile.ts`**: `watchClientTask` is now `task.parallel(compilation.watchTypeCheckTask('src'), ...)` — no `rimraf('out')` (the transpiler owns that), no JS emit.
-- **`build/next/index.ts`**: Watch mode emits `Starting transpilation...` / `Finished transpilation with N errors after X ms` for VS Code problem matcher.
+- **`build/next/index.ts`**: Watch mode emits `Starting transpilation...` / `Finished transpilation with N errors after X ms` for tysh problem matcher.
 - **`.vscode/tasks.json`**: Old "Core - Build" split into "Core - Transpile" + "Core - Typecheck" with separate problem matchers (owners: `esbuild` vs `typescript`).
 - **`package.json`**: Added `watch-client-transpile`, `watch-client-transpiled`, `kill-watch-client-transpiled` scripts.

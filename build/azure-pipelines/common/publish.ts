@@ -405,16 +405,16 @@ class ESRPReleaseService {
 			owners: [{ owner: { userPrincipalName: 'lszomoru@microsoft.com' } }],
 			approvers: [{ approver: { userPrincipalName: 'lszomoru@microsoft.com' }, isAutoApproved: true, isMandatory: false }],
 			releaseInfo: {
-				title: 'VS Code',
+				title: 'tysh',
 				properties: {
 					'ReleaseContentType': 'InstallPackage'
 				},
 				minimumNumberOfApprovers: 1
 			},
 			productInfo: {
-				name: 'VS Code',
+				name: 'tysh',
 				version,
-				description: 'VS Code'
+				description: 'tysh'
 			},
 			accessPermissionsInfo: {
 				mainPublisher: 'VSCode',

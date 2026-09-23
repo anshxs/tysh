@@ -38,7 +38,7 @@ suite('aiCustomizationWelcomePagePromptLaunchers', () => {
 		));
 		const category: ICustomizationMigrationCategorySummary = {
 			id: CustomizationMigrationCategoryId.UserData,
-			label: 'VS Code Profile Customizations',
+			label: 'tysh Profile Customizations',
 			description: 'Move customizations.',
 			actionLabel: 'Migrate...',
 			actionAriaLabel: 'Migrate User Data customizations',

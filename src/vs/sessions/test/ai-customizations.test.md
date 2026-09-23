@@ -154,7 +154,7 @@ This tests the transition from the empty state to having an active workspace sel
 3. Select a name `<name>` when the quickpick appears and confirm
 4. Verify the file opens in the embedded editor
 5. Verify the file path shown in the editor header is `~/.copilot/instructions/<name>.instructions.md`
-6. Confirm the path is NOT the VS Code profile folder (e.g., NOT `~/.vscode-oss-sessions-dev/User/...`)
+6. Confirm the path is NOT the tysh profile folder (e.g., NOT `~/.vscodetysh-sessions-dev/User/...`)
 7. Press the back button to return to the list
 8. Observe the new instruction appears in the "User" group
 9. Observe the sidebar badge count reflects the new user instruction
@@ -163,7 +163,7 @@ This tests the transition from the empty state to having an active workspace sel
 
 #### Expected Results
 
-- User file is created under `~/.copilot/instructions/` (not the VS Code profile folder)
+- User file is created under `~/.copilot/instructions/` (not the tysh profile folder)
 - The file appears in the "User" group in the list
 - Sidebar badge count includes the new user file
 - Debug report confirms the user creation target is `~/.copilot/instructions`
@@ -171,7 +171,7 @@ This tests the transition from the empty state to having an active workspace sel
 #### Notes
 
 - This validates that `AgenticPromptsService.getSourceFolders()` correctly redirects user creation to `~/.copilot/`
-- The VS Code profile folder should never be used for user creation in sessions
+- The tysh profile folder should never be used for user creation in sessions
 
 ---
 
@@ -236,7 +236,7 @@ This tests the transition from the empty state to having an active workspace sel
 5. Skip the workspace. Its rows are hidden and its items are excluded from the sidebar count, but **Include Workspace** remains reachable. Including it restores the rows without changing files.
 6. Change profile destinations. The picker offers only profile file destinations; workspace destinations stay unchanged. MCP destinations remain fixed at the workspace root `.mcp.json`.
 7. Complete a migration, then return to Migrations. Expand its activity entry and verify the source and actual destination paths. Only successful writes appear, including when another item fails.
-8. Close and reopen the editor and restart VS Code. Activity remains local to the profile and initiating workspace. Switching workspaces does not show another workspace's activity.
+8. Close and reopen the editor and restart tysh. Activity remains local to the profile and initiating workspace. Switching workspaces does not show another workspace's activity.
 9. Dismiss an activity entry. Its record disappears; migrated files remain untouched.
 10. Navigate with Tab and Shift+Tab, expand activity with Enter or Space, and open Accessibility Help and Accessible View. Focus returns to the invoking control on dismissal.
 11. Verify dark, light, high-contrast, and narrow layouts. No Chat Participants, agent verification, issue creation, or optional multi-root controls are present.

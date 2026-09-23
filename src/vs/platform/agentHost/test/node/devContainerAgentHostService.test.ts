@@ -98,7 +98,7 @@ class TestDevContainerAgentHostMainService extends DevContainerAgentHostMainServ
 			logService,
 			new class extends mock<IProductService>() {
 				override readonly quality = 'insider';
-				override readonly serverDataFolderName = '.vscode-server-oss';
+				override readonly serverDataFolderName = '.vscode-servertysh';
 				override readonly commit = undefined;
 			}(),
 			NullTelemetryService,
@@ -558,7 +558,7 @@ suite('Dev Container Agent Host Main Service', () => {
 				hostWorkspaceFolder: '/workspace',
 			},
 			devContainerArgs: [['up', '--log-level', 'debug', '--workspace-folder', '/workspace']],
-			relayCommand: '~/.vscode-server-oss/code-insiders --cli-data-dir ~/.vscode-server-oss/cli agent relay \'instance\' --user-data-dir \'/home/vscode/.config/Code\'',
+			relayCommand: '~/.vscode-servertysh/code-insiders --cli-data-dir ~/.vscode-servertysh/cli agent relay \'instance\' --user-data-dir \'/home/vscode/.config/Code\'',
 			sent: ['{"jsonrpc":"2.0"}'],
 			disposed: true,
 			output: ['connection:Starting Dev Container\n'],

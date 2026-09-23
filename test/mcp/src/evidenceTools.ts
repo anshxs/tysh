@@ -27,15 +27,15 @@ function isHttpUrl(value: string): boolean {
 export function applyEvidenceStartTool(server: McpServer, evidenceService: EvidenceService): RegisteredTool {
 	return server.tool(
 		'vscode_automation_evidence_start',
-		'Start VS Code with video and trace recording for a UI validation scenario',
+		'Start tysh with video and trace recording for a UI validation scenario',
 		{
 			scenarioId: z.string().describe('Stable scenario identifier'),
 			title: z.string().describe('Human-readable scenario title'),
 			source: z.string().url().refine(isHttpUrl, 'Source must use HTTP or HTTPS').optional().describe('Source test-plan issue URL'),
 			scenarioPath: z.string().optional().describe('Path to the Markdown scenario definition'),
 			workspacePath: z.string().optional().describe('Workspace or folder to open'),
-			userSettings: z.record(z.string(), jsonValueSchema).optional().describe('User settings to seed before VS Code starts'),
-			extraArgs: z.array(z.string()).optional().describe('Additional VS Code command-line arguments')
+			userSettings: z.record(z.string(), jsonValueSchema).optional().describe('User settings to seed before tysh starts'),
+			extraArgs: z.array(z.string()).optional().describe('Additional tysh command-line arguments')
 		},
 		async ({ scenarioId, title, source, scenarioPath, workspacePath, userSettings, extraArgs }) => {
 			const runPath = await evidenceService.start(scenarioId, title, source, scenarioPath, workspacePath, userSettings, extraArgs);
@@ -50,7 +50,7 @@ export function applyEvidenceTools(server: McpServer, evidenceService: EvidenceS
 	return [
 		server.tool(
 			'vscode_automation_evidence_step',
-			'Mark a scenario step in the video and save a screenshot of the current VS Code window',
+			'Mark a scenario step in the video and save a screenshot of the current tysh window',
 			{
 				id: z.string().describe('Stable step identifier from the scenario'),
 				title: z.string().describe('Human-readable step title'),
@@ -69,7 +69,7 @@ export function applyEvidenceTools(server: McpServer, evidenceService: EvidenceS
 		),
 		server.tool(
 			'vscode_automation_evidence_finish',
-			'Finish a UI validation scenario, stop VS Code, and write the evidence report',
+			'Finish a UI validation scenario, stop tysh, and write the evidence report',
 			{
 				outcome: z.enum(['passed', 'failed', 'aborted']).describe('Overall scenario outcome'),
 				notes: z.string().optional().describe('Run summary or blocking condition')

@@ -21,96 +21,96 @@ type DocumentationCodeBlockApiContext = BaseApiContext & { type: 'documentationC
 type ApiContext = CodeApiContext | CommandApiContext | DocumentationCodeBlockApiContext;
 
 export class ApiEmbeddingsIndex implements IApiEmbeddingsIndex {
-	declare readonly _serviceBrand: undefined;
-	private readonly embeddingsCache: IEmbeddingsCache;
-	private apiChunks: ApiContext[] | undefined;
+    declare readonly _serviceBrand: undefined;
+    private readonly embeddingsCache: IEmbeddingsCache;
+    private apiChunks: ApiContext[] | undefined;
 
-	constructor(
-		useRemoteCache: boolean = true,
-		@IEnvService envService: IEnvService,
-		@IInstantiationService instantiationService: IInstantiationService
-	) {
-		const cacheVersion = sanitizeVSCodeVersion(envService.getEditorInfo().version);
-		this.embeddingsCache = useRemoteCache ?
-			instantiationService.createInstance(RemoteEmbeddingsCache, EmbeddingCacheType.GLOBAL, 'api', cacheVersion, EmbeddingType.text3small_512, RemoteCacheType.Api) :
-			instantiationService.createInstance(LocalEmbeddingsCache, EmbeddingCacheType.GLOBAL, 'api', cacheVersion, EmbeddingType.text3small_512);
-	}
+    constructor(
+        useRemoteCache: boolean = true,
+        @IEnvService envService: IEnvService,
+        @IInstantiationService instantiationService: IInstantiationService
+    ) {
+        const cacheVersion = sanitizeVSCodeVersion(envService.getEditorInfo().version);
+        this.embeddingsCache = useRemoteCache ?
+            instantiationService.createInstance(RemoteEmbeddingsCache, EmbeddingCacheType.GLOBAL, 'api', cacheVersion, EmbeddingType.text3small_512, RemoteCacheType.Api) :
+            instantiationService.createInstance(LocalEmbeddingsCache, EmbeddingCacheType.GLOBAL, 'api', cacheVersion, EmbeddingType.text3small_512);
+    }
 
-	async updateIndex(): Promise<void> {
-		this.apiChunks = await this.embeddingsCache.getCache();
-	}
+    async updateIndex(): Promise<void> {
+        this.apiChunks = await this.embeddingsCache.getCache();
+    }
 
-	public nClosestValues(queryEmbedding: Embedding, n: number): string[] {
-		if (!this.apiChunks) {
-			return [];
-		}
+    public nClosestValues(queryEmbedding: Embedding, n: number): string[] {
+        if (!this.apiChunks) {
+            return [];
+        }
 
-		return rankEmbeddings(queryEmbedding, this.apiChunks.map(item => [item, { type: this.embeddingsCache.embeddingType, value: item.embedding } satisfies Embedding]), n)
-			.map(x => this.toContextString(x.value));
-	}
+        return rankEmbeddings(queryEmbedding, this.apiChunks.map(item => [item, { type: this.embeddingsCache.embeddingType, value: item.embedding } satisfies Embedding]), n)
+            .map(x => this.toContextString(x.value));
+    }
 
-	private toContextString(context: ApiContext): string {
-		if (context.type === 'code') {
-			return `API Reference Code Snippet from vscode.d.ts:\n${createFencedCodeBlock(context.lang, context.text)}`;
-		} else if (context.type === 'command') {
-			return `${context.text}`;
-		} else if (context.type === 'documentationCodeBlock') {
-			return `Example code from VS Code documentation:\n${createFencedCodeBlock(context.lang, context.text)}`;
-		}
+    private toContextString(context: ApiContext): string {
+        if (context.type === 'code') {
+            return `API Reference Code Snippet from vscode.d.ts:\n${createFencedCodeBlock(context.lang, context.text)}`;
+        } else if (context.type === 'command') {
+            return `${context.text}`;
+        } else if (context.type === 'documentationCodeBlock') {
+            return `Example code from tysh documentation:\n${createFencedCodeBlock(context.lang, context.text)}`;
+        }
 
-		return '';
-	}
+        return '';
+    }
 }
 
 export interface IApiEmbeddingsIndex {
-	readonly _serviceBrand: undefined;
+    readonly _serviceBrand: undefined;
 
-	updateIndex(): Promise<void>;
-	nClosestValues(embedding: Embedding, n: number): string[];
+    updateIndex(): Promise<void>;
+    nClosestValues(embedding: Embedding, n: number): string[];
 }
 
 export const IApiEmbeddingsIndex = createDecorator<IApiEmbeddingsIndex>('IApiEmbeddingsIndex');
 
 export interface VSCodeAPIContextProps extends BasePromptElementProps {
-	query: string;
+    query: string;
 }
 
 export class VSCodeAPIContextElement extends PromptElement<VSCodeAPIContextProps> {
-	constructor(
-		props: VSCodeAPIContextProps,
-		@IApiEmbeddingsIndex private readonly apiEmbeddingsIndex: IApiEmbeddingsIndex,
-		@IEmbeddingsComputer private readonly embeddingsComputer: IEmbeddingsComputer,
-	) {
-		super(props);
-	}
+    constructor(
+        props: VSCodeAPIContextProps,
+        @IApiEmbeddingsIndex private readonly apiEmbeddingsIndex: IApiEmbeddingsIndex,
+        @IEmbeddingsComputer private readonly embeddingsComputer: IEmbeddingsComputer,
+    ) {
+        super(props);
+    }
 
-	async renderAsString(): Promise<string> {
-		const snippets = await this.getSnippets(undefined);
-		return `Below are some potentially relevant code samples related to VS Code extension development. You may use information from these samples to help you answer the question if you believe it is relevant.\n${snippets.join('\n\n')}`;
-	}
+    async renderAsString(): Promise<string> {
+        const snippets = await this.getSnippets(undefined);
+        return `Below are some potentially relevant code samples related to tysh extension development. You may use information from these samples to help you answer the question if you believe it is relevant.\n${snippets.join('\n\n')}`;
+    }
 
-	private async getSnippets(token: CancellationToken | undefined): Promise<string[]> {
-		await this.apiEmbeddingsIndex.updateIndex();
-		if (token?.isCancellationRequested) {
-			return [];
-		}
+    private async getSnippets(token: CancellationToken | undefined): Promise<string[]> {
+        await this.apiEmbeddingsIndex.updateIndex();
+        if (token?.isCancellationRequested) {
+            return [];
+        }
 
-		const embeddingResult = await this.embeddingsComputer.computeEmbeddings(EmbeddingType.text3small_512, [this.props.query], {}, new TelemetryCorrelationId('VSCodeAPIContextElement::getSnippets'), token);
-		if (embeddingResult.values.length === 0) {
-			return [];
-		}
-		return this.apiEmbeddingsIndex.nClosestValues(embeddingResult.values[0], 5);
-	}
+        const embeddingResult = await this.embeddingsComputer.computeEmbeddings(EmbeddingType.text3small_512, [this.props.query], {}, new TelemetryCorrelationId('VSCodeAPIContextElement::getSnippets'), token);
+        if (embeddingResult.values.length === 0) {
+            return [];
+        }
+        return this.apiEmbeddingsIndex.nClosestValues(embeddingResult.values[0], 5);
+    }
 
-	override async render(state: undefined, sizing: PromptSizing, progress?: Progress<ChatResponsePart>, token?: CancellationToken): Promise<PromptPiece<any, any> | undefined> {
-		const snippets = await this.getSnippets(token);
-		if (snippets.length) {
-			return <>
-				Below are some potentially relevant code samples related to VS Code extension development. You may use information from these samples to help you answer the question if you believe it is relevant.<br />
-				{snippets.map(s => {
-					return <><TextChunk>{s}</TextChunk><br /><br /></>;
-				})}
-			</>;
-		}
-	}
+    override async render(state: undefined, sizing: PromptSizing, progress?: Progress<ChatResponsePart>, token?: CancellationToken): Promise<PromptPiece<any, any> | undefined> {
+        const snippets = await this.getSnippets(token);
+        if (snippets.length) {
+            return <>
+                Below are some potentially relevant code samples related to tysh extension development. You may use information from these samples to help you answer the question if you believe it is relevant.<br />
+                {snippets.map(s => {
+                    return <><TextChunk>{s}</TextChunk><br /><br /></>;
+                })}
+            </>;
+        }
+    }
 }

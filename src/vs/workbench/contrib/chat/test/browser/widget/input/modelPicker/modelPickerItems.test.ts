@@ -926,7 +926,7 @@ suite('buildModelPickerItems', () => {
 		// than collapsing them under the vendor display name.
 		const auto = createAutoModel();
 		const gpt41 = createModel('gpt-4.1', 'gpt-4.1', 'customoai');
-		const ossModel = createModel('openai.gpt-oss-120b', 'gpt-oss-120b', 'customoai');
+		const ossModel = createModel('openai.gpttysh-120b', 'gpttysh-120b', 'customoai');
 		const lmService = createLanguageModelsServiceStub([
 			{
 				vendor: 'customoai',
@@ -960,7 +960,7 @@ suite('buildModelPickerItems', () => {
 	test('promoted models show provider group name when groups disambiguate a single vendor (BYOK)', () => {
 		const auto = createAutoModel();
 		const gpt41 = createModel('gpt-4.1', 'gpt-4.1', 'customoai');
-		const ossModel = createModel('openai.gpt-oss-120b', 'gpt-oss-120b', 'customoai');
+		const ossModel = createModel('openai.gpttysh-120b', 'gpttysh-120b', 'customoai');
 		const lmService = createLanguageModelsServiceStub([
 			{
 				vendor: 'customoai',

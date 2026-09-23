@@ -223,6 +223,11 @@ export class ThemeRegistry<T extends IThemeData> implements IDisposable {
 			return resultingThemes;
 		}
 		themeContributions.forEach(theme => {
+			if (this.themesExtPoint.name === 'themes') {
+				if (extensionData.extensionName !== 'theme-defaults' || (theme.id !== 'White' && theme.id !== 'Black')) {
+					return;
+				}
+			}
 			if (!theme.path || !types.isString(theme.path)) {
 				log?.error(nls.localize(
 					'reqpath',
@@ -296,6 +301,9 @@ export class ThemeRegistry<T extends IThemeData> implements IDisposable {
 	}
 
 	public getMarketplaceThemes(manifest: any, extensionLocation: URI, extensionData: ExtensionData): T[] {
+		if (this.themesExtPoint.name === 'themes') {
+			return [];
+		}
 		const themes = manifest?.contributes?.[this.themesExtPoint.name];
 		if (Array.isArray(themes)) {
 			return this.onThemes(extensionData, extensionLocation, themes);

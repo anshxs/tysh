@@ -8,7 +8,7 @@
 	display: flex;
 	width: 100%;
 	padding: 4px 8px;
-	border-radius: 4px;
+	border-radius: 8px;
 	text-align: center;
 	cursor: pointer;
 	justify-content: center;
@@ -131,7 +131,8 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin: 4px 5px; /* allows button focus outline to be visible */
+	margin: 4px 5px;
+	/* allows button focus outline to be visible */
 }
 
 .monaco-description-button .monaco-button-description {
@@ -156,7 +157,7 @@
 /* default color styles - based on CSS variables */
 
 .monaco-button.default-colors,
-.monaco-button-dropdown.default-colors > .monaco-button{
+.monaco-button-dropdown.default-colors > .monaco-button {
 	color: var(--vscode-button-foreground);
 	background-color: var(--vscode-button-background);
 }

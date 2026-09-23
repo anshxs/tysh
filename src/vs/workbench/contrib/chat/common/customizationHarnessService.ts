@@ -306,7 +306,7 @@ export interface ICustomizationSyncProvider {
  * Service that manages the active customization harness and provides
  * per-type storage source filters based on the selected harness.
  *
- * The default (core) registration exposes a single "VS Code" harness
+ * The default (core) registration exposes a single "tysh" harness
  * that shows all storage sources. The sessions window overrides this
  * to provide CLI-scoped harnesses.
  */
@@ -367,7 +367,7 @@ export interface ICustomizationHarnessService {
 	/**
 	 * Returns the prompt and skill slash commands for the given session type.
 	 * Provider-backed harnesses contribute their own items directly; the default
-	 * VS Code harness falls back to the core prompts service.
+	 * tysh harness falls back to the core prompts service.
 	 *
 	 * @param sessionResource URI of the chat session whose customizations
 	 *   should be considered. Forwarded to the underlying
@@ -388,7 +388,7 @@ export interface ICustomizationHarnessService {
 
 	/**
 	 * Resolves a slash command to its full metadata, including the parsed prompt file for prompt commands.
-	 * Provider-backed harnesses resolve their own items directly; the default VS Code harness falls back to the core prompts service.
+	 * Provider-backed harnesses resolve their own items directly; the default tysh harness falls back to the core prompts service.
 	 *
 	 * @param sessionResource URI of the chat session whose customizations
 	 *   should be considered when looking up the slash command.
@@ -440,7 +440,7 @@ const EMPTY_DESCRIPTOR: IHarnessDescriptor = {
  */
 
 /**
- * Creates a "VS Code" harness descriptor that shows all storage sources
+ * Creates a "tysh" harness descriptor that shows all storage sources
  * with no user-root restrictions.
  */
 export function createVSCodeHarnessDescriptor(): IHarnessDescriptor {

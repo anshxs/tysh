@@ -157,13 +157,13 @@ mod tests {
 	fn serializes_connected_with_link_for_new_tunnel() {
 		assert_eq!(
 			status_line(&MachineStatus::Connected {
-				tunnel_name: "desktop-oss".to_string(),
+				tunnel_name: "desktoptysh".to_string(),
 				tunnel_id: Some("tunnel-id".to_string()),
 				is_attached: false,
-				link: Some("https://insiders.vscode.dev/tunnel/desktop-oss/c:/some/dir".to_string()),
+				link: Some("https://insiders.vscode.dev/tunnel/desktoptysh/c:/some/dir".to_string()),
 				domain: Some("insiders.vscode.dev".to_string()),
 			}),
-			"__VSCODE_CLI_STATUS__{\"type\":\"connected\",\"tunnelName\":\"desktop-oss\",\"tunnelId\":\"tunnel-id\",\"isAttached\":false,\"link\":\"https://insiders.vscode.dev/tunnel/desktop-oss/c:/some/dir\",\"domain\":\"insiders.vscode.dev\"}"
+			"__VSCODE_CLI_STATUS__{\"type\":\"connected\",\"tunnelName\":\"desktoptysh\",\"tunnelId\":\"tunnel-id\",\"isAttached\":false,\"link\":\"https://insiders.vscode.dev/tunnel/desktoptysh/c:/some/dir\",\"domain\":\"insiders.vscode.dev\"}"
 		);
 	}
 
@@ -171,13 +171,13 @@ mod tests {
 	fn serializes_connected_without_link_for_attached_tunnel() {
 		assert_eq!(
 			status_line(&MachineStatus::Connected {
-				tunnel_name: "desktop-oss".to_string(),
+				tunnel_name: "desktoptysh".to_string(),
 				tunnel_id: None,
 				is_attached: true,
 				link: None,
 				domain: None,
 			}),
-			"__VSCODE_CLI_STATUS__{\"type\":\"connected\",\"tunnelName\":\"desktop-oss\",\"isAttached\":true}"
+			"__VSCODE_CLI_STATUS__{\"type\":\"connected\",\"tunnelName\":\"desktoptysh\",\"isAttached\":true}"
 		);
 	}
 

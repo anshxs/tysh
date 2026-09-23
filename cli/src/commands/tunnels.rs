@@ -151,7 +151,7 @@ pub async fn command_shell(ctx: CommandContext, args: CommandShellArgs) -> Resul
 	}
 
 	// The supervisor is what lets the renderer reach the agent host via
-	// the `agentHostProxy` IPC channel on the spawned VS Code server. This
+	// the `agentHostProxy` IPC channel on the spawned tysh server. This
 	// future is genuinely lazy, exactly like the one built in
 	// `control_server::serve()`: nothing drives it here — a
 	// `command-shell` that nobody connects to must not spawn a standalone

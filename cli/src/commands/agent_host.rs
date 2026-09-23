@@ -65,7 +65,7 @@ const SUPERVISOR_READY_TIMEOUT: Duration = Duration::from_secs(5 * 60);
 ///
 /// * **Supervisor** (when [`SUPERVISOR_ENV`] is set): binds the public TCP
 ///   listener, publishes a registry entry recording this process's PID +
-///   port, runs the proxy accept loop, and manages the underlying VS Code
+///   port, runs the proxy accept loop, and manages the underlying tysh
 ///   server as a regular child process so the supervisor can kill+respawn
 ///   it on update.
 pub async fn agent_host(ctx: CommandContext, args: AgentHostArgs) -> Result<i32, AnyError> {
@@ -925,7 +925,7 @@ impl ActiveAgentHost {
 	}
 
 	/// Populate the `--agent-host-bridge-*` fields on a [`CodeServerArgs`]
-	/// so the spawned VS Code server's `agentHostProxy` channel dials this
+	/// so the spawned tysh server's `agentHostProxy` channel dials this
 	/// supervisor. Uses [`dial_host`] for the host so a supervisor bound
 	/// to a wildcard (`0.0.0.0` / `::`) is reached via loopback rather
 	/// than the wildcard itself.

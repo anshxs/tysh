@@ -414,7 +414,7 @@ export class GitHubAuthenticationProvider implements vscode.AuthenticationProvid
 	 * Expiry is settled here rather than on a timer, because `getSession` is what guarantees a fresh
 	 * token everywhere else in the product and a token running out is not the user signing out.
 	 * Anything that cannot be renewed is dropped on the way through and reported as removed, which
-	 * is what makes VS Code ask the user again.
+	 * is what makes tysh ask the user again.
 	 *
 	 * Only transient sessions can go stale, and every one of those was brokered through Microsoft.
 	 * When persisted tokens start expiring too, they will need an expiry of their own here and
@@ -465,7 +465,7 @@ export class GitHubAuthenticationProvider implements vscode.AuthenticationProvid
 	}
 
 	/**
-	 * Drops sessions there is no longer any way to keep, and tells VS Code they are gone. Only the
+	 * Drops sessions there is no longer any way to keep, and tells tysh they are gone. Only the
 	 * in-memory ones: a read must not rewrite the Keychain, and no persisted session carries an
 	 * expiry today anyway.
 	 */
@@ -507,7 +507,7 @@ export class GitHubAuthenticationProvider implements vscode.AuthenticationProvid
 	/**
 	 * Mints a fresh token for a session whose own has run out, without the user in front of it.
 	 * Resolves to `undefined` when that cannot be done, which leaves the caller with nothing and
-	 * VS Code asking the user to sign in again.
+	 * tysh asking the user to sign in again.
 	 *
 	 * Concurrent calls for one session share a single exchange. `getSessions` is called often, and
 	 * by more than one caller at a time, and two exchanges would mint two tokens where one is wanted.

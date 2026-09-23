@@ -2115,7 +2115,7 @@ export class SSHRemoteAgentHostMainService extends Disposable implements ISSHRem
 	}
 
 	private get _serverDataFolderName(): string {
-		return this._productService.serverDataFolderName ?? '.vscode-server-oss';
+		return this._productService.serverDataFolderName ?? '.vscode-servertysh';
 	}
 
 	private get _commit(): string | undefined {
@@ -2172,7 +2172,7 @@ export class SSHRemoteAgentHostMainService extends Disposable implements ISSHRem
 			serverDataFolderName: this._serverDataFolderName,
 			quality: this._quality,
 			commit: this._commit,
-			reportInstalling: () => reportProgress(localize('sshProgressDownloadingCLI', "Installing VS Code CLI on remote...")),
+			reportInstalling: () => reportProgress(localize('sshProgressDownloadingCLI', "Installing tysh CLI on remote...")),
 			logService: this._logService,
 			logPrefix: LOG_PREFIX,
 		});

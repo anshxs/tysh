@@ -501,7 +501,7 @@ suite('aiCustomizationListWidget', () => {
 
 		test('extracts extension ID from Code OSS dev path', () => {
 			assert.strictEqual(
-				extractExtensionIdFromPath('/Users/josh/.vscode-oss-dev/extensions/github.copilot-chat-0.43.2026040602/assets/prompts/skills/troubleshoot/SKILL.md'),
+				extractExtensionIdFromPath('/Users/josh/.tysh/extensions/github.copilot-chat-0.43.2026040602/assets/prompts/skills/troubleshoot/SKILL.md'),
 				'github.copilot-chat'
 			);
 		});
@@ -543,7 +543,7 @@ suite('aiCustomizationListWidget', () => {
 
 		test('extracts extension ID from User/globalStorage path (Copilot Chat ask agent)', () => {
 			assert.strictEqual(
-				extractExtensionIdFromPath('/Users/josh/.vscode-oss-dev/User/globalStorage/github.copilot-chat/ask-agent/Ask.agent.md'),
+				extractExtensionIdFromPath('/Users/josh/.tysh/User/globalStorage/github.copilot-chat/ask-agent/Ask.agent.md'),
 				'github.copilot-chat'
 			);
 		});
@@ -558,7 +558,7 @@ suite('aiCustomizationListWidget', () => {
 		test('returns undefined for non-extension entries in globalStorage', () => {
 			// e.g. `state.vscdb` or other workspace storage that lacks a publisher.name pattern
 			assert.strictEqual(
-				extractExtensionIdFromPath('/Users/josh/.vscode-oss-dev/User/globalStorage/state.vscdb'),
+				extractExtensionIdFromPath('/Users/josh/.tysh/User/globalStorage/state.vscdb'),
 				undefined
 			);
 		});

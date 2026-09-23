@@ -695,13 +695,13 @@ export class AgentHostStateManager extends Disposable {
 		return entry ? this._isIdleProvisional(session, entry.state.lifecycle) : false;
 	}
 
-	/** Whether the session is owned by a throwaway VS Code chat surface. */
+	/** Whether the session is owned by a throwaway tysh chat surface. */
 	isEphemeralSession(session: string): boolean {
 		const entry = this._sessionStates.get(session);
 		return entry ? readEphemeralSessionMeta(entry.state).isEphemeral === true : false;
 	}
 
-	/** Returns the typed VS Code surface metadata for a tracked session, when present. */
+	/** Returns the typed tysh surface metadata for a tracked session, when present. */
 	getSessionSurfaceMeta(session: string): IChatSurfaceMeta | undefined {
 		const entry = this._sessionStates.get(session);
 		return entry ? readChatSurfaceMeta(entry.state) : undefined;
@@ -1170,7 +1170,7 @@ export class AgentHostStateManager extends Disposable {
 
 	/**
 	 * Creates the default {@link ChatState} for a session and records it as
-	 * the session's single chat. VS Code models every session as having
+	 * the session's single chat. tysh models every session as having
 	 * exactly one chat — its default chat — whose URI is derived
 	 * deterministically from the session URI. The chat is seeded with any
 	 * pre-populated `turns` (used by {@link restoreSession}).
@@ -1645,7 +1645,7 @@ export class AgentHostStateManager extends Disposable {
 	 * producer to re-create the changeset on next subscribe.
 	 *
 	 * Per the spec, the server SHOULD also unsubscribe its clients after
-	 * dispatching this action; for VS Code-internal clients that happens
+	 * dispatching this action; for tysh-internal clients that happens
 	 * via the `notify/sessionRemoved` notification, which the workbench-side
 	 * provider correlates to release any held subscriptions.
 	 *
@@ -2027,7 +2027,7 @@ export class AgentHostStateManager extends Disposable {
 	 * Bridges a default-chat state transition back onto its owning session.
 	 *
 	 * The protocol moved turn lifecycle (and therefore the derived
-	 * activity status) onto the chat channel. To preserve VS Code's
+	 * activity status) onto the chat channel. To preserve tysh's
 	 * single-chat behaviour we:
 	 *  - track active-turn transitions (driving `RootActiveSessionsChanged`
 	 *    and `hasActiveSessions`, which gate `--enable-remote-auto-shutdown`),

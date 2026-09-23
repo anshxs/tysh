@@ -37,7 +37,7 @@ The Sessions layer direction remains defined by [LAYERS.md](LAYERS.md). Non-prov
 |---|---|
 | Unified Automation catalogue exposed to UI and tools | `ProviderAutomationService` |
 | Selection of the store for a create, update, run, or delete | `ProviderAutomationService` |
-| Legacy VS Code definitions, runs, and compare-and-swap persistence | `AutomationStore` |
+| Legacy tysh definitions, runs, and compare-and-swap persistence | `AutomationStore` |
 | Connection and capability transitions for one Agent Host provider | `ReconnectableAgentHostAutomationStore` |
 | Projection between AHP state and provider-neutral Automation objects | `AgentHostAutomationStore` |
 | Import of one provider's legacy definitions into its Agent Host | `AgentHostAutomationStore` |
@@ -111,9 +111,9 @@ Provider stores map their connection and persistence lifecycle into this provide
 
 ## Multi-host routing
 
-VS Code may register one local Agent Host provider and multiple remote Agent Host providers at the same time. A remote connection has its own provider identity, Automation store, AHP catalogue, and migration state.
+tysh may register one local Agent Host provider and multiple remote Agent Host providers at the same time. A remote connection has its own provider identity, Automation store, AHP catalogue, and migration state.
 
-The AHP Automation catalogue is singleton within one Agent Host. It is not shared across every host connected to a VS Code window.
+The AHP Automation catalogue is singleton within one Agent Host. It is not shared across every host connected to a tysh window.
 
 ### Create routing
 

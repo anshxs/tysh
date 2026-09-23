@@ -167,7 +167,7 @@ export interface IAgentHostSessionsProvider extends ISessionsProvider {
 	/**
 	 * Kind-scoped auto-start policy surfaced on the recovery screen. Present
 	 * on remote providers whose host can be started locally; omitted where
-	 * starting is not something VS Code can do.
+	 * starting is not something tysh can do.
 	 */
 	readonly autoConnect?: IAgentHostAutoConnect;
 

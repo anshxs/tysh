@@ -29,7 +29,7 @@
 	background: var(--vscode-toolbar-hoverBackground, transparent);
 }
 
-/* VS Code gates motion with `.monaco-enable-motion`; disable the cell slide/fade when it's off. */
+/* tysh gates motion with `.monaco-enable-motion`; disable the cell slide/fade when it's off. */
 .monaco-workbench:not(.monaco-enable-motion) .chat-voice-input-mode-cell {
 	transition: none;
 }
@@ -154,10 +154,21 @@
 }
 
 /* Exact stroke heights from the compact codicon. */
-.chat-voice-input-mode-bar:nth-child(1) { height: 6px; }
-.chat-voice-input-mode-bar:nth-child(2) { height: 12px; }
-.chat-voice-input-mode-bar:nth-child(3) { height: 8px; }
-.chat-voice-input-mode-bar:nth-child(4) { height: 4px; }
+.chat-voice-input-mode-bar:nth-child(1) {
+	height: 6px;
+}
+
+.chat-voice-input-mode-bar:nth-child(2) {
+	height: 12px;
+}
+
+.chat-voice-input-mode-bar:nth-child(3) {
+	height: 8px;
+}
+
+.chat-voice-input-mode-bar:nth-child(4) {
+	height: 4px;
+}
 
 /* Hover while connected → preview disconnect: collapse to a short, even, "silent" row (no waveform, no motion). The height transition makes leaving the hover grow the bars smoothly back into the active waveform. */
 .chat-voice-input-mode-cell.voice.on:hover .chat-voice-input-mode-bar,
@@ -170,32 +181,70 @@
 .monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.idle-on:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar {
 	animation: chat-voice-input-mode-wave 2.6s ease-in-out infinite;
 }
-.monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.idle-on:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(1) { animation-delay: 0s; }
-.monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.idle-on:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(2) { animation-delay: -0.34s; }
-.monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.idle-on:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(3) { animation-delay: -0.68s; }
-.monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.idle-on:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(4) { animation-delay: -1.02s; }
+
+.monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.idle-on:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(1) {
+	animation-delay: 0s;
+}
+
+.monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.idle-on:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(2) {
+	animation-delay: -0.34s;
+}
+
+.monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.idle-on:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(3) {
+	animation-delay: -0.68s;
+}
+
+.monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.idle-on:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(4) {
+	animation-delay: -1.02s;
+}
 
 /* Listening / speaking → energetic equalizer. JS overrides heights when an audio analyser is available; this is the fallback (and covers the moment before capture). */
 .monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.listening:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar,
 .monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.speaking:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar {
 	animation: chat-voice-input-mode-eq 0.85s ease-in-out infinite;
 }
+
 .monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.listening:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(1),
-.monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.speaking:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(1) { animation-delay: 0s; }
+.monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.speaking:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(1) {
+	animation-delay: 0s;
+}
+
 .monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.listening:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(2),
-.monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.speaking:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(2) { animation-delay: 0.12s; }
+.monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.speaking:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(2) {
+	animation-delay: 0.12s;
+}
+
 .monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.listening:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(3),
-.monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.speaking:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(3) { animation-delay: 0.24s; }
+.monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.speaking:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(3) {
+	animation-delay: 0.24s;
+}
+
 .monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.listening:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(4),
-.monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.speaking:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(4) { animation-delay: 0.36s; }
+.monaco-workbench.monaco-enable-motion .chat-voice-input-mode-cell.voice.speaking:not(:hover):not(.sim-hover) .chat-voice-input-mode-bar:nth-child(4) {
+	animation-delay: 0.36s;
+}
 
 /* Undulating idle wave: gentle centered height ripple (bars scale from their center, so they grow/shrink in place rather than moving up or down). */
 @keyframes chat-voice-input-mode-wave {
-	0%, 100% { transform: scaleY(0.72); }
-	50% { transform: scaleY(1); }
+
+	0%,
+	100% {
+		transform: scaleY(0.72);
+	}
+
+	50% {
+		transform: scaleY(1);
+	}
 }
 
 @keyframes chat-voice-input-mode-eq {
-	0%, 100% { height: 2px; }
-	50% { height: 12px; }
+
+	0%,
+	100% {
+		height: 2px;
+	}
+
+	50% {
+		height: 12px;
+	}
 }

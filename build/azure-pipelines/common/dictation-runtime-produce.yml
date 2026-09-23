@@ -6,7 +6,7 @@ parameters:
       - linux
       - win32
 
-# Produces the dictation-runtime for ONE VS Code build:
+# Produces the dictation-runtime for ONE tysh build:
 #   - STAMP: writes the (target-agnostic) product.dictationRuntime results file
 #     and emits `##vso[task.setvariable variable=DICTATION_RUNTIME_RESULTS_FILE]`
 #     on EVERY build that can host dictation, so the downstream gulp packaging

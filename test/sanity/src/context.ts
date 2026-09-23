@@ -83,7 +83,7 @@ const targetArtifacts: Readonly<Record<string, string>> = {
 };
 
 /**
- * Provides context and utilities for VS Code sanity tests.
+ * Provides context and utilities for tysh sanity tests.
  */
 export class TestContext {
 	private static readonly authenticodeInclude = /^.+\.(exe|dll|sys|cab|cat|msi|jar|ocx|ps1|psm1|psd1|ps1xml|pssc1)$/i;
@@ -391,7 +391,7 @@ export class TestContext {
 	}
 
 	/**
-	 * Fetches metadata for a specific VS Code release target.
+	 * Fetches metadata for a specific tysh release target.
 	 * @param target The target platform (e.g., 'cli-linux-x64').
 	 * @returns The target metadata.
 	 */
@@ -411,7 +411,7 @@ export class TestContext {
 	}
 
 	/**
-	 * Downloads installer for specified VS Code release target.
+	 * Downloads installer for specified tysh release target.
 	 * @param target The target platform (e.g., 'cli-linux-x64').
 	 * @returns The path to the downloaded file.
 	 */
@@ -736,7 +736,7 @@ export class TestContext {
 	}
 
 	/**
-	 * Downloads and unpacks the specified VS Code release target.
+	 * Downloads and unpacks the specified tysh release target.
 	 * @param target The target platform (e.g., 'cli-linux-x64').
 	 * @returns The path to the unpacked directory.
 	 */
@@ -889,9 +889,9 @@ export class TestContext {
 	}
 
 	/**
-	 * Returns the Windows installation directory for VS Code based on the installation type and quality.
+	 * Returns the Windows installation directory for tysh based on the installation type and quality.
 	 * @param type The type of installation ('user' or 'system').
-	 * @returns The path to the VS Code installation directory.
+	 * @returns The path to the tysh installation directory.
 	 */
 	private getWindowsInstallDir(type: 'user' | 'system'): string {
 		let parentDir: string;
@@ -903,18 +903,18 @@ export class TestContext {
 
 		switch (this.options.quality) {
 			case 'stable':
-				return path.join(parentDir, 'Microsoft VS Code');
+				return path.join(parentDir, 'Microsoft tysh');
 			case 'insider':
-				return path.join(parentDir, 'Microsoft VS Code Insiders');
+				return path.join(parentDir, 'Microsoft tysh Insiders');
 			case 'exploration':
-				return path.join(parentDir, 'Microsoft VS Code Exploration');
+				return path.join(parentDir, 'Microsoft tysh Exploration');
 		}
 	}
 
 	/**
 	 * Installs a Microsoft Installer package silently.
 	 * @param installerPath The path to the installer executable.
-	 * @returns The path to the installed VS Code executable.
+	 * @returns The path to the installed tysh executable.
 	 */
 	public installWindowsApp(type: 'user' | 'system', installerPath: string): string {
 		this.log(`Installing ${installerPath} in silent mode`);
@@ -939,7 +939,7 @@ export class TestContext {
 			this.error(`Desktop entry point does not exist: ${entryPoint}`);
 		}
 
-		this.log(`Installed VS Code executable at: ${entryPoint}`);
+		this.log(`Installed tysh executable at: ${entryPoint}`);
 		return entryPoint;
 	}
 
@@ -954,9 +954,9 @@ export class TestContext {
 			this.error(`Uninstaller does not exist: ${uninstallerPath}`);
 		}
 
-		this.log(`Uninstalling VS Code from ${appDir} in silent mode`);
+		this.log(`Uninstalling tysh from ${appDir} in silent mode`);
 		this.runNoErrors(uninstallerPath, '/silent');
-		this.log(`Uninstalled VS Code from ${appDir} successfully`);
+		this.log(`Uninstalled tysh from ${appDir} successfully`);
 
 		await this.timeout(2000);
 		if (fs.existsSync(appDir)) {
@@ -968,9 +968,9 @@ export class TestContext {
 	}
 
 	/**
-	 * Installs VS Code Linux DEB package.
+	 * Installs tysh Linux DEB package.
 	 * @param packagePath The path to the DEB file.
-	 * @returns The path to the installed VS Code executable.
+	 * @returns The path to the installed tysh executable.
 	 */
 	public async installDeb(packagePath: string): Promise<string> {
 		const name = this.getLinuxBinaryName();
@@ -983,12 +983,12 @@ export class TestContext {
 		await this.runDpkgNoErrors('-i', packagePath);
 		this.log(`Installed ${packagePath} successfully`);
 
-		this.log(`Installed VS Code executable at: ${entryPoint}`);
+		this.log(`Installed tysh executable at: ${entryPoint}`);
 		return entryPoint;
 	}
 
 	/**
-	 * Uninstalls VS Code Linux DEB package. Safe to call when the package is not
+	 * Uninstalls tysh Linux DEB package. Safe to call when the package is not
 	 * installed (no-op) so that test cleanup in a `finally` block is always safe.
 	 */
 	public async uninstallDeb() {
@@ -1011,9 +1011,9 @@ export class TestContext {
 	}
 
 	/**
-	 * Installs VS Code Linux RPM package.
+	 * Installs tysh Linux RPM package.
 	 * @param packagePath The path to the RPM file.
-	 * @returns The path to the installed VS Code executable.
+	 * @returns The path to the installed tysh executable.
 	 */
 	public installRpm(packagePath: string): string {
 		const name = this.getLinuxBinaryName();
@@ -1027,12 +1027,12 @@ export class TestContext {
 		this.log(`Installed ${packagePath} successfully`);
 
 		const entryPoint = path.join('/usr/share', name, name);
-		this.log(`Installed VS Code executable at: ${entryPoint}`);
+		this.log(`Installed tysh executable at: ${entryPoint}`);
 		return entryPoint;
 	}
 
 	/**
-	 * Uninstalls VS Code Linux RPM package. Safe to call when the package is not
+	 * Uninstalls tysh Linux RPM package. Safe to call when the package is not
 	 * installed (no-op) so that test cleanup in a `finally` block is always safe.
 	 */
 	public async uninstallRpm() {
@@ -1055,9 +1055,9 @@ export class TestContext {
 	}
 
 	/**
-	 * Installs VS Code Linux Snap package.
+	 * Installs tysh Linux Snap package.
 	 * @param packagePath The path to the Snap file.
-	 * @returns The path to the installed VS Code executable.
+	 * @returns The path to the installed tysh executable.
 	 */
 	public installSnap(packagePath: string): string {
 		const name = this.getLinuxBinaryName();
@@ -1072,12 +1072,12 @@ export class TestContext {
 
 		// Snap wrapper scripts are in /snap/bin, but actual Electron binary is in /snap/<package>/current/usr/share/
 		const entryPoint = `/snap/${name}/current/usr/share/${name}/${name}`;
-		this.log(`Installed VS Code executable at: ${entryPoint}`);
+		this.log(`Installed tysh executable at: ${entryPoint}`);
 		return entryPoint;
 	}
 
 	/**
-	 * Uninstalls VS Code Linux Snap package. Safe to call when the package is not
+	 * Uninstalls tysh Linux Snap package. Safe to call when the package is not
 	 * installed (no-op) so that test cleanup in a `finally` block is always safe.
 	 */
 	public async uninstallSnap() {
@@ -1114,8 +1114,8 @@ export class TestContext {
 	}
 
 	/**
-	 * Returns the entry point executable for the VS Code Desktop installation in the specified directory.
-	 * @param dir The directory of the VS Code installation.
+	 * Returns the entry point executable for the tysh Desktop installation in the specified directory.
+	 * @param dir The directory of the tysh installation.
 	 * @returns The path to the entry point executable.
 	 */
 	public getDesktopEntryPoint(dir: string): string {
@@ -1184,7 +1184,7 @@ export class TestContext {
 	}
 
 	/**
-	 * Returns the entry point executable for the VS Code CLI in the specified directory.
+	 * Returns the entry point executable for the tysh CLI in the specified directory.
 	 * @param dir The directory containing unpacked CLI files.
 	 * @returns The path to the CLI entry point executable.
 	 */
@@ -1215,7 +1215,7 @@ export class TestContext {
 	}
 
 	/**
-	 * Returns the entry point executable for the VS Code server in the specified directory.
+	 * Returns the entry point executable for the tysh server in the specified directory.
 	 * @param dir The directory containing unpacked server files.
 	 * @param forWsl If true, returns the Linux entry point (for running in WSL on Windows).
 	 * @returns The path to the server entry point executable.
@@ -1258,8 +1258,8 @@ export class TestContext {
 	}
 
 	/**
-	 * Creates a portable data directory in the specified unpacked VS Code directory.
-	 * @param dir The directory where VS Code was unpacked.
+	 * Creates a portable data directory in the specified unpacked tysh directory.
+	 * @param dir The directory where tysh was unpacked.
 	 * @returns The path to the created portable data directory.
 	 */
 	public createPortableDataDir(dir: string): string {
@@ -1407,7 +1407,7 @@ export class TestContext {
 	}
 
 	/**
-	 * Returns the tunnel URL for the VS Code server.
+	 * Returns the tunnel URL for the tysh server.
 	 * @param baseUrl The base URL for *vscode.dev/tunnel connection.
 	 * @param workspaceDir Optional folder path to open
 	 * @returns The tunnel URL with folder in pathname.
@@ -1460,7 +1460,7 @@ export class TestContext {
 	}
 
 	/**
-	 * Runs a VS Code command-line application (such as server or CLI).
+	 * Runs a tysh command-line application (such as server or CLI).
 	 * @param name The name of the app as it will appear in logs.
 	 * @param command Command to run.
 	 * @param args Arguments for the command.

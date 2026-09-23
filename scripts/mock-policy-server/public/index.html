@@ -85,7 +85,7 @@
 						<div class="method-copy">
 							<h3>System proxy</h3>
 							<span class="method-recommendation">Any HTTPS rewriting proxy works. <a href="https://proxyman.com/" target="_blank" rel="noopener noreferrer">Proxyman</a> is recommended.</span>
-							<p class="method-description">Routes policy requests from VS Code, Copilot CLI, and SDK clients to this server.</p>
+							<p class="method-description">Routes policy requests from tysh, Copilot CLI, and SDK clients to this server.</p>
 						</div>
 						<div class="method-status">
 							<div id="proxy-status" class="status-pill" data-state="checking" role="status" aria-live="polite">Checking…</div>
@@ -135,9 +135,9 @@
 										</div>
 									</details>
 									<div class="required-setting">
-										<p><strong>Required for VS Code:</strong> add this property inside the client's <code>settings.json</code>.</p>
+										<p><strong>Required for tysh:</strong> add this property inside the client's <code>settings.json</code>.</p>
 										<div class="code-field">
-											<span class="label-small">VS Code settings.json property</span>
+											<span class="label-small">tysh settings.json property</span>
 											<code id="proxy-settings" class="block settings-json"></code>
 										</div>
 										<button id="copy-proxy-settings" type="button" class="btn-secondary">Copy Setting Property</button>
@@ -147,7 +147,7 @@
 							<li>
 								<div class="step-number" aria-hidden="true">2</div>
 								<div class="step-content">
-									<h4>Request fresh policy in VS Code</h4>
+									<h4>Request fresh policy in tysh</h4>
 									<p>Run <code>&gt; Developer: Sync Account Policy</code>. For Local Agent Host, also run <code>&gt; Developer: Restart Local Agent Host</code>.</p>
 									<p class="helper-text">If no request appears under Live Requests on the Policies page, open Troubleshooting in the right sidebar, clear the SDK policy cache for your platform, and then run the commands again.</p>
 								</div>
@@ -209,7 +209,7 @@
 								<div class="step-number" aria-hidden="true">2</div>
 								<div class="step-content">
 									<h4>Reload the client</h4>
-									<p>Restart the client so it loads the file, or in VS Code run <code>&gt; Developer: Sync Account Policy</code>. File-based settings persist across accounts and don't expire like the SDK policy cache.</p>
+									<p>Restart the client so it loads the file, or in tysh run <code>&gt; Developer: Sync Account Policy</code>. File-based settings persist across accounts and don't expire like the SDK policy cache.</p>
 									<p class="helper-text">Use this to avoid proxying entirely, or deploy it alongside a server-managed response to test precedence. <a href="https://docs.github.com/en/copilot/how-tos/administer-copilot/manage-for-enterprise/manage-agents/configure-enterprise-managed-settings#deploying-file-based-settings" target="_blank" rel="noopener">Deploying file-based settings</a></p>
 								</div>
 							</li>
@@ -328,7 +328,7 @@
 									<button type="button" class="info-button" aria-label="About the SDK policy cache"
 										aria-describedby="policy-cache-tooltip">i</button>
 									<div id="policy-cache-tooltip" class="info-tooltip" role="tooltip">
-										The Copilot SDK maintains its own managed-settings cache outside of VS Code. If a client keeps using stale policy or no policy request appears in Live Requests, run the command for its platform to delete that SDK cache file, then request policy again. These commands do not delete VS Code settings or the deployed <code>managed-settings.json</code> file.
+										The Copilot SDK maintains its own managed-settings cache outside of tysh. If a client keeps using stale policy or no policy request appears in Live Requests, run the command for its platform to delete that SDK cache file, then request policy again. These commands do not delete tysh settings or the deployed <code>managed-settings.json</code> file.
 									</div>
 								</div>
 							</div>

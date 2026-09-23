@@ -63,10 +63,10 @@ const themingRegistry = Registry.as<IThemingRegistry>(ThemingExtensions.ThemingC
 function validateThemeId(theme: string): string {
 	// migrations
 	switch (theme) {
-		case ThemeTypeSelector.VS: return `vs ${defaultThemeExtensionId}-themes-light_vs-json`;
-		case ThemeTypeSelector.VS_DARK: return `vs-dark ${defaultThemeExtensionId}-themes-dark_vs-json`;
-		case ThemeTypeSelector.HC_BLACK: return `hc-black ${defaultThemeExtensionId}-themes-hc_black-json`;
-		case ThemeTypeSelector.HC_LIGHT: return `hc-light ${defaultThemeExtensionId}-themes-hc_light-json`;
+		case ThemeTypeSelector.VS: return `vs ${defaultThemeExtensionId}-themes-white-json`;
+		case ThemeTypeSelector.VS_DARK: return `vs-dark ${defaultThemeExtensionId}-themes-black-json`;
+		case ThemeTypeSelector.HC_BLACK: return `vs-dark ${defaultThemeExtensionId}-themes-black-json`;
+		case ThemeTypeSelector.HC_LIGHT: return `vs ${defaultThemeExtensionId}-themes-white-json`;
 	}
 	return theme;
 }
@@ -280,7 +280,7 @@ export class WorkbenchThemeService extends Disposable implements IWorkbenchTheme
 		const keepTheme = await new Promise(resolve => {
 			this.notificationService.prompt(
 				Severity.Info,
-				nls.localize({ key: 'themeUpdatedNotification', comment: ['{0} is the name of the new default theme'] }, "VS Code has a new default theme: '{0}'.", this.getColorTheme().label),
+				nls.localize({ key: 'themeUpdatedNotification', comment: ['{0} is the name of the new default theme'] }, "tysh has a new default theme: '{0}'.", this.getColorTheme().label),
 				[
 					toAction({
 						id: 'themeUpdated.tryItOut',

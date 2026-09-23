@@ -515,7 +515,7 @@ ${this.description}
 		}
 
 		if (this.type === ExtensionType.System) {
-			return Promise.resolve(`Please check the [VS Code Release Notes](command:${ShowCurrentReleaseNotesActionId}) for changes to the built-in extensions.`);
+			return Promise.resolve(`Please check the [tysh Release Notes](command:${ShowCurrentReleaseNotesActionId}) for changes to the built-in extensions.`);
 		}
 
 		return Promise.reject(new Error('not available'));
@@ -2575,6 +2575,10 @@ export class ExtensionsWorkbenchService extends Disposable implements IExtension
 
 		if (extension.deprecationInfo?.disallowInstall) {
 			return new MarkdownString().appendText(nls.localize('disallowed', "This extension is disallowed to be installed."));
+		}
+
+		if (extension.gallery?.categories?.some(c => c.toLowerCase() === 'themes') || extension.gallery?.tags?.some(t => t.toLowerCase() === 'theme')) {
+			return new MarkdownString(nls.localize('themeInstallBlocked', "Theme extensions cannot be installed."));
 		}
 
 		if (extension.gallery) {

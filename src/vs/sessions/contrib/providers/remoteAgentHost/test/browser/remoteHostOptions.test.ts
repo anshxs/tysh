@@ -266,7 +266,7 @@ suite('remoteHostOptions', () => {
 			await changeRemoteAgentHostLocationPreference({
 				preferenceKey: 'ssh:my-host-alias',
 				hostLabel: 'my-host-alias',
-				productName: 'Code - OSS',
+				productName: 'TYSH',
 				provider: provider as IAgentHostSessionsProvider,
 				dialogService,
 				locationPreferenceService: trackedLocationPreferenceService,
@@ -298,7 +298,7 @@ suite('remoteHostOptions', () => {
 			await changeRemoteAgentHostLocationPreference({
 				preferenceKey: 'ssh:my-host-alias',
 				hostLabel: 'my-host-alias',
-				productName: 'Code - OSS',
+				productName: 'TYSH',
 				provider: provider as IAgentHostSessionsProvider,
 				dialogService,
 				locationPreferenceService,
@@ -327,7 +327,7 @@ suite('remoteHostOptions', () => {
 			await changeRemoteAgentHostLocationPreference({
 				preferenceKey: 'tunnel:abc123',
 				hostLabel: 'My Tunnel',
-				productName: 'Code - OSS',
+				productName: 'TYSH',
 				provider: provider as IAgentHostSessionsProvider,
 				dialogService,
 				locationPreferenceService,
@@ -355,7 +355,7 @@ suite('remoteHostOptions', () => {
 			await changeRemoteAgentHostLocationPreference({
 				preferenceKey: 'ssh:my-host-alias',
 				hostLabel: 'my-host-alias',
-				productName: 'Code - OSS',
+				productName: 'TYSH',
 				provider: provider as IAgentHostSessionsProvider,
 				dialogService,
 				locationPreferenceService,
@@ -386,7 +386,7 @@ suite('remoteHostOptions', () => {
 			await changeRemoteAgentHostLocationPreference({
 				preferenceKey: 'ssh:my-host-alias',
 				hostLabel: 'my-host-alias',
-				productName: 'Code - OSS',
+				productName: 'TYSH',
 				provider: provider as IAgentHostSessionsProvider,
 				dialogService,
 				locationPreferenceService,
@@ -413,7 +413,7 @@ suite('remoteHostOptions', () => {
 			await changeRemoteAgentHostLocationPreference({
 				preferenceKey: 'ssh:my-host-alias',
 				hostLabel: 'my-host-alias',
-				productName: 'Code - OSS',
+				productName: 'TYSH',
 				provider: undefined,
 				dialogService,
 				locationPreferenceService,
@@ -447,7 +447,7 @@ suite('remoteHostOptions', () => {
 			await changeRemoteAgentHostLocationPreference({
 				preferenceKey: 'tunnel:some-tunnel-id',
 				hostLabel: 'some-tunnel-id',
-				productName: 'Code - OSS',
+				productName: 'TYSH',
 				provider: provider as IAgentHostSessionsProvider,
 				dialogService,
 				locationPreferenceService,
@@ -481,7 +481,7 @@ suite('remoteHostOptions', () => {
 			await changeRemoteAgentHostLocationPreference({
 				preferenceKey: 'ssh:my-host-alias',
 				hostLabel: 'my-host-alias',
-				productName: 'Code - OSS',
+				productName: 'TYSH',
 				provider: undefined,
 				dialogService,
 				locationPreferenceService,

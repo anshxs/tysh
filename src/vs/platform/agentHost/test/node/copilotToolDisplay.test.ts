@@ -974,13 +974,13 @@ suite('search tool display', () => {
 
 	test('web search has progress wording while code search stays stable', () => {
 		assert.deepStrictEqual({
-			webInvocation: text(getInvocationMessage('web_search', 'Web Search', { query: 'VS Code tests' })),
-			webComplete: text(getPastTenseMessage('web_search', 'Web Search', { query: 'VS Code tests' }, true)),
+			webInvocation: text(getInvocationMessage('web_search', 'Web Search', { query: 'tysh tests' })),
+			webComplete: text(getPastTenseMessage('web_search', 'Web Search', { query: 'tysh tests' }, true)),
 			codeInvocation: text(getInvocationMessage('search_code_subagent', 'Search Code', { query: 'tool display mapping' })),
 			codeComplete: text(getPastTenseMessage('search_code_subagent', 'Search Code', { query: 'tool display mapping' }, true)),
 		}, {
-			webInvocation: 'Searching the web for `VS Code tests`',
-			webComplete: 'Searched the web for `VS Code tests`',
+			webInvocation: 'Searching the web for `tysh tests`',
+			webComplete: 'Searched the web for `tysh tests`',
 			codeInvocation: 'Search code for `tool display mapping`',
 			codeComplete: 'Search code for `tool display mapping`',
 		});

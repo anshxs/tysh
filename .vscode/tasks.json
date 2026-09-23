@@ -3,7 +3,7 @@
 	"tasks": [
 		{
 			"label": "Install & Watch (Client)",
-			"detail": "Install dependencies, compile and watch VS Code core for fixing a bug or implementing a feature.",
+			"detail": "Install dependencies, compile and watch tysh core for fixing a bug or implementing a feature.",
 			"dependsOn": [
 				"Install Dependencies",
 				"Compile",
@@ -13,8 +13,8 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Run VS Code",
-			"detail": "Run VS Code with a user data directory inside the worktree.",
+			"label": "Run tysh",
+			"detail": "Run tysh with a user data directory inside the worktree.",
 			"type": "shell",
 			"command": "./scripts/code.sh",
 			"windows": {
@@ -24,7 +24,7 @@
 		},
 		{
 			"label": "Install & Watch (All)",
-			"detail": "Install dependencies and watch all of VS Code (core, extensions and copilot).",
+			"detail": "Install dependencies and watch all of tysh (core, extensions and copilot).",
 			"dependsOn": [
 				"Install Dependencies",
 				"Watch"
@@ -236,7 +236,7 @@
 			]
 		},
 		{
-			"label": "VS Code - Build",
+			"label": "tysh - Build",
 			"dependsOn": [
 				"Core - Transpile",
 				"Core - Typecheck",
@@ -298,7 +298,7 @@
 			"problemMatcher": "$esbuild"
 		},
 		{
-			"label": "Kill VS Code - Build",
+			"label": "Kill tysh - Build",
 			"dependsOn": [
 				"Kill Core - Transpile",
 				"Kill Core - Typecheck",
@@ -309,21 +309,21 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Restart VS Code - Build",
+			"label": "Restart tysh - Build",
 			"dependsOn": [
-				"Kill VS Code - Build",
-				"VS Code - Build"
+				"Kill tysh - Build",
+				"tysh - Build"
 			],
 			"group": "build",
 			"dependsOrder": "sequence",
 			"problemMatcher": []
 		},
 		{
-			"label": "Kill VS Code - Build, Npm, VS Code - Build",
+			"label": "Kill tysh - Build, Npm, tysh - Build",
 			"dependsOn": [
-				"Kill VS Code - Build",
+				"Kill tysh - Build",
 				"npm: install",
-				"VS Code - Build"
+				"tysh - Build"
 			],
 			"group": "build",
 			"dependsOrder": "sequence",
@@ -451,7 +451,7 @@
 			}
 		},
 		{
-			"label": "Run VS Code (Web)",
+			"label": "Run tysh (Web)",
 			"detail": "Run the Agents window as a web client.",
 			"type": "shell",
 			"command": "./scripts/code-server.sh",
@@ -563,8 +563,8 @@
 			},
 			"args": [
 				"--agents",
-				"--user-data-dir=${userHome}/.vscode-oss-dev",
-				"--extensions-dir=${userHome}/.vscode-oss-dev/extensions"
+				"--user-data-dir=${userHome}/.tysh",
+				"--extensions-dir=${userHome}/.tysh/extensions"
 			],
 			"inAgents": true,
 			"problemMatcher": []
@@ -591,7 +591,7 @@
 		},
 		{
 			"label": "Install Dependencies & Build Fast",
-			"detail": "Install dependencies and build VS Code.",
+			"detail": "Install dependencies and build tysh.",
 			"dependsOn": [
 				"Install Dependencies",
 				"Build Fast"

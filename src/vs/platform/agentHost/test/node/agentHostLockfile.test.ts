@@ -53,8 +53,8 @@ suite('Agent Host Lockfile (local)', () => {
 		});
 
 		test('keys lockfile name on quality', () => {
-			const result = getLocalAgentHostLockfilePath('.vscode-server-oss', 'stable');
-			assert.strictEqual(result, join(os.homedir(), '.vscode-server-oss', 'cli', 'agent-host-stable.lock'));
+			const result = getLocalAgentHostLockfilePath('.vscode-servertysh', 'stable');
+			assert.strictEqual(result, join(os.homedir(), '.vscode-servertysh', 'cli', 'agent-host-stable.lock'));
 		});
 
 		test('rejects unsafe server data folder names', () => {
@@ -64,8 +64,8 @@ suite('Agent Host Lockfile (local)', () => {
 		});
 
 		test('rejects unsafe quality strings', () => {
-			assert.throws(() => getLocalAgentHostLockfilePath('.vscode-server-oss', 'foo bar'), /Unsafe quality/);
-			assert.throws(() => getLocalAgentHostLockfilePath('.vscode-server-oss', '/abs'), /Unsafe quality/);
+			assert.throws(() => getLocalAgentHostLockfilePath('.vscode-servertysh', 'foo bar'), /Unsafe quality/);
+			assert.throws(() => getLocalAgentHostLockfilePath('.vscode-servertysh', '/abs'), /Unsafe quality/);
 		});
 	});
 

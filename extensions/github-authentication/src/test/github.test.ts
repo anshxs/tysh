@@ -144,7 +144,7 @@ suite('GitHub Microsoft-brokered sessions', () => {
 		readonly renewals: IEntraRenewal[];
 		/** Every interactive Microsoft exchange the provider put on the wire, in order. */
 		readonly logins: Array<{ readonly scopes: readonly string[]; readonly options: IEntraLoginOptions | undefined }>;
-		/** What the provider told VS Code changed, as `verb account` for each session. */
+		/** What the provider told tysh changed, as `verb account` for each session. */
 		readonly announced: string[];
 		/** The sessions still held in memory, as `account until` for each. */
 		heldSessions(): string[];

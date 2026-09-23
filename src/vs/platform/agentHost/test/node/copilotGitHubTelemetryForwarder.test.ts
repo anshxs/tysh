@@ -41,7 +41,7 @@ class TestTelemetryService implements ITelemetryService {
 suite('CopilotGitHubTelemetryForwarder', () => {
 	ensureNoDisposablesAreLeakedInTestSuite();
 
-	test('forwards a standard event to VS Code telemetry', () => {
+	test('forwards a standard event to tysh telemetry', () => {
 		const telemetryService = new TestTelemetryService();
 		const forwarder = new CopilotGitHubTelemetryForwarder(() => false, telemetryService);
 

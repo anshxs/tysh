@@ -477,13 +477,13 @@ npm run valid-layers-check
 
 ### E2E
 
-Use the **`launch`** skill (personal, `~/.agents/skills/launch/`) to drive Code OSS and the **`code-oss-logs`** skill (`.github/skills/code-oss-logs/`) to verify agent-host logs.
+Use the **`launch`** skill (personal, `~/.agents/skills/launch/`) to drive Code OSS and the **`codetysh-logs`** skill (`.github/skills/codetysh-logs/`) to verify agent-host logs.
 
 **Scenario:**
 1. Use `launch` to open Code OSS dev build pointing at a test workspace with a writable file.
 2. Open a Claude session and send: "Edit `test.ts` — add a comment `// Phase 8 test` at the top."
 3. Approve the `Write`/`Edit` permission prompt via the UI (from Phase 7's permission card).
-4. Use `code-oss-logs` to read the agent-host log; confirm:
+4. Use `codetysh-logs` to read the agent-host log; confirm:
    - A `session/toolCall/complete` action is logged with `fileEdit` content type.
    - The `session-db:` before/after URIs are non-empty strings.
 5. In the workbench, open the diff view for the edited file. Confirm before/after content renders.
@@ -508,7 +508,7 @@ None at plan-acceptance time. All five council candidates from the planning pass
 - Production reference (not using `enableFileCheckpointing`): `extensions/copilot/src/extension/chatSessions/claude/node/claudeCodeAgent.ts`
 - Copilot tracker (reference impl): `src/vs/platform/agentHost/node/copilot/fileEditTracker.ts`
 - SDK type definitions: `node_modules/@anthropic-ai/claude-agent-sdk/sdk.d.ts` lines 726, 733, 1262, 1299, 1934, 1965, 2153, 2247
-- E2E skills: `launch` (personal), `code-oss-logs` (repo)
+- E2E skills: `launch` (personal), `codetysh-logs` (repo)
 
 ## Implementation Notes
 

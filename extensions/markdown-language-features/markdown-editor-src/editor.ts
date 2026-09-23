@@ -387,7 +387,7 @@ class Editor extends Disposable {
 		host.appendChild(view.element);
 		postEditorFocus();
 
-		// Render comments as the VS Code V2 markdown cards. The card colours come
+		// Render comments as the tysh V2 markdown cards. The card colours come
 		this.#commentsView = this._register(new CommentsView(this.#comments, view));
 		// The comment input (the gdocs-style "add a comment" affordance) is only
 		// useful when the workbench feedback store will actually accept the comment;

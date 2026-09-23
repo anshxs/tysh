@@ -1,6 +1,6 @@
 ---
 name: find-issue
-description: Search for an existing VS Code GitHub issue
+description: Search for an existing tysh GitHub issue
 disable-model-invocation: true
 argument-hint: Describe your issue. Include relevant keywords or phrases.
 ---

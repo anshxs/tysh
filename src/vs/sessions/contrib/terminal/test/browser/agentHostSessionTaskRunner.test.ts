@@ -239,7 +239,7 @@ suite('AgentHostSessionTaskRunner', () => {
 		const transpile: ITaskEntry = { label: 'Transpile Client', type: 'shell', command: 'npm', args: ['run', 'transpile'] };
 		const runDev: ITaskEntry = { label: 'Run Dev', type: 'shell', command: 'npm', args: ['run', 'dev'] };
 		const top: ITaskEntry = {
-			label: 'Run and Compile Code - OSS',
+			label: 'Run and Compile TYSH',
 			dependsOn: ['Transpile Client', 'Run Dev'],
 			dependsOrder: 'sequence',
 			inAgents: true,
@@ -278,16 +278,16 @@ suite('AgentHostSessionTaskRunner', () => {
 			label: 'Run Client',
 			type: 'shell',
 			command: './scripts/code.sh',
-			args: ['--user-data-dir=${workspaceFolder}/.profile-oss'],
+			args: ['--user-data-dir=${workspaceFolder}/.profiletysh'],
 		};
 
 		(await runner.runTask(task, session))?.dispose();
 
 		assert.deepStrictEqual(sentText, [{
-			text: `./scripts/code.sh --user-data-dir=${cwd.path}/.profile-oss`,
+			text: `./scripts/code.sh --user-data-dir=${cwd.path}/.profiletysh`,
 			shouldExecute: true,
 		}]);
-		assert.deepStrictEqual(resolverCalls, ['./scripts/code.sh', '--user-data-dir=${workspaceFolder}/.profile-oss']);
+		assert.deepStrictEqual(resolverCalls, ['./scripts/code.sh', '--user-data-dir=${workspaceFolder}/.profiletysh']);
 	});
 
 	test('remote agent-host sessions expand ${workspaceFolder} from the POSIX host path without the renderer resolver', async () => {
@@ -297,13 +297,13 @@ suite('AgentHostSessionTaskRunner', () => {
 			label: 'Run Client',
 			type: 'shell',
 			command: './scripts/code.sh',
-			args: ['--user-data-dir=${workspaceFolder}/.profile-oss'],
+			args: ['--user-data-dir=${workspaceFolder}/.profiletysh'],
 		};
 
 		(await runner.runTask(task, session))?.dispose();
 
 		assert.deepStrictEqual(sentText, [{
-			text: `./scripts/code.sh --user-data-dir=${innerCwd.path}/.profile-oss`,
+			text: `./scripts/code.sh --user-data-dir=${innerCwd.path}/.profiletysh`,
 			shouldExecute: true,
 		}]);
 		assert.deepStrictEqual(resolverCalls, []);

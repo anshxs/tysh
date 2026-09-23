@@ -283,7 +283,7 @@ class MarketplaceThemesPicker implements IDisposable {
 }
 
 interface InstalledThemesPickerOptions {
-	readonly installMessage: string;
+	readonly installMessage?: string;
 	readonly browseMessage?: string;
 	readonly placeholderMessage: string;
 	readonly marketplaceTag: string;
@@ -313,7 +313,7 @@ class InstalledThemesPicker {
 			if (await this.extensionResourceLoaderService.supportsExtensionGalleryResources() && this.options.browseMessage) {
 				marketplaceThemePicker = this.instantiationService.createInstance(MarketplaceThemesPicker, this.getMarketplaceColorThemes.bind(this), this.options.marketplaceTag);
 				picks = [configurationEntry(this.options.browseMessage, ConfigureItem.BROWSE_GALLERY), ...picks];
-			} else {
+			} else if (this.options.installMessage) {
 				picks = [...picks, { type: 'separator' }, configurationEntry(this.options.installMessage, ConfigureItem.EXTENSIONS_VIEW)];
 			}
 		}
@@ -445,8 +445,6 @@ registerAction2(class extends Action2 {
 		};
 
 		const options = {
-			installMessage: localize('installColorThemes', "Install Additional Color Themes..."),
-			browseMessage: '$(plus) ' + localize('browseColorThemes', "Browse Additional Color Themes..."),
 			placeholderMessage: this.getTitle(preferredColorScheme),
 			marketplaceTag: 'category:themes',
 			buttons: [modeConfigureButton],

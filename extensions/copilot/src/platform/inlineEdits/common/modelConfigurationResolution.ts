@@ -17,7 +17,7 @@ import { derived, DebugOwner, IObservable } from '../../../util/vs/base/common/o
  * still win.
  *
  * @remark `key` must not be contributed in `package.json`. For contributed settings tagged `onExp`,
- * VS Code folds the treatment into the default value, which would put `modelConfigValue` above the
+ * tysh folds the treatment into the default value, which would put `modelConfigValue` above the
  * experiment again.
  */
 export function resolveModelConfigValue<T extends ExperimentBasedConfigType>(

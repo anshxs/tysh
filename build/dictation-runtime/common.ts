@@ -6,7 +6,7 @@
 /**
  * Shared helpers for the per-platform dictation-runtime build pipeline. Called
  * from `package.ts`, `upload.ts`, and `produce.ts`, plus the gulpfiles'
- * `packageTask` (via `readDictationRuntimeResults`) so each VS Code build can
+ * `packageTask` (via `readDictationRuntimeResults`) so each tysh build can
  * stamp its own `product.dictationRuntime` into the per-platform `product.json`
  * at packaging time.
  *
@@ -73,7 +73,7 @@ export function getRuntimeVersion(): string {
 	return version;
 }
 
-/** Strict subset of VS Code build platforms the dictation runtime can target. */
+/** Strict subset of tysh build platforms the dictation runtime can target. */
 export type VscodeBuildPlatform = 'darwin' | 'linux' | 'win32';
 
 /** Runtime whitelist mirroring `VscodeBuildPlatform`, for CLI guards. */
@@ -96,7 +96,7 @@ export const SUPPORTED_TARGETS: ReadonlySet<string> = new Set([
 ]);
 
 /**
- * Resolves the runtime target for a particular VS Code build, or `undefined`
+ * Resolves the runtime target for a particular tysh build, or `undefined`
  * when that `(platform, arch)` has no Foundry Local runtime (e.g. `darwin-x64`,
  * Alpine/musl, armhf, web). The macOS build is Universal but Foundry Local only
  * ships `darwin-arm64`, so `darwin-x64` returns `undefined` — the runtime gate
@@ -114,7 +114,7 @@ export function getRuntimeTargetForBuild(vscodePlatform: string, arch: string): 
 }
 
 /**
- * Whether a given VS Code build should stamp `product.dictationRuntime`, EVEN IF
+ * Whether a given tysh build should stamp `product.dictationRuntime`, EVEN IF
  * this build's own `(platform, arch)` has no CDN payload of its own.
  *
  * The stamp — `{version, urlTemplate}` — is target-agnostic (the `{target}`

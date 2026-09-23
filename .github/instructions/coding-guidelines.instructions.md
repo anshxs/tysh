@@ -1,5 +1,5 @@
 ---
-description: VS Code coding guidelines — naming, style, types, strings, and code quality rules. Reference when writing or reviewing code.
+description: tysh coding guidelines — naming, style, types, strings, and code quality rules. Reference when writing or reviewing code.
 applyTo: src/vs/**
 ---
 

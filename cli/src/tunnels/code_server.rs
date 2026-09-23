@@ -75,7 +75,7 @@ pub struct CodeServerArgs {
 	pub without_connection_token: bool,
 	// reconnection
 	pub reconnection_grace_time: Option<u32>,
-	// agent-host bridge: tells the spawned VS Code server where the
+	// agent-host bridge: tells the spawned tysh server where the
 	// canonical agent host is listening so it can register the
 	// `agentHostProxy` IPC channel and let renderers reach the agent
 	// host over the remote-agent connection. The server does NOT spawn
@@ -198,7 +198,7 @@ pub struct ServerParamsRaw {
 	pub platform: Platform,
 }
 
-/// Server params that can be used to start a VS Code server.
+/// Server params that can be used to start a tysh server.
 pub struct ResolvedServerParams {
 	pub release: Release,
 	pub code_server_args: CodeServerArgs,
@@ -798,7 +798,7 @@ fn get_extensions_flag(extension_id: &str) -> String {
 	format!("--install-extension={extension_id}")
 }
 
-/// A type that can be used to scan stdout from the VS Code server. Returns
+/// A type that can be used to scan stdout from the tysh server. Returns
 /// some other type that, in turn, is returned from starting the server.
 pub trait ServerOutputMatcher<R>
 where

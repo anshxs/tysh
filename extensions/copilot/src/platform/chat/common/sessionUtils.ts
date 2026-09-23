@@ -21,7 +21,7 @@ export namespace SessionType {
 
 
 /**
- * Decode a VS Code chat session resource URI to extract the raw session ID.
+ * Decode a tysh chat session resource URI to extract the raw session ID.
  *
  * Handles multiple URI schemes:
  * - `vscode-chat-session://local/<base64EncodedSessionId>` — foreground chat sessions

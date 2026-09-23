@@ -24,24 +24,17 @@ suite('WorkbenchThemeService', () => {
 
 	suite('migrateThemeSettingsId', () => {
 
-		test('migrates Default-prefixed theme IDs', () => {
+		test('migrates theme IDs to White and Black', () => {
 			assert.deepStrictEqual(
-				['Default Dark Modern', 'Default Light Modern', 'Default Dark+', 'Default Light+'].map(migrateThemeSettingsId),
-				['Dark Modern', 'Light Modern', 'Dark+', 'Light+']
+				['White', 'Black', 'Light 2026', 'Dark 2026', 'Default Dark Modern', 'Default Light Modern'].map(migrateThemeSettingsId),
+				['White', 'Black', ThemeSettingDefaults.COLOR_THEME_LIGHT, ThemeSettingDefaults.COLOR_THEME_DARK, ThemeSettingDefaults.COLOR_THEME_DARK, ThemeSettingDefaults.COLOR_THEME_LIGHT]
 			);
 		});
 
-		test('migrates Experimental theme IDs to VS Code themes', () => {
+		test('migrates Experimental theme IDs to tysh themes', () => {
 			assert.deepStrictEqual(
-				['Experimental Dark', 'Experimental Light', 'VS Code Dark', 'VS Code Light'].map(migrateThemeSettingsId),
+				['Experimental Dark', 'Experimental Light', 'tysh Dark', 'tysh Light'].map(migrateThemeSettingsId),
 				[ThemeSettingDefaults.COLOR_THEME_DARK, ThemeSettingDefaults.COLOR_THEME_LIGHT, ThemeSettingDefaults.COLOR_THEME_DARK, ThemeSettingDefaults.COLOR_THEME_LIGHT]
-			);
-		});
-
-		test('returns unknown IDs unchanged', () => {
-			assert.deepStrictEqual(
-				['Dark Modern', 'Dark 2026', 'Some Custom Theme', ''].map(migrateThemeSettingsId),
-				['Dark Modern', 'Dark 2026', 'Some Custom Theme', '']
 			);
 		});
 	});

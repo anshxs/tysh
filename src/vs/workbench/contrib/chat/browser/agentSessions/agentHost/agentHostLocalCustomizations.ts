@@ -42,7 +42,7 @@ export const SYNCABLE_PROMPT_TYPES: readonly PromptsType[] = [
  *
  * `builtin` only yields skills bundled with the Agents app (e.g. `/create-pr`,
  * `/merge`); for every other prompt type the prompts service returns nothing,
- * and in the regular VS Code workbench window it returns nothing at all.
+ * and in the regular tysh workbench window it returns nothing at all.
  */
 export const SYNCABLE_STORAGE_SOURCES: readonly PromptsStorage[] = [
 	PromptsStorage.plugin,
@@ -74,7 +74,7 @@ export interface ILocalCustomizationFile {
  * Built-in skills bundled with the Agents app (only present when the
  * sessions-aware prompts service is in play) are also enumerated so that
  * `/create-pr`, `/merge`, etc. are available to every agent host without
- * any per-provider plumbing. In the regular VS Code workbench window the
+ * any per-provider plumbing. In the regular tysh workbench window the
  * built-in lookup returns nothing and this is a no-op.
  */
 export async function enumerateLocalCustomizationsForHarness(
@@ -181,7 +181,7 @@ export async function resolveLocalCustomAgents(
 }
 
 /**
- * Enumerates MCP servers configured directly in VS Code — i.e. those that
+ * Enumerates MCP servers configured directly in tysh — i.e. those that
  * are not contributed by an agent plugin — so they can be bundled into the
  * synthetic synced plugin. Plugin-sourced servers are excluded because they
  * are already synced via their owning plugin's customization ref. Servers whose
@@ -220,7 +220,7 @@ export async function collectNonPluginMcpServers(mcpService: IMcpService, config
  * Every eligible local file is synced unless the user opted out. Files
  * belonging to installed plugins are de-duped to a single plugin ref;
  * remaining loose files — together with MCP servers configured directly in
- * VS Code — are bundled into a synthetic Open Plugin.
+ * tysh — are bundled into a synthetic Open Plugin.
  */
 export async function resolveCustomizationRefs(
 	fileService: IFileService,

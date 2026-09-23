@@ -232,7 +232,7 @@ suite('LocalGitService', () => {
 		await runGit('init');
 		await fs.writeFile(join(repoPath, 'payload.txt'), 'branch content');
 		await runGit('add', 'payload.txt');
-		await runGit('-c', 'user.name=VS Code Test', '-c', 'user.email=vscode-test@example.com', 'commit', '-m', 'branch commit');
+		await runGit('-c', 'user.name=tysh Test', '-c', 'user.email=vscode-test@example.com', 'commit', '-m', 'branch commit');
 		const initialCommit = await runGit('rev-parse', 'HEAD');
 		const pinnedCommit = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
 		await runGit('branch', pinnedCommit);

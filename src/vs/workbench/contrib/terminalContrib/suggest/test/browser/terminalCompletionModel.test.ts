@@ -113,7 +113,7 @@ suite('TerminalCompletionModel', function () {
 		});
 
 		test('should handle many files and folders correctly', function () {
-			// This is VS Code's root directory with some python items added that have special
+			// This is tysh's root directory with some python items added that have special
 			// sorting
 			const items = [
 				...createFolderItems(
@@ -123,7 +123,7 @@ suite('TerminalCompletionModel', function () {
 					'.devcontainer',
 					'.eslint-plugin-local',
 					'.github',
-					'.profile-oss',
+					'.profiletysh',
 					'.vscode',
 					'.vscode-test',
 					'build',
@@ -198,7 +198,7 @@ suite('TerminalCompletionModel', function () {
 				'package.json',
 				'package-lock.json',
 				'product.json',
-				'.profile-oss',
+				'.profiletysh',
 				'README.md',
 				'remote',
 				'resources',

@@ -22,151 +22,151 @@ import { ToolName } from '../../common/toolNames';
 import { ICopilotTool, ToolRegistry } from '../../common/toolsRegistry';
 
 export interface INewWorkspaceToolParams {
-	query: string;
+    query: string;
 }
 
 export class GetNewWorkspaceTool implements ICopilotTool<INewWorkspaceToolParams> {
-	public static readonly toolName = ToolName.CreateNewWorkspace;
+    public static readonly toolName = ToolName.CreateNewWorkspace;
 
-	private _shouldPromptWorkspaceOpen: boolean = false;
-	constructor(
-		@IWorkspaceService private readonly workspaceService: IWorkspaceService,
-		@IFileSystemService private readonly fileSystemService: IFileSystemService,
-		@IInstantiationService private readonly instantiationService: IInstantiationService,
-		@IDialogService private readonly dialogService: IDialogService,
-		@IVSCodeExtensionContext private readonly _extensionContext: IVSCodeExtensionContext,
-		@IInteractiveSessionService private readonly interactiveSession: IInteractiveSessionService,
-		@IRunCommandExecutionService private readonly commandService: IRunCommandExecutionService,
-	) { }
+    private _shouldPromptWorkspaceOpen: boolean = false;
+    constructor(
+        @IWorkspaceService private readonly workspaceService: IWorkspaceService,
+        @IFileSystemService private readonly fileSystemService: IFileSystemService,
+        @IInstantiationService private readonly instantiationService: IInstantiationService,
+        @IDialogService private readonly dialogService: IDialogService,
+        @IVSCodeExtensionContext private readonly _extensionContext: IVSCodeExtensionContext,
+        @IInteractiveSessionService private readonly interactiveSession: IInteractiveSessionService,
+        @IRunCommandExecutionService private readonly commandService: IRunCommandExecutionService,
+    ) { }
 
-	/**
-	 * Used as a softer "empty" check for the case where the user re-selects the
-	 * already-open workspace folder. Treats a folder as empty if every top-level
-	 * entry name starts with `.` (e.g. `.git`, `.gitignore`, `.vscode`,
-	 * `.editorconfig`), so that newly cloned/initialized repos and folders that
-	 * only contain dotfile config can be used in place without reopening.
-	 */
-	private async _isEffectivelyEmpty(folder: Uri): Promise<boolean> {
-		const entries = await this.fileSystemService.readDirectory(folder);
-		return entries.every(([name]) => name.startsWith('.'));
-	}
+    /**
+     * Used as a softer "empty" check for the case where the user re-selects the
+     * already-open workspace folder. Treats a folder as empty if every top-level
+     * entry name starts with `.` (e.g. `.git`, `.gitignore`, `.vscode`,
+     * `.editorconfig`), so that newly cloned/initialized repos and folders that
+     * only contain dotfile config can be used in place without reopening.
+     */
+    private async _isEffectivelyEmpty(folder: Uri): Promise<boolean> {
+        const entries = await this.fileSystemService.readDirectory(folder);
+        return entries.every(([name]) => name.startsWith('.'));
+    }
 
-	async prepareInvocation?(options: LanguageModelToolInvocationPrepareOptions<INewWorkspaceToolParams>, token: CancellationToken): Promise<PreparedToolInvocation> {
+    async prepareInvocation?(options: LanguageModelToolInvocationPrepareOptions<INewWorkspaceToolParams>, token: CancellationToken): Promise<PreparedToolInvocation> {
 
-		this._shouldPromptWorkspaceOpen = false;
-		const workspace = this.workspaceService.getWorkspaceFolders();
-		if (!workspace || workspace.length === 0) {
-			this._shouldPromptWorkspaceOpen = true;
-		}
-		else if (workspace && workspace.length > 0) {
-			this._shouldPromptWorkspaceOpen = (await this.fileSystemService.readDirectory(workspace[0])).length > 0;
-		}
-		if (this._shouldPromptWorkspaceOpen) {
-			const confirmationMessages = {
-				title: l10n.t`Open an empty folder to continue`,
-				message: l10n.t`Copilot requires an empty folder as a workspace to continue workspace creation.`
-			};
+        this._shouldPromptWorkspaceOpen = false;
+        const workspace = this.workspaceService.getWorkspaceFolders();
+        if (!workspace || workspace.length === 0) {
+            this._shouldPromptWorkspaceOpen = true;
+        }
+        else if (workspace && workspace.length > 0) {
+            this._shouldPromptWorkspaceOpen = (await this.fileSystemService.readDirectory(workspace[0])).length > 0;
+        }
+        if (this._shouldPromptWorkspaceOpen) {
+            const confirmationMessages = {
+                title: l10n.t`Open an empty folder to continue`,
+                message: l10n.t`Copilot requires an empty folder as a workspace to continue workspace creation.`
+            };
 
-			return {
-				confirmationMessages,
-			};
-		}
+            return {
+                confirmationMessages,
+            };
+        }
 
-		return {
-			invocationMessage: l10n.t`Generating plan to create a new workspace`,
-		};
-	}
+        return {
+            invocationMessage: l10n.t`Generating plan to create a new workspace`,
+        };
+    }
 
-	async invoke(options: LanguageModelToolInvocationOptions<INewWorkspaceToolParams>, token: CancellationToken): Promise<LanguageModelToolResult> {
+    async invoke(options: LanguageModelToolInvocationOptions<INewWorkspaceToolParams>, token: CancellationToken): Promise<LanguageModelToolResult> {
 
-		if (token.isCancellationRequested) {
-			throw new CancellationError();
-		}
+        if (token.isCancellationRequested) {
+            throw new CancellationError();
+        }
 
-		const workspace = this.workspaceService.getWorkspaceFolders();
-		let workspaceUri: Uri | undefined = workspace.length > 0 ? workspace[0] : undefined;
+        const workspace = this.workspaceService.getWorkspaceFolders();
+        let workspaceUri: Uri | undefined = workspace.length > 0 ? workspace[0] : undefined;
 
-		if (this._shouldPromptWorkspaceOpen) {
-			const newWorkspaceUri = (await this.dialogService.showOpenDialog({ canSelectFolders: true, canSelectFiles: false, canSelectMany: false, openLabel: 'Select an Empty Workspace Folder' }))?.[0];
-			if (!newWorkspaceUri) {
-				return new LanguageModelToolResult([
-					new LanguageModelTextPart('The user has not opened a valid workspace folder in VS Code. Ask them to open an empty folder before continuing.')
-				]);
-			}
+        if (this._shouldPromptWorkspaceOpen) {
+            const newWorkspaceUri = (await this.dialogService.showOpenDialog({ canSelectFolders: true, canSelectFiles: false, canSelectMany: false, openLabel: 'Select an Empty Workspace Folder' }))?.[0];
+            if (!newWorkspaceUri) {
+                return new LanguageModelToolResult([
+                    new LanguageModelTextPart('The user has not opened a valid workspace folder in tysh. Ask them to open an empty folder before continuing.')
+                ]);
+            }
 
-			if (workspaceUri && extUri.isEqual(newWorkspaceUri, workspaceUri)) {
-				// User re-selected the already-open folder: if it only contains
-				// dotfile entries, use it in place without reopening the window.
-				if (!await this._isEffectivelyEmpty(newWorkspaceUri)) {
-					return new LanguageModelToolResult([
-						new LanguageModelTextPart('The user has not opened a valid workspace folder in VS Code. Ask them to open an empty folder before continuing.')
-					]);
-				}
-			} else {
-				if ((await this.fileSystemService.readDirectory(newWorkspaceUri)).length > 0) {
-					return new LanguageModelToolResult([
-						new LanguageModelTextPart('The user has not opened a valid workspace folder in VS Code. Ask them to open an empty folder before continuing.')
-					]);
-				}
+            if (workspaceUri && extUri.isEqual(newWorkspaceUri, workspaceUri)) {
+                // User re-selected the already-open folder: if it only contains
+                // dotfile entries, use it in place without reopening the window.
+                if (!await this._isEffectivelyEmpty(newWorkspaceUri)) {
+                    return new LanguageModelToolResult([
+                        new LanguageModelTextPart('The user has not opened a valid workspace folder in tysh. Ask them to open an empty folder before continuing.')
+                    ]);
+                }
+            } else {
+                if ((await this.fileSystemService.readDirectory(newWorkspaceUri)).length > 0) {
+                    return new LanguageModelToolResult([
+                        new LanguageModelTextPart('The user has not opened a valid workspace folder in tysh. Ask them to open an empty folder before continuing.')
+                    ]);
+                }
 
-				saveNewWorkspaceContext({
-					workspaceURI: newWorkspaceUri.toString(),
-					userPrompt: options.input.query,
-					initialized: false, /*not already opened */
-				}, this._extensionContext);
+                saveNewWorkspaceContext({
+                    workspaceURI: newWorkspaceUri.toString(),
+                    userPrompt: options.input.query,
+                    initialized: false, /*not already opened */
+                }, this._extensionContext);
 
-				workspaceUri = newWorkspaceUri;
-				this.commandService.executeCommand('setContext', 'chatSkipRequestInProgressMessage', true);
-				await this.interactiveSession.transferActiveChat(newWorkspaceUri);
-				this.commandService.executeCommand('vscode.openFolder', newWorkspaceUri, { forceReuseWindow: true });
+                workspaceUri = newWorkspaceUri;
+                this.commandService.executeCommand('setContext', 'chatSkipRequestInProgressMessage', true);
+                await this.interactiveSession.transferActiveChat(newWorkspaceUri);
+                this.commandService.executeCommand('vscode.openFolder', newWorkspaceUri, { forceReuseWindow: true });
 
-				return new LanguageModelToolResult([
-					new LanguageModelTextPart(`The user is opening the folder ${newWorkspaceUri.toString()}. Do not proceed with project generation till the user has confirmed opening the folder.`)
-				]);
-			}
-		}
+                return new LanguageModelToolResult([
+                    new LanguageModelTextPart(`The user is opening the folder ${newWorkspaceUri.toString()}. Do not proceed with project generation till the user has confirmed opening the folder.`)
+                ]);
+            }
+        }
 
-		if (!workspaceUri) {
-			return new LanguageModelToolResult([
-				new LanguageModelTextPart('The user has not opened a valid workspace folder in VS Code. Ask them to open an empty folder before continuing.')
-			]);
-		}
+        if (!workspaceUri) {
+            return new LanguageModelToolResult([
+                new LanguageModelTextPart('The user has not opened a valid workspace folder in tysh. Ask them to open an empty folder before continuing.')
+            ]);
+        }
 
-		const json = await renderPromptElementJSON(this.instantiationService, NewWorkspaceCreationResult, { query: options.input.query },);
-		return new LanguageModelToolResult([
-			new LanguageModelPromptTsxPart(json),
-		]);
-	}
+        const json = await renderPromptElementJSON(this.instantiationService, NewWorkspaceCreationResult, { query: options.input.query },);
+        return new LanguageModelToolResult([
+            new LanguageModelPromptTsxPart(json),
+        ]);
+    }
 }
 
 export class NewWorkspaceCreationResult extends PromptElement<NewWorkspaceElementProps> {
-	constructor(
-		props: PromptElementProps<NewWorkspaceElementProps>,
-		@IWorkspaceService private readonly workspaceService: IWorkspaceService,
-		@IRunCommandExecutionService private readonly commandService: IRunCommandExecutionService,
-	) {
-		super(props);
-	}
+    constructor(
+        props: PromptElementProps<NewWorkspaceElementProps>,
+        @IWorkspaceService private readonly workspaceService: IWorkspaceService,
+        @IRunCommandExecutionService private readonly commandService: IRunCommandExecutionService,
+    ) {
+        super(props);
+    }
 
-	override async render(state: void, sizing: PromptSizing) {
-		const workspace = this.workspaceService.getWorkspaceFolders();
-		const workspaceUri: Uri | undefined = workspace.length > 0 ? workspace[0] : undefined;
+    override async render(state: void, sizing: PromptSizing) {
+        const workspace = this.workspaceService.getWorkspaceFolders();
+        const workspaceUri: Uri | undefined = workspace.length > 0 ? workspace[0] : undefined;
 
-		if (!workspaceUri) {
-			return <TextChunk>
-				The user has not opened an empty workspace folder in VS Code. Ask them to open an empty folder before continuing.<br />
-			</TextChunk>;
-		}
+        if (!workspaceUri) {
+            return <TextChunk>
+                The user has not opened an empty workspace folder in tysh. Ask them to open an empty folder before continuing.<br />
+            </TextChunk>;
+        }
 
-		// For https://github.com/microsoft/vscode/issues/258252
-		this.commandService.executeCommand('workbench.action.terminal.focus');
+        // For https://github.com/microsoft/vscode/issues/258252
+        this.commandService.executeCommand('workbench.action.terminal.focus');
 
-		return <>
-			<TextChunk>
-				Create or update the copilot-instructions.md file in the .github directory with the exact content shown below.<br />
-				<br />
-			</TextChunk>
-			<UnsafeCodeBlock code={`
+        return <>
+            <TextChunk>
+                Create or update the copilot-instructions.md file in the .github directory with the exact content shown below.<br />
+                <br />
+            </TextChunk>
+            <UnsafeCodeBlock code={`
 <!-- Use this file to provide workspace-specific custom instructions to Copilot. For more details, visit https://code.visualstudio.com/docs/copilot/copilot-customization#_use-a-githubcopilotinstructionsmd-file -->
 - [ ] Verify that the copilot-instructions.md file in the .github directory is created.
 
@@ -239,7 +239,7 @@ DEVELOPMENT RULES:
 - Use '.' as the working directory unless user specifies otherwise.
 - Avoid adding media or external links unless explicitly requested.
 - Use placeholders only with a note that they should be replaced.
-- Use VS Code API tool only for VS Code extension projects.
+- Use tysh API tool only for tysh extension projects.
 - Once the project is created, it is already opened in Visual Studio Code—do not suggest commands to open this project in Visual Studio again.
 - If the project setup information has additional rules, follow them strictly.
 
@@ -259,7 +259,7 @@ PROJECT CONTENT RULES:
 - If you need to use any media assets as placeholders, let the user know that these are placeholders and should be replaced with the actual assets later.
 - Ensure all generated components serve a clear purpose within the user's requested workflow.
 - If a feature is assumed but not confirmed, prompt the user for clarification before including it.
-- If you are working on a VS Code extension, use the VS Code API tool with a query to find relevant VS Code API references and samples related to that query.
+- If you are working on a tysh extension, use the tysh API tool with a query to find relevant tysh API references and samples related to that query.
 
 TASK COMPLETION RULES:
 - Your task is complete when:
@@ -274,19 +274,19 @@ Before starting a new task in the above plan, update progress in the plan.
 - Keep communication concise and focused.
 - Follow development best practices.
 `} languageId='markdown'></UnsafeCodeBlock>
-			<TextChunk>
-				<br />
-				Verify that a copilot-instructions.md file in the .github directory exists and systematically work through each item in the task list.<br />
-				Update the copilot-instructions.md file in the .github directory directly as you complete each step.<br />
-				<br />
-				If the user asks to "continue," refer to the previous steps and proceed accordingly.
-			</TextChunk>
-		</>;
-	}
+            <TextChunk>
+                <br />
+                Verify that a copilot-instructions.md file in the .github directory exists and systematically work through each item in the task list.<br />
+                Update the copilot-instructions.md file in the .github directory directly as you complete each step.<br />
+                <br />
+                If the user asks to "continue," refer to the previous steps and proceed accordingly.
+            </TextChunk>
+        </>;
+    }
 }
 
 ToolRegistry.registerTool(GetNewWorkspaceTool);
 
 interface NewWorkspaceElementProps extends BasePromptElementProps {
-	query: string;
+    query: string;
 }

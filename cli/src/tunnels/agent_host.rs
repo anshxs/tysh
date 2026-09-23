@@ -104,13 +104,13 @@ pub struct AgentHostConfig {
 	pub connection_token_file: Option<String>,
 }
 
-/// State of the running VS Code server process.
+/// State of the running tysh server process.
 struct RunningServer {
 	child: tokio::process::Child,
 	commit: String,
 }
 
-/// Manages the VS Code server lifecycle: on-demand start, auto-restart
+/// Manages the tysh server lifecycle: on-demand start, auto-restart
 /// after idle shutdown, and background update checking.
 pub struct AgentHostManager {
 	log: log::Logger,
@@ -1027,7 +1027,7 @@ fn connection_err(err: hyper::Error) -> Response<HyperBody> {
 
 /// A CLI-owned agent host sidecar: binds a public listener up front, writes
 /// the canonical lockfile pointing at it, and lazily starts/maintains the
-/// underlying VS Code server through an [`AgentHostManager`]. The lockfile is
+/// underlying tysh server through an [`AgentHostManager`]. The lockfile is
 /// removed on shutdown / drop only when the recorded PID still matches this
 /// process, so a foreign sidecar that has taken over the same path is left
 /// alone.

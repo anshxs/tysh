@@ -6,7 +6,7 @@
 import * as vscode from 'vscode';
 
 /**
- * The Microsoft authentication provider contributed by VS Code. We deliberately go through the
+ * The Microsoft authentication provider contributed by tysh. We deliberately go through the
  * built-in provider rather than talking to MSAL/WAM directly so that account selection, brokering
  * and consent all behave exactly like every other Microsoft sign in in the product.
  */

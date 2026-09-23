@@ -53,7 +53,7 @@ export const enum AgentHostLogSourceKind {
 	WireLog = 'wire',
 	/** The Copilot SDK process logs under `<COPILOT_HOME>/logs`. */
 	CliLog = 'cliLog',
-	/** A VS Code output channel (agent host process, renderer, shared). */
+	/** A tysh output channel (agent host process, renderer, shared). */
 	ProcessChannel = 'processChannel',
 	/** The remote machine's `agenthost.log`, downloaded on demand. */
 	RemoteProcessLog = 'remoteProcessLog',
@@ -513,7 +513,7 @@ export async function readRemoteAgentHostLog(
 	}
 	candidates.add('.vscode-server');
 	candidates.add('.vscode-server-insiders');
-	candidates.add('.vscode-server-oss');
+	candidates.add('.vscode-servertysh');
 	candidates.add('.vscode-server-exploration');
 
 	// Enumerate every `<home>/<candidate>/data/logs/<datestamp>/agenthost.log`

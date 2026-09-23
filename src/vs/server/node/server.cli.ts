@@ -19,11 +19,11 @@ import { FileAccess } from '../../base/common/network.js';
 import { hasAgentCommand } from './server.cliAgent.js';
 
 /*
- * Implements a standalone CLI app that opens VS Code from a remote terminal.
+ * Implements a standalone CLI app that opens tysh from a remote terminal.
  *  - In integrated terminals for remote windows this connects to the remote server though a pipe.
  *    The pipe is passed in env VSCODE_IPC_HOOK_CLI.
- *  - In external terminals for WSL this calls VS Code on the Windows side.
- *    The VS Code desktop executable path is passed in env VSCODE_CLIENT_COMMAND.
+ *  - In external terminals for WSL this calls tysh on the Windows side.
+ *    The tysh desktop executable path is passed in env VSCODE_CLIENT_COMMAND.
  */
 
 
@@ -480,7 +480,7 @@ function asExtensionIdOrVSIX(inputs: string[] | undefined) {
 }
 
 function fatal(message: string, err: unknown): void {
-	console.error('Unable to connect to VS Code server: ' + message);
+	console.error('Unable to connect to tysh server: ' + message);
 	console.error(err);
 	process.exit(1);
 }

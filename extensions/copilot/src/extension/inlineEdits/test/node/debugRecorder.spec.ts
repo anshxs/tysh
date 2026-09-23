@@ -335,7 +335,7 @@ suite('Debug recorder', () => {
 
 			// setContent starts at v=1; consecutive `changed` entries should be 2, 3, 4 — no phantom
 			// gaps caused by intervening selection events. Matches what WorkspaceRecorder writes
-			// in production using VS Code's real model version.
+			// in production using tysh's real model version.
 			expect(setContent.v).toBe(1);
 			expect(changes.map(c => c.v)).toEqual([2, 3, 4]);
 		});

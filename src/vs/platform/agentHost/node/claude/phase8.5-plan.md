@@ -542,7 +542,7 @@ Available skills in this workspace:
 - **launch** — Playwright/CDP-driven Code OSS automation. Used
   for the Phase 12 live E2E captured in [`phase12-plan.md`](./phase12-plan.md)
   (Step 14).
-- **code-oss-logs** — find and read dev-build renderer / agentHost
+- **codetysh-logs** — find and read dev-build renderer / agentHost
   logs. Used to assert no `[Claude]` warn-logs during the
   scenario.
 
@@ -597,7 +597,7 @@ agent):
    Verify the historical rows render in the same renderers and
    with the same rich messages as the live ones — replay
    produces identical `_meta` and `pastTenseMessage` per D6.
-7. Use `code-oss-logs` to read the agentHost log; assert no
+7. Use `codetysh-logs` to read the agentHost log; assert no
    `[Claude]` warn-logs for the resolved tool calls.
 8. **Auto-allowed tool visibility (regression guard for the
    missing-Ready bug).** In a NEW Claude `[Local]` chat session,
@@ -621,7 +621,7 @@ If the launch skill cannot be used, the same scenario is
 achievable by hand: open Agents window, send the same prompts,
 inspect the chat UI, then `tail -f` the agentHost log under
 `~/.config/Code - Insiders/logs/.../agentHost.log` (path varies
-by OS; `code-oss-logs` resolves it).
+by OS; `codetysh-logs` resolves it).
 
 ## Open Questions
 
@@ -650,7 +650,7 @@ session and folded into Decisions above.)*
 - Phase 12 closeout (subagent `_meta` precedent):
   [`phase12-plan.md`](./phase12-plan.md).
 - Glossary: [`CONTEXT.md`](./CONTEXT.md).
-- E2E skills used: `launch`, `code-oss-logs`.
+- E2E skills used: `launch`, `codetysh-logs`.
 
 ## Self-check
 
@@ -659,7 +659,7 @@ session and folded into Decisions above.)*
 - [x] Decisions captured.
 - [x] Out of scope explicit.
 - [x] Verification names concrete commands and skills.
-- [x] E2E references real skills (`launch`, `code-oss-logs`).
+- [x] E2E references real skills (`launch`, `codetysh-logs`).
 - [x] An agent reading only this file can implement.
 
 ## Implementation Notes
@@ -757,7 +757,7 @@ Tests:
 
 Ran against a `claude-code [Local]` workspace using the `launch`
 skill (Playwright/CDP into the Agents window) and the
-`code-oss-logs` skill (agent-host action stream). The Claude agent
+`codetysh-logs` skill (agent-host action stream). The Claude agent
 resolved to `claude-sonnet-4-6` for the validated turn.
 
 **Validated live (terminal + generic + file-link):** prompt *"Use

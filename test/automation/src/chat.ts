@@ -588,7 +588,7 @@ export class Chat {
  * neither is matched here. We verify the first text button actually reads
  * "Allow" before clicking to avoid ever hitting "Skip".
  *
- * Uses the VS Code driver (`getElements`/`click`) rather than a raw Playwright
+ * Uses the tysh driver (`getElements`/`click`) rather than a raw Playwright
  * locator: the confirmation renders outside the chat response/editor
  * containers, and the driver reliably resolves it workbench-wide.
  */

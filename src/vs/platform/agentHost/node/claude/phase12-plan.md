@@ -298,12 +298,12 @@ Note: **no changes to `claudeSessionMetadataStore.ts`**. Persistence dropped per
 - `typecheck-client` clean, `valid-layers-check` clean.
 
 ### E2E
-The workspace has the [launch skill](../../../../../../.agents/skills/launch/SKILL.md) (Playwright-driven Code OSS automation) and [code-oss-logs skill](../../../../../../.github/skills/code-oss-logs/SKILL.md) (find and read dev-build logs). Smoke scenario:
+The workspace has the [launch skill](../../../../../../.agents/skills/launch/SKILL.md) (Playwright-driven Code OSS automation) and [codetysh-logs skill](../../../../../../.github/skills/codetysh-logs/SKILL.md) (find and read dev-build logs). Smoke scenario:
 
 1. Use the **launch** skill to start Code OSS with the agent host enabled and a Claude session open.
 2. Send a prompt that the model is likely to delegate via `Agent` (e.g. "use the Agent tool to list files in /tmp").
 3. Watch for the subagent marker rendering in the parent transcript and confirm the workbench can drill into the subagent session and see its turns.
-4. Use the **code-oss-logs** skill to inspect agent-host logs for `[AgentSideEffects] Creating subagent session` and the absence of buffered-signal warnings; also confirm a `claude.subagent.resolved_via.<strategy>` telemetry counter incremented.
+4. Use the **codetysh-logs** skill to inspect agent-host logs for `[AgentSideEffects] Creating subagent session` and the absence of buffered-signal warnings; also confirm a `claude.subagent.resolved_via.<strategy>` telemetry counter incremented.
 5. Restart Code OSS; reopen the same parent session; click into the same subagent marker; confirm the transcript still loads (this exercises the cold path through the resolver chain + priming).
 
 If the live model rarely invokes the `Agent` tool in a deterministic way, fall back to a `MockAgent`-driven scenario (`scripts/code-agent-host.js --enable-mock-agent`) that synthesises an Agent turn and a paired subagent transcript on disk.
@@ -494,7 +494,7 @@ Validation: 138 unit tests green (was 137; +1 regression). Full type-check + lay
 - SDK type pointers: `CanUseTool.agentID` [`sdk.d.ts:187`](../../../../../../node_modules/@anthropic-ai/claude-agent-sdk/sdk.d.ts#L187), `BaseHookInput.agent_id` [`sdk.d.ts:131`](../../../../../../node_modules/@anthropic-ai/claude-agent-sdk/sdk.d.ts#L131), `SessionMessage.parent_tool_use_id: null` [`sdk.d.ts:3566`](../../../../../../node_modules/@anthropic-ai/claude-agent-sdk/sdk.d.ts#L3566) (the typing trap — actually accurate per Q11), `forwardSubagentText` [`sdk.d.ts:1376-1379`](../../../../../../node_modules/@anthropic-ai/claude-agent-sdk/sdk.d.ts#L1376), `SessionKey.subpath` [`sdk.d.ts:3540-3555`](../../../../../../node_modules/@anthropic-ai/claude-agent-sdk/sdk.d.ts#L3540).
 - Phase 13 mapper this phase reuses: [`claudeReplayMapper.ts`](./claudeReplayMapper.ts).
 - Validators for `PromptMatchStrategy`: [`claudeSessionSchema.ts`](../../../../../../extensions/copilot/src/extension/chatSessions/claude/node/sessionParser/claudeSessionSchema.ts) — `vObj`, `vString`, `vNullable`, `vUuid`. No `as any` casts.
-- E2E skills used: [launch](../../../../../../.agents/skills/launch/SKILL.md), [code-oss-logs](../../../../../../.github/skills/code-oss-logs/SKILL.md).
+- E2E skills used: [launch](../../../../../../.agents/skills/launch/SKILL.md), [codetysh-logs](../../../../../../.github/skills/codetysh-logs/SKILL.md).
 
 ## Council review record
 
@@ -617,7 +617,7 @@ keyed by `parentUri` everywhere) into a per-session domain model:
 
 The two scenarios from the roadmap's "Manual end-to-end validation"
 section were executed end-to-end against the live SDK via the
-`launch` skill and `code-oss-logs` skill:
+`launch` skill and `codetysh-logs` skill:
 
 1. **Live spawn.** Launched the Agents window, switched the agent
    picker to **Claude**, sent *"Spin up 2 subagents that do something,

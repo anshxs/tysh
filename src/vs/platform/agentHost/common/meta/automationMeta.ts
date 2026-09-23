@@ -14,7 +14,7 @@ export function isAgentHostAutomationCatalogMigrated(source: IHasAutomationMeta)
 	return readAutomationMetaSlot(source, AGENT_HOST_AUTOMATION_CATALOG_MIGRATED_META_KEY) === true;
 }
 
-/** Whether an Automation definition was imported from VS Code's legacy store. */
+/** Whether an Automation definition was imported from tysh's legacy store. */
 export function isAgentHostLegacyAutomationImport(source: IHasAutomationMeta | undefined): boolean {
 	return source !== undefined && readAutomationMetaSlot(source, AGENT_HOST_LEGACY_AUTOMATION_IMPORT_META_KEY) === true;
 }

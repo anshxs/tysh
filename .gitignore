@@ -21,7 +21,7 @@ test-results/
 test-results.xml
 vscode.lsif
 vscode.db
-/.profile-oss
+/.profiletysh
 /cli/target
 /cli/openssl
 product.overrides.json

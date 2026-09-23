@@ -149,8 +149,8 @@ export const config = {
 	darwinIcon: 'resources/darwin/code.icns',
 	darwinBundleIdentifier: product.darwinBundleIdentifier,
 	darwinApplicationCategoryType: 'public.app-category.developer-tools',
-	darwinHelpBookFolder: 'VS Code HelpBook',
-	darwinHelpBookName: 'VS Code HelpBook',
+	darwinHelpBookFolder: 'tysh HelpBook',
+	darwinHelpBookName: 'tysh HelpBook',
 	darwinBundleDocumentTypes: [
 		...darwinBundleDocumentTypes({ 'C header file': 'h', 'C source code': 'c' }, 'c'),
 		...darwinBundleDocumentTypes({ 'Git configuration file': ['gitattributes', 'gitconfig', 'gitignore'] }, 'config'),
@@ -191,7 +191,7 @@ export const config = {
 		// Default icon with specified names
 		...darwinBundleDocumentTypes({
 			'Clojure source code': ['clj', 'cljs', 'cljx', 'clojure'],
-			'VS Code workspace file': 'code-workspace',
+			'tysh workspace file': 'code-workspace',
 			'CoffeeScript source code': 'coffee',
 			'Comma Separated Values': 'csv',
 			'CMake script': 'cmake',
@@ -270,7 +270,7 @@ async function main(arch: string = process.arch): Promise<void> {
 	await util.streamToPromise(getElectron(arch)());
 }
 
-if (import.meta.main) {
+if (import.meta.main || (process.argv[1] && path.resolve(process.argv[1]) === import.meta.filename)) {
 	main(process.argv[2]).catch(err => {
 		console.error(err);
 		process.exit(1);

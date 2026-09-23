@@ -549,6 +549,20 @@ suite('ExtensionsWorkbenchServiceTest', () => {
 		assert.equal(await testObject.canInstall(target), true);
 	});
 
+	test('test canInstall returns false for theme extension', async () => {
+		const local = aLocalExtension('theme-ext', { version: '1.0.1' }, { type: ExtensionType.User });
+		instantiationService.stubPromise(IExtensionManagementService, 'getInstalled', [local]);
+		const gallery = aGalleryExtension(local.manifest.name, { identifier: local.identifier, categories: ['Themes'] });
+		instantiationService.stubPromise(IExtensionGalleryService, 'query', aPage(gallery));
+		instantiationService.stubPromise(IExtensionGalleryService, 'getCompatibleExtension', gallery);
+		instantiationService.stubPromise(IExtensionGalleryService, 'getExtensions', [gallery]);
+		testObject = await aWorkbenchService();
+		const target = testObject.local[0];
+
+		await Event.toPromise(Event.filter(testObject.onChange, e => !!e?.gallery));
+		assert.ok(await testObject.canInstall(target) !== true);
+	});
+
 	test('test onchange event is triggered while installing', async () => {
 		const gallery = aGalleryExtension('gallery1');
 		testObject = await aWorkbenchService();

@@ -336,7 +336,7 @@ export function isSupportedChatFileScheme(accessor: ServicesAccessor, scheme: st
 }
 
 /**
- * Returns the effective default session type for a new chat in the VS Code
+ * Returns the effective default session type for a new chat in the tysh
  * editor window.
  *
  * Virtual workspaces always default to {@link localChatSessionType}. Otherwise,

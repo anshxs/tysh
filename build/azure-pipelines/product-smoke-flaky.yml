@@ -1,6 +1,6 @@
 # Scheduled flaky-detection pipeline.
 #
-# Builds VS Code from source once per platform (Linux, Windows and macOS), then
+# Builds tysh from source once per platform (Linux, Windows and macOS), then
 # fans out to parallel Unit/Integration/Smoke jobs that download and reuse that
 # build instead of recompiling. Each job repeats its suite 20 times, with each
 # repetition as its own step (continueOnError) so a single flaky failure does not

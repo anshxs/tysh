@@ -62,7 +62,7 @@ Always add a comment explaining *why* the gate exists. Also add or update the co
 
 New Agent Host E2E tests are not ready to merge after local replay alone. Push the branch, open or update a draft PR, then use the `azure-pipelines` skill to validate the real packaged Electron integration-test path.
 
-1. Queue VS Code pipeline definition `111` with `VSCODE_BUILD_TYPE=CI`; enable Windows, Linux, and macOS x64 while disabling publishing, release, Web, ARM, Alpine, and Snap artifacts. The `azure-pipelines` skill contains the canonical command.
+1. Queue tysh pipeline definition `111` with `VSCODE_BUILD_TYPE=CI`; enable Windows, Linux, and macOS x64 while disabling publishing, release, Web, ARM, Alpine, and Snap artifacts. The `azure-pipelines` skill contains the canonical command.
 2. Monitor jobs as they finish. Inspect a failed platform's Electron integration-test task immediately rather than waiting for unrelated stages to complete.
 3. Treat the Agent Host E2E result as accepted only when the Electron integration tests succeed on Windows, Linux, and macOS.
 4. Rerun an apparently unrelated or pre-existing failure in isolation before attributing it to the PR.

@@ -203,7 +203,7 @@
 		]
 	},
 	{
-		"name": "multifile-edit-claude [panel] [typescript] - add a command and dependency to a VS Code extension - (claude-sonnet-4.5)",
+		"name": "multifile-edit-claude [panel] [typescript] - add a command and dependency to a tysh extension - (claude-sonnet-4.5)",
 		"requests": [
 			"02fd54b4985318a5cf7b60bc27f2d4a9952863bbe6e9b62ce5a98e85fd86a252",
 			"0c3d39ba60529efe983dc826b9d1b440777918f58b69f910ea06e2b2d8050b9c",

@@ -25,7 +25,7 @@ interface Section {
 
 export function collectCompletionDiagnostics(accessor: ServicesAccessor, telemetry: TelemetryData | undefined, opportunityId?: string): Report {
 	const telemetryItems: SectionItems = {};
-	// The opportunity ID (VS Code core's `InlineCompletionContext.requestUuid`) is sourced from the shown
+	// The opportunity ID (tysh core's `InlineCompletionContext.requestUuid`) is sourced from the shown
 	// item rather than `telemetry.properties.opportunityId`, since the latter can be stale for cached or
 	// typing-as-suggested completions whose telemetry is derived from an earlier request.
 	if (opportunityId) {

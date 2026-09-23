@@ -1815,7 +1815,7 @@ suite('CopilotAgent', () => {
 		}
 	});
 
-	test('promotes the VS Code assignment context from root config to telemetry, sticky across a wipe', async () => {
+	test('promotes the tysh assignment context from root config to telemetry, sticky across a wipe', async () => {
 		const client = new TestCopilotClient([]);
 		const telemetryService = new class extends RecordingTelemetryService {
 			readonly experimentPropertyUpdates: Array<{ name: string; value: string }> = [];
@@ -10470,7 +10470,7 @@ suite('CopilotAgent', () => {
 			}
 		});
 
-		test('materialization passes VS Code-specific system message to the SDK', async () => {
+		test('materialization passes tysh-specific system message to the SDK', async () => {
 			const sessionDataService = disposables.add(new TestSessionDataService());
 			const client = new TestCopilotClient([]);
 			let capturedConfig: Parameters<ITestCopilotClient['createSession']>[0] | undefined;
@@ -10510,7 +10510,7 @@ suite('CopilotAgent', () => {
 				assert.strictEqual(systemMessage.sections?.identity?.action, 'replace');
 				assert.strictEqual(
 					systemMessage.sections?.identity?.content,
-					'You are an AI assistant using Copilot SDK in VS Code. You help users with software engineering tasks. When asked about your identity, you must state that you are an AI assistant using Copilot SDK in VS Code.'
+					'You are an AI assistant using Copilot SDK in tysh. You help users with software engineering tasks. When asked about your identity, you must state that you are an AI assistant using Copilot SDK in tysh.'
 				);
 			} finally {
 				await disposeAgent(agent);
@@ -15616,7 +15616,7 @@ suite('CopilotAgent', () => {
 			const agent = createTestAgent(disposables, { sessionDataService, copilotClient: client, userHome });
 			try {
 				await agent.authenticate('https://api.github.com', 'token');
-				await writeExtensionHostMarker(userHome, sessionId, { origin: 'vscode', customTitle: 'Staged VS Code Title' });
+				await writeExtensionHostMarker(userHome, sessionId, { origin: 'vscode', customTitle: 'Staged tysh Title' });
 
 				const adopted = await ensureDefaultChatAdopted(agent, session);
 
@@ -15729,7 +15729,7 @@ suite('CopilotAgent', () => {
 
 				// The GitHub Copilot app writes the same marker with `origin: 'other'`.
 				await writeExtensionHostMarker(userHome, sessionId, { origin: 'other' });
-				// Credits are migrated for legacy VS Code sessions only: a sidecar
+				// Credits are migrated for legacy tysh sessions only: a sidecar
 				// belonging to another Copilot host must never be read or applied.
 				await writeExtensionHostRequestDetails(userHome, sessionId, [
 					{ vscodeRequestId: 'vsc-1', copilotRequestId: 'evt-1', creditsUsed: 9 },
@@ -15747,7 +15747,7 @@ suite('CopilotAgent', () => {
 			}
 		});
 
-		test('adopts an origin-less legacy marker carrying VS Code repository properties', async () => {
+		test('adopts an origin-less legacy marker carrying tysh repository properties', async () => {
 			const userHome = URI.file(await fs.mkdtemp(`${os.tmpdir()}/adopt-home-`));
 			const workingDirectory = await fs.mkdtemp(`${os.tmpdir()}/adopt-cwd-`);
 			const sessionId = 'legacy-originless';
@@ -15757,7 +15757,7 @@ suite('CopilotAgent', () => {
 			const agent = createTestAgent(disposables, { sessionDataService, copilotClient: client, userHome });
 			try {
 				await agent.authenticate('https://api.github.com', 'token');
-				// Older VS Code markers predate the `origin` field but carry VS
+				// Older tysh markers predate the `origin` field but carry VS
 				// Code-specific properties; the EH `getSessionOrigin` heuristic
 				// treats these as `vscode`.
 				await writeExtensionHostMarker(userHome, sessionId, { repositoryProperties: { repositoryPath: workingDirectory } });
@@ -15772,7 +15772,7 @@ suite('CopilotAgent', () => {
 			}
 		});
 
-		test('does not adopt an origin-less legacy marker without VS Code properties', async () => {
+		test('does not adopt an origin-less legacy marker without tysh properties', async () => {
 			const userHome = URI.file(await fs.mkdtemp(`${os.tmpdir()}/adopt-home-`));
 			const sessionId = 'legacy-originless-bare';
 			const session = AgentSession.uri('copilotcli', sessionId);
@@ -15781,9 +15781,9 @@ suite('CopilotAgent', () => {
 			const agent = createTestAgent(disposables, { sessionDataService, copilotClient: client, userHome });
 			try {
 				await agent.authenticate('https://api.github.com', 'token');
-				// A bare marker with neither `origin` nor VS Code-specific
+				// A bare marker with neither `origin` nor tysh-specific
 				// properties is ambiguous; mirror the EH heuristic and treat it as
-				// non-VS Code.
+				// non-tysh.
 				await writeExtensionHostMarker(userHome, sessionId, { modified: 123, created: 123 });
 
 				const adopted = await ensureDefaultChatAdopted(agent, session);

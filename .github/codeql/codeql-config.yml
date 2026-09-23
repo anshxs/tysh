@@ -54,7 +54,7 @@ paths-ignore:
   - 'extensions/copilot/src/sanity-test-extension.ts'
   - 'extensions/copilot/src/shared-fetch-utils/**/test/**'
   - 'extensions/copilot/src/test-extension.ts'
-  # Standalone chat-lib rewrites runtime VS Code API imports to util/common/test/shims.
+  # Standalone chat-lib rewrites runtime tysh API imports to util/common/test/shims.
   # These are required runtime dependencies, not tests; exclude only their test-only siblings.
   - 'extensions/copilot/src/util/common/test/annotatedSrc.ts'
   - 'extensions/copilot/src/util/common/test/mockChatResponseStream.ts'

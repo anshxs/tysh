@@ -1,6 +1,6 @@
 ---
 name: flaky-smoke-tests
-description: Diagnose intermittent VS Code Electron smoke-test failures from the Azure DevOps Flaky Smoke Tests pipeline (definition 700). Covers finding failed iterations, downloading task logs and platform artifacts with Azure CLI, correlating cumulative runner logs, tracing the introducing commit, and queueing focused validation runs.
+description: Diagnose intermittent tysh Electron smoke-test failures from the Azure DevOps Flaky Smoke Tests pipeline (definition 700). Covers finding failed iterations, downloading task logs and platform artifacts with Azure CLI, correlating cumulative runner logs, tracing the introducing commit, and queueing focused validation runs.
 ---
 
 # Diagnosing Flaky Smoke Tests
@@ -13,7 +13,7 @@ Use this skill for failures from the Azure DevOps **Flaky Smoke Tests** pipeline
 - Pipeline YAML: `build/azure-pipelines/product-smoke-flaky.yml`
 - Scheduled runs: twice daily on `main`
 
-The pipeline builds VS Code from source and runs the complete Electron smoke suite once per entry in the `iterations` parameter. Each platform runs its iterations sequentially in one job.
+The pipeline builds tysh from source and runs the complete Electron smoke suite once per entry in the `iterations` parameter. Each platform runs its iterations sequentially in one job.
 
 ## Important Pipeline Behavior
 

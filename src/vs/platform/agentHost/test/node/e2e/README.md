@@ -6,7 +6,7 @@ They do this by recording the model traffic once (against real CAPI) into commit
 
 > **New here?** Read [Mental model](#mental-model), then [Running the tests](#running-the-tests). Writing a test? Jump to [Writing a new test](#writing-a-new-test). CI is red? Jump to [Troubleshooting](#troubleshooting).
 
-> These are **e2e tests**. The `*.integrationTest.ts` file suffix and `test-integration.sh` script are just the VS Code test-runner conventions they hook into.
+> These are **e2e tests**. The `*.integrationTest.ts` file suffix and `test-integration.sh` script are just the tysh test-runner conventions they hook into.
 
 ---
 
@@ -60,7 +60,7 @@ Key properties:
 - **Strict on replay**: a request with no recorded response is a hard cache miss that fails the test — CI can never silently reach real CAPI.
 - **Complete on replay**: every recorded model response must be consumed before teardown, so a provider that stops early cannot pass by leaving the remainder of its fixture unused.
 - **Ancillary bootstrap endpoints are stubbed, not recorded** (see [What's stubbed](#whats-stubbed-vs-recorded)) — keeps identity, tokens, and the model catalog out of fixtures.
-- **Isolated persistent state**: each provider suite uses a temporary home and VS Code user-data directory. Provider config roots resolve under that home, with ambient overrides such as `CLAUDE_CONFIG_DIR` and `CODEX_HOME` cleared, so local config, MCP servers, and session state cannot affect the run. Teardown removes the directory after the agent host exits.
+- **Isolated persistent state**: each provider suite uses a temporary home and tysh user-data directory. Provider config roots resolve under that home, with ambient overrides such as `CLAUDE_CONFIG_DIR` and `CODEX_HOME` cleared, so local config, MCP servers, and session state cannot affect the run. Teardown removes the directory after the agent host exits.
 
 ---
 
@@ -226,7 +226,7 @@ Provider availability:
 
 Each test needs an agent host server (a forked subprocess) fronted by a `CapiReplayProxy`. `AgentHostE2EServerLease` (in `harness/agentHostE2ETestHarness.ts`) owns that lifecycle and picks one of two strategies:
 
-The lease also owns isolated data directories. Servers normally share one directory as their home and VS Code user-data directory, with provider-specific config overrides prevented from escaping it, so both shared and provider-specific scenarios are isolated from developer-machine configuration.
+The lease also owns isolated data directories. Servers normally share one directory as their home and tysh user-data directory, with provider-specific config overrides prevented from escaping it, so both shared and provider-specific scenarios are isolated from developer-machine configuration.
 
 On Windows, test-server cleanup records descendants before requesting graceful shutdown and terminates any survivors after the server exits, before temporary directories are removed. Recording descendants and waiting for graceful exit share the existing shutdown deadline.
 

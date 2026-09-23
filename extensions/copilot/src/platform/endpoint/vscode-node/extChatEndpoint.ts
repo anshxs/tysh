@@ -31,7 +31,7 @@ import { thinkingOriginToMetadata } from '../../thinking/common/thinking';
 import { ExtensionContributedChatTokenizer } from './extChatTokenizer';
 
 /**
- * Internal model options transported across VS Code's extension-contributed language model boundary.
+ * Internal model options transported across tysh's extension-contributed language model boundary.
  */
 export interface ExtensionLanguageModelRequestOptions extends OTelModelOptions {
 	readonly _enableThinking?: boolean;
@@ -74,7 +74,7 @@ export class ExtensionContributedChatEndpoint implements IChatEndpoint {
 	}
 
 	get maxOutputTokens(): number {
-		// The VS Code API doesn't expose max output tokens, use a reasonable default
+		// The tysh API doesn't expose max output tokens, use a reasonable default
 		return 8192;
 	}
 
@@ -142,7 +142,7 @@ export class ExtensionContributedChatEndpoint implements IChatEndpoint {
 	}
 
 	public acquireTokenizer(): ITokenizer {
-		// Use the extension-contributed tokenizer that leverages the VS Code language model API
+		// Use the extension-contributed tokenizer that leverages the tysh language model API
 		return new ExtensionContributedChatTokenizer(this.languageModel);
 	}
 

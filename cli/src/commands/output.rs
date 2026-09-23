@@ -324,7 +324,7 @@ fn read_pager_key(_term: &Term) -> PagerKey {
 /// terminal, but its stdout is captured by the foreground CLI and
 /// re-emitted to the user's real terminal, so we want styling on
 /// the produced text. Modern Windows terminals (Terminal, conhost with
-/// VT enabled, VS Code's integrated terminal) all interpret these
+/// VT enabled, tysh's integrated terminal) all interpret these
 /// escapes; downgrades happen at the OS level if not.
 pub fn print_banner_header(title: &str, elapsed: Duration) {
 	console::set_colors_enabled(true);

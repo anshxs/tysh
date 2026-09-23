@@ -9,4 +9,4 @@
  * WARNING: Do not move or rename this file.
  */
 export const LICENSE_AGREEMENT: string | undefined = undefined;
-export const INTEGRATION_ID: string = 'code-oss';
+export const INTEGRATION_ID: string = 'codetysh';

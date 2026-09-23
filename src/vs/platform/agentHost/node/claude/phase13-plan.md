@@ -134,13 +134,13 @@ Fork support (Phase 6.5) is explicitly *not* a Phase 13 concern. The earlier pla
   - SDK throw → returns `[]` and logs a warning.
 - **Hygiene** (per [.github/copilot-instructions.md](../../../../../../.github/copilot-instructions.md)): `typecheck-client` clean, `valid-layers-check` clean, `npm run eslint` clean, `npm run gulp hygiene` clean.
 
-Run via VS Code's `runTests` tool against the test files, or fall back to `scripts/test.sh --grep "Phase 13|getSessionMessages|claudeReplayMapper"`.
+Run via tysh's `runTests` tool against the test files, or fall back to `scripts/test.sh --grep "Phase 13|getSessionMessages|claudeReplayMapper"`.
 
 ### E2E
 
 Workspace skills available for E2E:
 - **Launch skill**: [`launch`](../../../../../../.agents/skills/launch/SKILL.md) — Playwright-driven Code OSS automation.
-- **Log skill**: [`code-oss-logs`](../../../../../../.github/skills/code-oss-logs/SKILL.md) — read agent host / renderer logs from dev builds.
+- **Log skill**: [`codetysh-logs`](../../../../../../.github/skills/codetysh-logs/SKILL.md) — read agent host / renderer logs from dev builds.
 
 **Scenario — restart-and-restore:**
 1. Use `launch` to start Code OSS Agents (`./scripts/code.sh --agents`), open the Agents window, create a new Claude session, send a prompt that triggers at least one tool call (e.g., "list files in the current directory" → `Bash` or `Read`).
@@ -148,7 +148,7 @@ Workspace skills available for E2E:
 3. Close the Agents window (do not quit the agent host process initially).
 4. Re-open the same session via the sessions sidebar.
 5. Confirm the full turn (user message + assistant text + tool call card) renders identically. Screenshot for comparison.
-6. Use `code-oss-logs` to read `agenthost.log` for the run; grep for `[Claude]` warnings during `getSessionMessages` — none expected on the happy path.
+6. Use `codetysh-logs` to read `agenthost.log` for the run; grep for `[Claude]` warnings during `getSessionMessages` — none expected on the happy path.
 7. Quit and relaunch the agent host (`Run and Compile Agents - OSS`). Re-open the same session. Confirm restoration still works (no in-memory `_sessions` entry).
 8. Append a new turn to the restored session and confirm it lands cleanly (validates that a restored session can still take new messages).
 
@@ -169,7 +169,7 @@ _None remaining._ All grilling-phase questions resolved — see Decisions table.
 - Copilot reference: [../copilot/copilotAgent.ts](../copilot/copilotAgent.ts) `getSessionMessages` (line 1056), [../copilot/copilotAgentSession.ts](../copilot/copilotAgentSession.ts) `getMessages` (line 776), [../copilot/mapSessionEvents.ts](../copilot/mapSessionEvents.ts)
 - Production-extension reference (verify, do not port directly): [`extensions/copilot/src/extension/chatSessions/claude/node/sessionParser/sdkSessionAdapter.ts`](../../../../../../extensions/copilot/src/extension/chatSessions/claude/node/sessionParser/sdkSessionAdapter.ts), [`claudeCodeSdkService.ts`](../../../../../../extensions/copilot/src/extension/chatSessions/claude/node/claudeCodeSdkService.ts) `getSessionMessages` wrapper
 - Related plans: [phase5-plan.md](./phase5-plan.md) (`IClaudeSessionTranscriptStore` deferral note at line 367), [phase6-plan.md](./phase6-plan.md), [phase9-plan.md](./phase9-plan.md), [phase6.1-plan.md](./phase6.1-plan.md)
-- E2E skills: [launch](../../../../../../.agents/skills/launch/SKILL.md), [code-oss-logs](../../../../../../.github/skills/code-oss-logs/SKILL.md)
+- E2E skills: [launch](../../../../../../.agents/skills/launch/SKILL.md), [codetysh-logs](../../../../../../.github/skills/codetysh-logs/SKILL.md)
 - Council models consulted: GPT-5.5, Claude Opus 4.6, GPT-5.3-Codex (3 independent plans synthesized into the Decisions table above)
 
 ## Implementation Notes

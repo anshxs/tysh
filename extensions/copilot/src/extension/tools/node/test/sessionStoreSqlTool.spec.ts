@@ -477,7 +477,7 @@ describe('SessionStoreSqlTool', () => {
 				'### Cost Tips',
 				'usage_input_tokens', 'usage_output_tokens', 'usage_model',
 				'agent_name',
-				`'VS Code Chat'`,
+				`'tysh Chat'`,
 				`'GitHub Copilot Chat'`,
 				'assistant.usage',
 				'local SQLite',

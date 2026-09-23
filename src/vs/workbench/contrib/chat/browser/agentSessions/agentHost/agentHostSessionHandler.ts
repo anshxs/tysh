@@ -174,8 +174,8 @@ type AgentHostInvocationFailedClassification = {
 	hasUserSelectedModel: { classification: 'SystemMetaData'; purpose: 'PerformanceAndHealth'; isMeasurement: true; comment: 'Whether the workbench request carried a selected language model identifier.' };
 	errorName: { classification: 'CallstackOrException'; purpose: 'PerformanceAndHealth'; comment: 'The name of the exception.' };
 	errorCode: { classification: 'CallstackOrException'; purpose: 'PerformanceAndHealth'; comment: 'The exception or protocol error code, when available.' };
-	msg: { classification: 'CallstackOrException'; purpose: 'PerformanceAndHealth'; comment: 'The error message. VS Code telemetry scrubs file paths and likely secrets before transmission.' };
-	callstack: { classification: 'CallstackOrException'; purpose: 'PerformanceAndHealth'; comment: 'The error stack. VS Code telemetry scrubs file paths and likely secrets before transmission.' };
+	msg: { classification: 'CallstackOrException'; purpose: 'PerformanceAndHealth'; comment: 'The error message. tysh telemetry scrubs file paths and likely secrets before transmission.' };
+	callstack: { classification: 'CallstackOrException'; purpose: 'PerformanceAndHealth'; comment: 'The error stack. tysh telemetry scrubs file paths and likely secrets before transmission.' };
 	owner: 'roblourens';
 	comment: 'Captures errors that prevent an agent host request from reaching a terminal host turn.';
 };
@@ -6268,7 +6268,7 @@ export class AgentHostSessionHandler extends Disposable implements IChatSessionC
 			}
 			const dirs = state?.workingDirectories;
 			if (state && dirs !== undefined) {
-				// Inherit trust for a VS Code-created worktree from the trusted base
+				// Inherit trust for a tysh-created worktree from the trusted base
 				// repository so the gate does not prompt for it. Done here (the gate
 				// already read the state) so `_ensureFoldersTrusted` short-circuits.
 				await this._inheritWorktreeTrust(state);
@@ -6279,7 +6279,7 @@ export class AgentHostSessionHandler extends Disposable implements IChatSessionC
 	}
 
 	/**
-	 * Grants (and persists) trust for a worktree-isolated session's VS Code-created
+	 * Grants (and persists) trust for a worktree-isolated session's tysh-created
 	 * worktree when the base repository the user already trusts is trusted, so the
 	 * trust gate does not prompt for the worktree.
 	 *

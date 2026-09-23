@@ -53,11 +53,11 @@ const myLogger = new Logger('CopilotInlineCompletionItemProvider');
 
 export function exception(accessor: ServicesAccessor, error: unknown, origin: string, logger?: Logger) {
 	if (error instanceof Error && error.name === 'Canceled') {
-		// these are VS Code cancellations
+		// these are tysh cancellations
 		return;
 	}
 	if (error instanceof Error && error.name === 'CodeExpectedError') {
-		// expected errors from VS Code
+		// expected errors from tysh
 		return;
 	}
 	const telemetryService = accessor.get(ICompletionsTelemetryService);
@@ -161,9 +161,9 @@ export class CopilotInlineCompletionItemProvider extends Disposable implements I
 		const copilotConfig = workspace.getConfiguration(CopilotConfigPrefix);
 		// Constraining the generated inline completion to match selectedCompletionInfo sandbags Copilot pretty hard, as
 		// typically it's just the first entry in the list alphabetically.  But if we generate a result that doesn't
-		// match it, VS Code won't show it to the user unless the completion dropdown is dismissed. Historically we've
+		// match it, tysh won't show it to the user unless the completion dropdown is dismissed. Historically we've
 		// chosen to favor completion quality, but this option allows opting into or out of generating a completion that
-		// VS Code will actually show.
+		// tysh will actually show.
 		if (!copilotConfig.get('respectSelectedCompletionInfo', quickSuggestionsDisabled() || BuildInfo.isPreRelease())) {
 			context = { ...context, selectedCompletionInfo: undefined };
 		}

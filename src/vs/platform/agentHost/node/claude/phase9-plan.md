@@ -346,7 +346,7 @@ npm run valid-layers-check
 
 ### E2E
 
-Use the **`launch`** skill (personal, `~/.agents/skills/launch/`) and the **`code-oss-logs`** skill (`.github/skills/code-oss-logs/`).
+Use the **`launch`** skill (personal, `~/.agents/skills/launch/`) and the **`codetysh-logs`** skill (`.github/skills/codetysh-logs/`).
 
 **Scenario A — abort + resend:**
 1. Launch Code OSS dev with a writable workspace.
@@ -373,7 +373,7 @@ Use the **`launch`** skill (personal, `~/.agents/skills/launch/`) and the **`cod
 2. Switch to `'max'` effort mid-session.
 3. Verify in log: warning containing `TODO(phase9-max-effort)` substring; subsequent `applyFlagSettings` call has `effortLevel: 'xhigh'`.
 
-If `verify-claude-logs.sh` exists by Phase 9 time, add a `--phase=9` assertion block; otherwise the `code-oss-logs` skill covers the assertion pattern.
+If `verify-claude-logs.sh` exists by Phase 9 time, add a `--phase=9` assertion block; otherwise the `codetysh-logs` skill covers the assertion pattern.
 
 ### Manual
 
@@ -391,7 +391,7 @@ None at plan-acceptance time. All six original open questions resolved during co
 - Production reference: `extensions/copilot/src/extension/chatSessions/claude/node/claudeCodeAgent.ts` (abort: 138, 274, 435, 719; restart: 451-460, 520-548, 676, 733-740; resume vs sessionId: 461)
 - Copilot reference: `node/copilot/copilotAgent.ts:1036-1050` (setPendingMessages), `:1242-1254` (changeModel); `copilotAgentSession.ts:800-803` (abort reusability), `:816-820` (setModel)
 - SDK type definitions: `node_modules/@anthropic-ai/claude-agent-sdk/sdk.d.ts` (Query.setModel, Query.applyFlagSettings, Query.setPermissionMode, Query.interrupt; SDKUserMessage.priority/uuid; Settings.effortLevel)
-- E2E skills: `launch` (workspace `.agents/skills/launch/`), `code-oss-logs` (repo)
+- E2E skills: `launch` (workspace `.agents/skills/launch/`), `codetysh-logs` (repo)
 
 ## Implementation Notes
 

@@ -5,7 +5,7 @@ They set `extensions.autoUpdate` to `on` in a fresh user-data directory and chec
 the value, editability, and organization-managed indicator with and without
 `ExtensionsAutoUpdate="off"`.
 
-Run only on a disposable test runner. A fresh VS Code profile does not isolate
+Run only on a disposable test runner. A fresh tysh profile does not isolate
 OS policy state:
 
 - Linux uses `/etc/vscode/policy.json`. Separate CI steps create `/etc/vscode`
@@ -22,7 +22,7 @@ Set `VSCODE_SMOKE_TEST_POLICY=1` in the test process environment
 and run `npm run smoketest-no-compile -- --tracing -g "Policy Plumbing"`.
 The desktop CI steps opt in explicitly and retain the usual npm invocation.
 The policy suite is disabled by default in ordinary local smoke runs because it
-modifies OS-level policy state outside the temporary VS Code profile. Running
+modifies OS-level policy state outside the temporary tysh profile. Running
 the smoke tests on a developer's machine must not accidentally overwrite or
 remove that machine's policies. Opt in only on a disposable runner or container;
 the fixtures additionally refuse existing policy state rather than overwrite it.

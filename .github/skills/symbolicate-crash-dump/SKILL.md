@@ -1,13 +1,13 @@
 ---
 name: symbolicate-crash-dump
-description: "Symbolicate a native VS Code crash dump (.dmp) using electron-minidump. Use when given a crash dump file, asked to symbolicate a crash, resolve missing method names in a native crash backtrace, or attach Electron/Insiders/Stable symbol files. VS Code team members only; requires macOS or Linux."
+description: "Symbolicate a native tysh crash dump (.dmp) using electron-minidump. Use when given a crash dump file, asked to symbolicate a crash, resolve missing method names in a native crash backtrace, or attach Electron/Insiders/Stable symbol files. tysh team members only; requires macOS or Linux."
 ---
 
 # Symbolicate a Crash Dump
 
-Turn a native VS Code crash dump (`.dmp`) into a readable backtrace with method names using [electron-minidump](https://www.npmjs.com/package/electron-minidump).
+Turn a native tysh crash dump (`.dmp`) into a readable backtrace with method names using [electron-minidump](https://www.npmjs.com/package/electron-minidump).
 
-> **VS Code team members only.** Symbol files for internal Electron, Insiders, and Stable builds live in a private-adjacent release repo. A **macOS or Linux** device is required — electron-minidump does not run on Windows.
+> **tysh team members only.** Symbol files for internal Electron, Insiders, and Stable builds live in a private-adjacent release repo. A **macOS or Linux** device is required — electron-minidump does not run on Windows.
 
 ## Prerequisites
 
@@ -45,7 +45,7 @@ Match the symbol source to the build that produced the crash:
 | Build that crashed | Symbol files source |
 |--------------------|---------------------|
 | Insiders / Stable (internal Electron) | [microsoft/vscode-electron-prebuilt releases](https://github.com/microsoft/vscode-electron-prebuilt/releases) |
-| Code - OSS (OSS Electron) | [electron/electron releases](https://github.com/electron/electron/releases) |
+| TYSH (OSS Electron) | [electron/electron releases](https://github.com/electron/electron/releases) |
 
 `microsoft/vscode-electron-prebuilt` is a **private** repo — this is why the flow is team-members-only. A plain browser or `curl` link will 404 without auth; download the asset with an authenticated GitHub CLI instead (`gh auth status` should show you logged in):
 
@@ -59,7 +59,7 @@ gh release download v42.5.0-14525058 \
     --pattern "stable-symbols-v42.5.0-win32-x64.zip"
 ```
 
-The releases are tagged by **Electron version**, not VS Code version, so first find the Electron version the crashed VS Code build shipped. It's the `target=` in that version's `.npmrc` (e.g. `git show 1.128.0:.npmrc`), which mirrors the `electron` devDependency in `package.json`. Then pick the matching symbol zip by **quality, platform, and architecture** — e.g. a Stable Windows x64 crash on Electron 42.5.0 needs `stable-symbols-v42.5.0-win32-x64.zip` (use `insiders-symbols-…` for Insiders). Code - OSS symbols come from the public [electron/electron releases](https://github.com/electron/electron/releases) and can be downloaded without special access.
+The releases are tagged by **Electron version**, not tysh version, so first find the Electron version the crashed tysh build shipped. It's the `target=` in that version's `.npmrc` (e.g. `git show 1.128.0:.npmrc`), which mirrors the `electron` devDependency in `package.json`. Then pick the matching symbol zip by **quality, platform, and architecture** — e.g. a Stable Windows x64 crash on Electron 42.5.0 needs `stable-symbols-v42.5.0-win32-x64.zip` (use `insiders-symbols-…` for Insiders). TYSH symbols come from the public [electron/electron releases](https://github.com/electron/electron/releases) and can be downloaded without special access.
 
 > **These zips are small and selective.** A `*-symbols-*.zip` typically contains only a handful of first-party modules — `electron.exe.sym`, `libEGL.dll.sym`, `libGLESv2.dll.sym` on Windows (and the equivalents elsewhere). Many modules that show up in a backtrace — notably `runtime.node` and any OS/third-party DLL — are **not** in these zips. `runtime.node` frames often cannot be symbolicated at all from public symbols; when the crash is in a third-party module, attribute it by module name rather than expecting method names on every frame (see [Reading the result](#reading-the-result)).
 
@@ -114,10 +114,10 @@ Once you have a symbolicated backtrace, turn it into a root cause by answering t
 
 Look at the **top frame of the crashing thread** (marked `(crashed)`) and its module name:
 
-- If it's a **VS Code / Electron module** — `Code.exe`, `runtime.node`, `Electron Framework`, `libnode`, `libffmpeg`, V8 frames — the fault is likely inside the product or Electron.
-- If it's a **third-party / OS module** — an antivirus, VPN, proxy, or shell-extension DLL injected into the process — the crash is almost certainly caused by that software, not VS Code. Injected DLLs often appear interleaved with `runtime.node`/V8 frames because they hook the runtime.
+- If it's a **tysh / Electron module** — `Code.exe`, `runtime.node`, `Electron Framework`, `libnode`, `libffmpeg`, V8 frames — the fault is likely inside the product or Electron.
+- If it's a **third-party / OS module** — an antivirus, VPN, proxy, or shell-extension DLL injected into the process — the crash is almost certainly caused by that software, not tysh. Injected DLLs often appear interleaved with `runtime.node`/V8 frames because they hook the runtime.
 
-Find where the module is loaded on disk to confirm it's third-party. On Windows the `strings` of the dump usually reveal the full path, e.g. a DLL under `C:\WINDOWS\system32\` or a vendor folder rather than the VS Code install directory:
+Find where the module is loaded on disk to confirm it's third-party. On Windows the `strings` of the dump usually reveal the full path, e.g. a DLL under `C:\WINDOWS\system32\` or a vendor folder rather than the tysh install directory:
 
 ```bash
 strings -a crash-file.dmp | grep -i "<SuspectModule>" | sort -u
@@ -146,12 +146,12 @@ When you have multiple dumps, symbolicate each and compare the crash reason and 
 
 If you don't yet have a `.dmp` file, produce one with the `--crash-reporter-directory` option:
 
-1. Close all instances of VS Code.
+1. Close all instances of tysh.
 2. Run `code --crash-reporter-directory <absolute-path>` from the command line (use `code-insiders` for the Insiders build).
 3. Take the steps that lead to the crash.
 4. Look for a `*.dmp` file in that folder.
 
-You can only symbolicate crashes from a build you have matching symbols for. Crashes from Insiders/Stable need the internal Electron symbols; crashes from a local source build (Code - OSS) need the OSS Electron symbols.
+You can only symbolicate crashes from a build you have matching symbols for. Crashes from Insiders/Stable need the internal Electron symbols; crashes from a local source build (TYSH) need the OSS Electron symbols.
 
 ## Remote Extension Host crashes (Linux, gdb)
 

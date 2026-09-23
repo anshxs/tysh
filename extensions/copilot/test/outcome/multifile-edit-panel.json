@@ -77,7 +77,7 @@
 		]
 	},
 	{
-		"name": "multifile-edit [panel] [typescript] - add a command and dependency to a VS Code extension",
+		"name": "multifile-edit [panel] [typescript] - add a command and dependency to a tysh extension",
 		"requests": [
 			"046f9275e20f4b6e1c67f336baaec298b82227531d0951ac13f4238cf03e2913",
 			"04869dc6123ea19ffc22c4d9e221a4b1be657ef60283d85d722cac8fa7a6aec3",

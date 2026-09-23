@@ -38,7 +38,7 @@ export interface IAccountLink {
  * mapping lives on GitHub's side and can move, so every use of a row re-checks where it points and
  * rewrites or drops it rather than trusting it.
  *
- * Rows are keyed by GitHub account label, the same thing VS Code itself keys an account by, and are
+ * Rows are keyed by GitHub account label, the same thing tysh itself keys an account by, and are
  * kept here rather than on each session so that two sessions for the same account share one row and
  * the row outlives them. A token running out is not the user saying they are done with that
  * identity, and neither is signing out of the Microsoft account: that takes away the way to act on

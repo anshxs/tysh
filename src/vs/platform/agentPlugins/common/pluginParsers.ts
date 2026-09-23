@@ -615,12 +615,12 @@ export function interpolateMcpPluginRoot(
 
 /**
  * Regex matching bare `${VAR_NAME}` references (uppercase only) that are NOT
- * using VS Code's `${env:VAR}` colon-delimited syntax.
+ * using tysh's `${env:VAR}` colon-delimited syntax.
  */
 const BARE_ENV_VAR_RE = /\$\{(?![A-Za-z]+:)([A-Z_][A-Z0-9_]*)\}/g;
 
 /**
- * Converts bare `${VAR}` environment-variable references to VS Code `${env:VAR}` syntax.
+ * Converts bare `${VAR}` environment-variable references to tysh `${env:VAR}` syntax.
  */
 export function convertBareEnvVarsToVsCodeSyntax(
 	def: IMcpServerDefinition,
@@ -642,11 +642,11 @@ export function convertBareEnvVarsToVsCodeSyntax(
 // ---------------------------------------------------------------------------
 
 /**
- * Maps known hook type identifiers from all formats (VS Code PascalCase,
+ * Maps known hook type identifiers from all formats (tysh PascalCase,
  * Copilot CLI camelCase, Claude PascalCase) to canonical identifiers.
  */
 const HOOK_TYPE_MAP: Record<string, string> = {
-	// PascalCase (VS Code / Claude)
+	// PascalCase (tysh / Claude)
 	'SessionStart': 'SessionStart',
 	'SessionEnd': 'SessionEnd',
 	'UserPromptSubmit': 'UserPromptSubmit',
@@ -1063,7 +1063,7 @@ function getInstructionFileName(resource: URI): string | undefined {
  * Reads rule/instruction files from plugin `rules` component directories.
  *
  * Open Plugins rules are conventionally `.mdc` files. We also accept
- * `.instructions.md` for compatibility with VS Code-discovered instructions
+ * `.instructions.md` for compatibility with tysh-discovered instructions
  * bundled as synthetic plugins.
  */
 export async function readInstructionComponents(

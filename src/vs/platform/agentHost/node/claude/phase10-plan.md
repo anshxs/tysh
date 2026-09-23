@@ -56,7 +56,7 @@ behavior the Copilot agent already ships.
   and uses yield-restart for the in-process tool path.
 - MCP gateway (`_gateway` / `_gatewayIdleTimeout`) lifecycle. **Roadmap
   correction (see Decisions):** the production extension's `_gateway` field is
-  the VS Code `McpGateway` adapter exposing external editor MCP servers over
+  the tysh `McpGateway` adapter exposing external editor MCP servers over
   HTTP — it has nothing to do with in-process tools built from
   `createSdkMcpServer`. There are no external resources to idle out here.
 - `setClientCustomizations` / `setCustomizationEnabled` (Phase 11).
@@ -724,7 +724,7 @@ _All Open Questions resolved during the grilling pass and the second council rev
 ### E2E
 Workspace launch/log skills available:
 - **Launch skill**: `launch` — Playwright-driven automation of Code OSS via Chrome DevTools Protocol. Drives the chat panel, switches agent, sends messages.
-- **Log skill**: `code-oss-logs` — finds and reads the renderer / extension host / **agent host** log files from the dev build.
+- **Log skill**: `codetysh-logs` — finds and reads the renderer / extension host / **agent host** log files from the dev build.
 - **Bonus**: `vscode-dev-workbench` — for browser-driven testing of the Agents window if needed.
 
 **Scenario** (Phase 10 acceptance):
@@ -734,7 +734,7 @@ Workspace launch/log skills available:
    (`session/activeClientToolsChanged`) with a minimal `ToolDefinition`
    (e.g. `name: 'echo'`, `inputSchema: { type:'object', properties:{ msg:{ type:'string' }}, required:['msg'] }`).
 4. Send a prompt that nudges Claude to call the tool: *"Use the `echo` tool with msg 'hello'"*.
-5. Verify via the `code-oss-logs` skill:
+5. Verify via the `codetysh-logs` skill:
    - Agent-host log line `[Claude] setClientTools` with the tool list.
    - Agent-host log line confirming `Options.mcpServers` was written at startup.
    - Workbench-side: the `echo` tool call surfaces in the chat as a tool-call card, the client responds, and Claude continues with the result.
@@ -751,7 +751,7 @@ Workspace launch/log skills available:
 - Production claude extension reference (templates only, do NOT port wholesale): [ideMcpServer.ts](extensions/copilot/src/extension/chatSessions/claude/common/mcpServers/ideMcpServer.ts), [claudeCodeAgent.ts:432-491](extensions/copilot/src/extension/chatSessions/claude/node/claudeCodeAgent.ts).
 - SDK types: [sdk.d.ts:2962-2969](node_modules/@anthropic-ai/claude-agent-sdk/sdk.d.ts) (`tool` signature), [sdk.d.ts:948-961](node_modules/@anthropic-ai/claude-agent-sdk/sdk.d.ts) (`McpSdkServerConfigWithInstance`), [sdk.d.ts:1442-1450](node_modules/@anthropic-ai/claude-agent-sdk/sdk.d.ts) (`Options.mcpServers`).
 - Protocol types: [state.ts:1551-1568](src/vs/platform/agentHost/common/state/protocol/state.ts) (`ToolDefinition`), [state.ts:1408-1427](src/vs/platform/agentHost/common/state/protocol/state.ts) (`ToolCallResult`).
-- E2E skills: `launch`, `code-oss-logs`, `vscode-dev-workbench`.
+- E2E skills: `launch`, `codetysh-logs`, `vscode-dev-workbench`.
 
 ## Implementation Notes
 
@@ -831,4 +831,4 @@ Workspace launch/log skills available:
 - No new private methods worth extracting as standalone functions.
 
 **E2E**
-- Live scenario deferred. The user will run the launch + code-oss-logs walkthrough manually after reviewing the code.
+- Live scenario deferred. The user will run the launch + codetysh-logs walkthrough manually after reviewing the code.

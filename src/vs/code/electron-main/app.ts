@@ -206,7 +206,7 @@ type OSProxyConfigClassification = {
 };
 
 /**
- * The main VS Code application. There will only ever be one instance,
+ * The main tysh application. There will only ever be one instance,
  * even if the user starts many instances (e.g. from the command line).
  */
 export class CodeApplication extends Disposable {
@@ -693,7 +693,7 @@ export class CodeApplication extends Disposable {
 
 	async startup(): Promise<void> {
 		mark('code/willStartCodeApplication');
-		this.logService.debug('Starting VS Code');
+		this.logService.debug('Starting tysh');
 		this.logService.debug(`from: ${this.environmentMainService.appRoot}`);
 		this.logService.debug('args:', this.environmentMainService.args);
 
@@ -708,7 +708,7 @@ export class CodeApplication extends Disposable {
 
 		// Fix native tabs on macOS 10.13
 		// macOS enables a compatibility patch for any bundle ID beginning with
-		// "com.microsoft.", which breaks native tabs for VS Code when using this
+		// "com.microsoft.", which breaks native tabs for tysh when using this
 		// identifier (from the official build).
 		// Explicitly opt out of the patch here before creating any windows.
 		// See: https://github.com/microsoft/vscode/issues/35361#issuecomment-399794085

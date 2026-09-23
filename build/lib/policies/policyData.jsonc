@@ -61,7 +61,7 @@
             "localization": {
                 "description": {
                     "key": "chat.agent.allowedNetworkDomains",
-                    "value": "Allowed domains for network access by agent tools (fetch tool, integrated browser). Applies when `#chat.agent.networkFilter#` or `#chat.agent.sandbox.enabled#` is enabled. When `#chat.agent.sandbox.allowNetwork#` is enabled, all domains are allowed. Supports wildcards like `*.example.com`. When both allowed and denied lists are empty, all domains are blocked. Denied domains (see `#chat.agent.deniedNetworkDomains#`) take precedence.\n\nChanges may not take full effect until VS Code is restarted."
+                    "value": "Allowed domains for network access by agent tools (fetch tool, integrated browser). Applies when `#chat.agent.networkFilter#` or `#chat.agent.sandbox.enabled#` is enabled. When `#chat.agent.sandbox.allowNetwork#` is enabled, all domains are allowed. Supports wildcards like `*.example.com`. When both allowed and denied lists are empty, all domains are blocked. Denied domains (see `#chat.agent.deniedNetworkDomains#`) take precedence.\n\nChanges may not take full effect until tysh is restarted."
                 }
             },
             "type": "array",
@@ -76,7 +76,7 @@
             "localization": {
                 "description": {
                     "key": "chat.agent.deniedNetworkDomains",
-                    "value": "Denied domains for network access by agent tools (fetch tool, integrated browser). Applies when `#chat.agent.networkFilter#` or `#chat.agent.sandbox.enabled#` is enabled. This does not apply when `#chat.agent.sandbox.allowNetwork#` is enabled. Takes precedence over `#chat.agent.allowedNetworkDomains#`. Supports wildcards like `*.example.com`.\n\nChanges may not take full effect until VS Code is restarted."
+                    "value": "Denied domains for network access by agent tools (fetch tool, integrated browser). Applies when `#chat.agent.networkFilter#` or `#chat.agent.sandbox.enabled#` is enabled. This does not apply when `#chat.agent.sandbox.allowNetwork#` is enabled. Takes precedence over `#chat.agent.allowedNetworkDomains#`. Supports wildcards like `*.example.com`.\n\nChanges may not take full effect until tysh is restarted."
                 }
             },
             "type": "array",
@@ -106,7 +106,7 @@
             "localization": {
                 "description": {
                     "key": "chat.agent.networkFilter",
-                    "value": "When enabled, network access by agent tools (fetch tool, integrated browser) is restricted according to `#chat.agent.allowedNetworkDomains#` and `#chat.agent.deniedNetworkDomains#`. Domain filtering is also applied to those tools when `#chat.agent.sandbox.enabled#` is enabled.\n\nChanges may not take full effect until VS Code is restarted."
+                    "value": "When enabled, network access by agent tools (fetch tool, integrated browser) is restricted according to `#chat.agent.allowedNetworkDomains#` and `#chat.agent.deniedNetworkDomains#`. Domain filtering is also applied to those tools when `#chat.agent.sandbox.enabled#` is enabled.\n\nChanges may not take full effect until tysh is restarted."
                 }
             },
             "type": "boolean",
@@ -195,7 +195,7 @@
             "localization": {
                 "description": {
                     "key": "chat.agentHost.claudeAgent.enabled.policy",
-                    "value": "Enable Claude Agent sessions in VS Code. Start and resume agentic coding sessions powered by Anthropic Claude Agent SDK directly in the editor. Uses your existing Copilot subscription."
+                    "value": "Enable Claude Agent sessions in tysh. Start and resume agentic coding sessions powered by Anthropic Claude Agent SDK directly in the editor. Uses your existing Copilot subscription."
                 }
             },
             "type": "boolean",
@@ -213,7 +213,7 @@
             "localization": {
                 "description": {
                     "key": "chat.agentHost.codexAgent.enabled.policy",
-                    "value": "Enable Codex Agent sessions in VS Code. Start and resume agentic coding sessions powered by OpenAI Codex. Usage can be routed through GitHub Copilot or authenticated directly with an OpenAI account."
+                    "value": "Enable Codex Agent sessions in tysh. Start and resume agentic coding sessions powered by OpenAI Codex. Usage can be routed through GitHub Copilot or authenticated directly with an OpenAI account."
                 }
             },
             "type": "boolean",
@@ -474,7 +474,7 @@
             "localization": {
                 "description": {
                     "key": "chat.editor.preferCopilotHarness.policy",
-                    "value": "Configure whether VS Code uses the Agent Host Copilot SDK instead of the local harness for new editor chat sessions."
+                    "value": "Configure whether tysh uses the Agent Host Copilot SDK instead of the local harness for new editor chat sessions."
                 }
             },
             "type": "boolean",
@@ -528,7 +528,7 @@
                     },
                     {
                         "key": "chat.mcp.access.registry",
-                        "value": "Allows access to MCP servers listed in the registry that VS Code is connected to."
+                        "value": "Allows access to MCP servers listed in the registry that tysh is connected to."
                     },
                     {
                         "key": "chat.mcp.access.any",

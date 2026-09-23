@@ -8,7 +8,7 @@ pushd %~dp0\..
 :: Get electron, compile, built-in extensions
 if "%VSCODE_SKIP_PRELAUNCH%"=="" (
 	node build/lib/preLaunch.ts || (
-		echo Failed to prepare VS Code for launch ^(build/lib/preLaunch.ts^). 1>&2
+		echo Failed to prepare tysh for launch ^(build/lib/preLaunch.ts^). 1>&2
 		goto :failed
 	)
 )

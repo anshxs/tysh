@@ -201,11 +201,11 @@ suite('resolveTaskCommand', () => {
 			label: 'run',
 			type: 'shell',
 			command: './scripts/code.sh',
-			args: ['--user-data-dir=${workspaceFolder}/.profile-oss'],
+			args: ['--user-data-dir=${workspaceFolder}/.profiletysh'],
 		};
 		assert.strictEqual(
 			await resolveTaskCommand(task, { resolveVariables }),
-			'./scripts/code.sh --user-data-dir=/home/user/worktree/.profile-oss'
+			'./scripts/code.sh --user-data-dir=/home/user/worktree/.profiletysh'
 		);
 	});
 

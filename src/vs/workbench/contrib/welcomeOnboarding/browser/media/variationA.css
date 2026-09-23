@@ -288,10 +288,15 @@
 	border: none;
 	background: transparent;
 	box-shadow: none;
-	background-image: url('../../../../browser/media/code-icon.svg');
+	background-image: url('../../../../browser/media/code-icon-light.svg');
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: 148px;
+}
+
+.monaco-workbench.vs .onboarding-a-signin-brand-icon,
+.monaco-workbench.hc-light .onboarding-a-signin-brand-icon {
+	background-image: url('../../../../browser/media/code-icon-dark.svg');
 }
 
 .onboarding-a-signin-content {
@@ -946,6 +951,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
 	.onboarding-a-overlay,
 	.onboarding-a-card,
 	.onboarding-a-progress-dot,

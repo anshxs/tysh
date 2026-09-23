@@ -1,11 +1,11 @@
 ---
 name: launch
-description: "Launch Code OSS (VS Code from sources) into an isolated throwaway profile with unique debug ports so you can drive it with @playwright/cli AND attach a Node debugger via dap-cli in the same session. Use when working on VS Code itself and you want to interact with the running workbench, automate chat or UI flows, test UI features, take screenshots, set breakpoints in the renderer / extension host / main process, or combine UI driving with debugging."
+description: "Launch Code OSS (tysh from sources) into an isolated throwaway profile with unique debug ports so you can drive it with @playwright/cli AND attach a Node debugger via dap-cli in the same session. Use when working on tysh itself and you want to interact with the running workbench, automate chat or UI flows, test UI features, take screenshots, set breakpoints in the renderer / extension host / main process, or combine UI driving with debugging."
 ---
 
 # Code OSS Dev - Launch + Debug
 
-You're working on VS Code itself and you want to:
+You're working on tysh itself and you want to:
 
 1. Launch a Code OSS build from sources that is **already signed in** (Copilot, GitHub, etc.) so chat / agent flows work end-to-end.
 2. Drive it with `@playwright/cli` over CDP (UI automation).
@@ -25,9 +25,9 @@ The clone is **slim**: workspace storage, browser caches, file history, cached V
     fnm env --use-on-cd --shell powershell | Out-String | Invoke-Expression
     fnm use   # picks up the repo's .nvmrc
     ```
-- A VS Code checkout with `node_modules/` installed (`npm install` if missing — do **not** symlink from a sibling worktree; that breaks builds in subtle ways).
-- A VS Code checkout with sources built. Run `npm run compile` once (one-shot) or `npm run watch` for incremental rebuilds. Both build the full client **and** all built-in extensions under `extensions/`. You must build the full product to run successfully, building just the client is not enough.
-- An **authenticated** Code OSS profile to seed from. By default the launcher uses `~/.vscode-oss-dev` on macOS/Linux or `$env:USERPROFILE\.vscode-oss-dev` on Windows, which is the user-data-dir the repo's `launch.json` configs use - if the user has ever signed in to Copilot in a dev build, this should work. Only pass `--source-user-data-dir <path>` (or set `$CODE_OSS_DEV_AUTHED_USER_DATA_DIR`) when you specifically want to seed from a different profile (e.g. your regular `~/Library/Application Support/Code` install).
+- A tysh checkout with `node_modules/` installed (`npm install` if missing — do **not** symlink from a sibling worktree; that breaks builds in subtle ways).
+- A tysh checkout with sources built. Run `npm run compile` once (one-shot) or `npm run watch` for incremental rebuilds. Both build the full client **and** all built-in extensions under `extensions/`. You must build the full product to run successfully, building just the client is not enough.
+- An **authenticated** Code OSS profile to seed from. By default the launcher uses `~/.tysh` on macOS/Linux or `$env:USERPROFILE\.tysh` on Windows, which is the user-data-dir the repo's `launch.json` configs use - if the user has ever signed in to Copilot in a dev build, this should work. Only pass `--source-user-data-dir <path>` (or set `$CODE_OSS_DEV_AUTHED_USER_DATA_DIR`) when you specifically want to seed from a different profile (e.g. your regular `~/Library/Application Support/Code` install).
   - If Code OSS launches and needs a sign-in, don't give up! Use the questions tool to ask the user to sign in.
 - `@playwright/cli` available (it's a devDependency in the vscode repo - `npm install` then use `npx @playwright/cli`).
 - For debugger work: `dap-cli` on `PATH`. If debugger support would be useful but the `dap-cli` skill is not present, prompt the user to install it from https://github.com/roblourens/dap-cli.
@@ -35,7 +35,7 @@ The clone is **slim**: workspace storage, browser caches, file history, cached V
 
 > The launcher **copies** the source profile to a temp dir and never mutates the original. Each launch gets its own isolated `--user-data-dir` and `--extensions-dir`.
 
-> The launcher always sets `files.simpleDialog.enable: true` in the launched profile's `User/settings.json`. This is required for automation: VS Code's native OS file dialogs cannot be driven via `@playwright/cli` over CDP and are completely unreachable over SSH on headless macOS. The simple (quick-input) dialog can be navigated with `press` and clipboard paste. The override is per-launch and only affects throwaway profiles.
+> The launcher always sets `files.simpleDialog.enable: true` in the launched profile's `User/settings.json`. This is required for automation: tysh's native OS file dialogs cannot be driven via `@playwright/cli` over CDP and are completely unreachable over SSH on headless macOS. The simple (quick-input) dialog can be navigated with `press` and clipboard paste. The override is per-launch and only affects throwaway profiles.
 
 > Before launching from an agent session, call `get_current_session` and pass its `title` as `--session-title`. For a regular editor window, the launcher writes that title into the throwaway profile's `window.title` setting. For an Agents window, it passes the title to the Command Center. This never modifies the source profile.
 
@@ -80,7 +80,7 @@ If the local execution policy blocks scripts, invoke it with `powershell -Execut
 
 ### What gets copied (slim mode, the default)
 
-The exclude list mirrors the one used by VS Code's own perf-test skill (`.github/skills/auto-perf-optimize`), which is known to keep Copilot auth and language-model availability working. Specifically `WebStorage/`, `Service Worker/`, `Local Storage/`, `Cookies`, `Network Persistent State`, `TransportSecurity`, `Trust Tokens`, `Preferences`, `machineid`, and the entire `User/globalStorage/` (which holds `state.vscdb`) are all preserved.
+The exclude list mirrors the one used by tysh's own perf-test skill (`.github/skills/auto-perf-optimize`), which is known to keep Copilot auth and language-model availability working. Specifically `WebStorage/`, `Service Worker/`, `Local Storage/`, `Cookies`, `Network Persistent State`, `TransportSecurity`, `Trust Tokens`, `Preferences`, `machineid`, and the entire `User/globalStorage/` (which holds `state.vscdb`) are all preserved.
 
 #### Windows authentication
 
@@ -91,11 +91,11 @@ Windows has no shared per-app keychain for these secrets, so they live in files 
 | Encrypted GitHub session blob | `<shared-data-dir>/sharedStorage/state.vscdb` |
 | DPAPI-wrapped decryption key (`os_crypt.encrypted_key`) | `<user-data-dir>/Local State` |
 
-The launcher therefore seeds **both**: it copies the source profile *and* copies the source shared-data-dir into the run's throwaway `shared-data` dir. The source resolves the same way `IEnvironmentService.appSharedDataHome` does - `$env:CODE_OSS_DEV_AUTHED_SHARED_DATA_DIR` if set, else `$env:VSCODE_PORTABLE\shared-data` when running portable, else `~/<product.sharedDataFolderName>` (i.e. `%USERPROFILE%\.vscode-oss-shared`). It also verifies `Local State`, `machineid`, and `Network` survived the profile copy, and warns on stderr if neither database holds a GitHub session.
+The launcher therefore seeds **both**: it copies the source profile *and* copies the source shared-data-dir into the run's throwaway `shared-data` dir. The source resolves the same way `IEnvironmentService.appSharedDataHome` does - `$env:CODE_OSS_DEV_AUTHED_SHARED_DATA_DIR` if set, else `$env:VSCODE_PORTABLE\shared-data` when running portable, else `~/<product.sharedDataFolderName>` (i.e. `%USERPROFILE%\.vscodetysh-shared`). It also verifies `Local State`, `machineid`, and `Network` survived the profile copy, and warns on stderr if neither database holds a GitHub session.
 
 > This asymmetry is invisible on macOS/Linux, where the same token lands inside the profile. A Windows-only "always signed out" symptom is a shared-data-dir problem, **not** a profile problem: signing in against the source profile writes a perfectly good session, but before this seeding existed every launch handed Code OSS an empty shared dir and threw it away.
 
-To (re)establish the source session: run `.\scripts\code.bat --user-data-dir=$env:USERPROFILE\.vscode-oss-dev` directly, sign in once, and close it. That writes the blob to `%USERPROFILE%\.vscode-oss-shared` and the key to the profile's `Local State`; later launches copy both and inherit the session.
+To (re)establish the source session: run `.\scripts\code.bat --user-data-dir=$env:USERPROFILE\.tysh` directly, sign in once, and close it. That writes the blob to `%USERPROFILE%\.vscodetysh-shared` and the key to the profile's `Local State`; later launches copy both and inherit the session.
 
 > Profiles that predate the `APPLICATION_SHARED` migration can still hold the secret in `User/globalStorage/state.vscdb`. `ApplicationSharedStorageMain` registers application storage as a read fallback, so those profiles authenticate even with no shared-data-dir present - which is why a missing shared dir is reported as a fact rather than assumed fatal.
 
@@ -364,7 +364,7 @@ On macOS, a screenshot "Permission denied" failure usually means the terminal la
 
 ## Debug with dap-cli
 
-To set breakpoints in VS Code source while the window is running, attach `dap-cli` to one of the ports. If `dap-cli` would help but the corresponding skill is unavailable, prompt the user to install it from https://github.com/roblourens/dap-cli before continuing with debugger-specific steps.
+To set breakpoints in tysh source while the window is running, attach `dap-cli` to one of the ports. If `dap-cli` would help but the corresponding skill is unavailable, prompt the user to install it from https://github.com/roblourens/dap-cli before continuing with debugger-specific steps.
 
 **Read the `dap-cli` skill for the full attach/breakpoint/inspect workflow when it is available** - this skill only tells you which port to point it at:
 
@@ -429,4 +429,4 @@ Code OSS is a full Electron app and easily eats 1-4 GB. Always clean up.
 - **`launch.sh` exits non-zero with a log tail** - either pre-launch failed, `code.sh` died before CDP came up, or CDP never opened within 90s. The tail printed to stderr is from `runDir/code.log` - read it to diagnose.
 - **Snapshot shows the wrong page or no expected controls** - use `tab-list`, switch with `tab-select <index>` if needed, then re-snapshot before interacting.
 - **CLI typing commands complete but the input stays empty** - run `playwrightScripts/focus-chat-input.ts`, use `press` or clipboard paste rather than `fill` / `type`, and verify the input state before sending.
-- **Auth missing in the launched window** - confirm the source profile is actually authed (`ls "$SOURCE_UDD"` should contain `User/`, and `ls "$SOURCE_UDD/User/globalStorage"` should show persisted extension state). **On Windows, check the shared-data-dir first**: the GitHub session blob lives in `%USERPROFILE%\.vscode-oss-shared\sharedStorage\state.vscdb`, not in the profile. The launcher logs `copying shared data: <src> -> <dst>` on stderr when it finds it, and warns `no shared-data-dir at <path>` when it doesn't. A missing or empty source shared-data-dir means signing in again against the source profile is what you need - see [Windows authentication](#windows-authentication).
+- **Auth missing in the launched window** - confirm the source profile is actually authed (`ls "$SOURCE_UDD"` should contain `User/`, and `ls "$SOURCE_UDD/User/globalStorage"` should show persisted extension state). **On Windows, check the shared-data-dir first**: the GitHub session blob lives in `%USERPROFILE%\.vscodetysh-shared\sharedStorage\state.vscdb`, not in the profile. The launcher logs `copying shared data: <src> -> <dst>` on stderr when it finds it, and warns `no shared-data-dir at <path>` when it doesn't. A missing or empty source shared-data-dir means signing in again against the source profile is what you need - see [Windows authentication](#windows-authentication).

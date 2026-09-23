@@ -180,7 +180,7 @@ const policies: ExportedPolicyDataDto = {
 					},
 					{
 						key: 'chat.mcp.access.registry',
-						value: 'Allows access to MCP servers installed from the registry that VS Code is connected to.'
+						value: 'Allows access to MCP servers installed from the registry that tysh is connected to.'
 					},
 					{
 						key: 'chat.mcp.access.any',
@@ -346,11 +346,11 @@ const policies: ExportedPolicyDataDto = {
 };
 
 const mockProduct: ProductJson = {
-	nameLong: 'Code - OSS',
-	darwinBundleIdentifier: 'com.visualstudio.code.oss',
+	nameLong: 'TYSH',
+	darwinBundleIdentifier: 'com.ide.tysh',
 	darwinProfilePayloadUUID: 'CF808BE7-53F3-46C6-A7E2-7EDB98A5E959',
 	darwinProfileUUID: '47827DD9-4734-49A0-AF80-7E19B11495CC',
-	win32RegValueName: 'CodeOSS'
+	win32RegValueName: 'TYSH'
 };
 
 const frenchTranslations = [
@@ -400,7 +400,7 @@ suite('Policy E2E conversion', () => {
 		const result = renderMacOSPolicy(mockProduct, parsedPolicies, []);
 
 		// Load the expected fixture file
-		const fixturePath = path.join(import.meta.dirname, 'fixtures', 'policies', 'darwin', 'com.visualstudio.code.oss.mobileconfig');
+		const fixturePath = path.join(import.meta.dirname, 'fixtures', 'policies', 'darwin', 'com.ide.tysh.mobileconfig');
 		const expectedContent = await fs.readFile(fixturePath, 'utf-8');
 
 		// Compare the rendered profile with the fixture
@@ -412,7 +412,7 @@ suite('Policy E2E conversion', () => {
 		const result = renderMacOSPolicy(mockProduct, parsedPolicies, []);
 
 		// Load the expected fixture file
-		const fixturePath = path.join(import.meta.dirname, 'fixtures', 'policies', 'darwin', 'en-us', 'com.visualstudio.code.oss.plist');
+		const fixturePath = path.join(import.meta.dirname, 'fixtures', 'policies', 'darwin', 'en-us', 'com.ide.tysh.plist');
 		const expectedContent = await fs.readFile(fixturePath, 'utf-8');
 
 		// Find the en-us manifest
@@ -434,7 +434,7 @@ suite('Policy E2E conversion', () => {
 		const result = renderGP(mockProduct, parsedPolicies, []);
 
 		// Load the expected fixture file
-		const fixturePath = path.join(import.meta.dirname, 'fixtures', 'policies', 'win32', 'CodeOSS.admx');
+		const fixturePath = path.join(import.meta.dirname, 'fixtures', 'policies', 'win32', 'TYSH.admx');
 		const expectedContent = await fs.readFile(fixturePath, 'utf-8');
 
 		// Compare the rendered ADMX with the fixture
@@ -446,7 +446,7 @@ suite('Policy E2E conversion', () => {
 		const result = renderGP(mockProduct, parsedPolicies, []);
 
 		// Load the expected fixture file
-		const fixturePath = path.join(import.meta.dirname, 'fixtures', 'policies', 'win32', 'en-us', 'CodeOSS.adml');
+		const fixturePath = path.join(import.meta.dirname, 'fixtures', 'policies', 'win32', 'en-us', 'TYSH.adml');
 		const expectedContent = await fs.readFile(fixturePath, 'utf-8');
 
 		// Find the en-us ADML
@@ -462,7 +462,7 @@ suite('Policy E2E conversion', () => {
 		const result = renderMacOSPolicy(mockProduct, parsedPolicies, frenchTranslations);
 
 		// Load the expected fixture file
-		const fixturePath = path.join(import.meta.dirname, 'fixtures', 'policies', 'darwin', 'fr-fr', 'com.visualstudio.code.oss.plist');
+		const fixturePath = path.join(import.meta.dirname, 'fixtures', 'policies', 'darwin', 'fr-fr', 'com.ide.tysh.plist');
 		const expectedContent = await fs.readFile(fixturePath, 'utf-8');
 
 		// Find the fr-fr manifest
@@ -483,7 +483,7 @@ suite('Policy E2E conversion', () => {
 		const result = renderGP(mockProduct, parsedPolicies, frenchTranslations);
 
 		// Load the expected fixture file
-		const fixturePath = path.join(import.meta.dirname, 'fixtures', 'policies', 'win32', 'fr-fr', 'CodeOSS.adml');
+		const fixturePath = path.join(import.meta.dirname, 'fixtures', 'policies', 'win32', 'fr-fr', 'TYSH.adml');
 		const expectedContent = await fs.readFile(fixturePath, 'utf-8');
 
 		// Find the fr-fr ADML

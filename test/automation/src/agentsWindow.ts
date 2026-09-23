@@ -59,7 +59,7 @@ export class AgentsWindow {
 
 	/**
 	 * Run the "Open in Agents" command from the normal workbench window.
-	 * VS Code opens a new Agents Window with the current workspace folder
+	 * tysh opens a new Agents Window with the current workspace folder
 	 * pre-selected in the workspace picker.
 	 *
 	 * After calling this, use {@link switchToAgentsWindow} to move the

@@ -175,7 +175,8 @@
 	font-family: var(--monaco-monospace-font, 'SF Mono', Menlo, Monaco, Consolas, monospace);
 	font-size: 13px;
 	line-height: 1.5;
-	white-space: pre;          /* preserve columns; horizontal scroll for long lines */
+	white-space: pre;
+	/* preserve columns; horizontal scroll for long lines */
 	color: var(--vscode-editor-foreground, var(--vscode-foreground));
 	padding: 12px 16px;
 	min-height: 100%;
@@ -235,7 +236,7 @@
  * Regex-fallback syntax-highlighting token styles. Used when the
  * sessions workbench has no real Monaco tokenizer for the language
  * (TextMate grammars aren't loaded in this layer). Per-theme palettes
- * mirror VS Code's Light+ / Dark+ defaults so the diff blends in with
+ * mirror tysh's Light+ / Dark+ defaults so the diff blends in with
  * the rest of the workbench. These classes are emitted by
  * `regexTokenizeLine` in `mobileDiffView.ts`.
  *
@@ -271,10 +272,22 @@
 	--mobile-diff-tok-number: #098658;
 }
 
-.mobile-diff-tok-comment { color: var(--mobile-diff-tok-comment); font-style: italic; }
-.mobile-diff-tok-string { color: var(--mobile-diff-tok-string); }
-.mobile-diff-tok-keyword { color: var(--mobile-diff-tok-keyword); }
-.mobile-diff-tok-number { color: var(--mobile-diff-tok-number); }
+.mobile-diff-tok-comment {
+	color: var(--mobile-diff-tok-comment);
+	font-style: italic;
+}
+
+.mobile-diff-tok-string {
+	color: var(--mobile-diff-tok-string);
+}
+
+.mobile-diff-tok-keyword {
+	color: var(--mobile-diff-tok-keyword);
+}
+
+.mobile-diff-tok-number {
+	color: var(--mobile-diff-tok-number);
+}
 
 .mobile-diff-hunk-header {
 	display: block;

@@ -106,10 +106,10 @@ function findTunnelCli(): ITunnelCli {
 				process.env.VSCODE_CLI_DATA_DIR,
 				path.join(os.homedir(), '.vscode-insiders', 'cli'),
 				path.join(os.homedir(), '.vscode', 'cli'),
-				path.join(os.homedir(), '.vscode-oss', 'cli'),
+				path.join(os.homedir(), '.vscodetysh', 'cli'),
 				path.join(os.homedir(), '.vscode-cli-insiders'),
 				path.join(os.homedir(), '.vscode-cli'),
-				path.join(os.homedir(), '.vscode-cli-oss'),
+				path.join(os.homedir(), '.vscode-clitysh'),
 			].filter((value): value is string => !!value)
 				.map(directory => path.join(directory, 'license_consent.json'))
 				.find(file => {
@@ -830,7 +830,7 @@ async function createWslFixture(options: IRemoteDevContainerFixtureOptions, reso
 	const distro = process.env.VSCODE_SMOKE_TEST_WSL_DISTRO;
 	const serverPath = process.env.VSCODE_SMOKE_TEST_WSL_SERVER_PATH;
 	if (process.platform !== 'win32' || !distro || !serverPath?.startsWith('/')) {
-		throw new Error('WSL smoke tests require Windows, VSCODE_SMOKE_TEST_WSL_DISTRO, and VSCODE_SMOKE_TEST_WSL_SERVER_PATH pointing to an extracted Linux VS Code server inside that distribution.');
+		throw new Error('WSL smoke tests require Windows, VSCODE_SMOKE_TEST_WSL_DISTRO, and VSCODE_SMOKE_TEST_WSL_SERVER_PATH pointing to an extracted Linux tysh server inside that distribution.');
 	}
 	const wsl = path.join(process.env.SystemRoot ?? 'C:\\Windows', 'System32', 'wsl.exe');
 	const run = (command: string, timeout = 60_000): Promise<string> => new Promise((resolve, reject) => {

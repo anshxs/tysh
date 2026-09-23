@@ -25,8 +25,8 @@ import { registerFixtureLanguages, registerFixtureSyntaxHighlighting } from './f
 suite('Component fixture TextMate syntax highlighting', () => {
 	const disposables = ensureNoDisposablesAreLeakedInTestSuite();
 	const darkTheme = ColorThemeData.fromExtensionTheme(
-		{ id: '2026-dark', path: '2026-dark.json', uiTheme: ThemeTypeSelector.VS_DARK, _watch: false },
-		fixtureResourceUri('extensions/theme-defaults/themes/2026-dark.json'),
+		{ id: 'black', path: 'black.json', uiTheme: ThemeTypeSelector.VS_DARK, _watch: false },
+		fixtureResourceUri('extensions/theme-defaults/themes/black.json'),
 		ExtensionData.fromName('vscode', 'theme-defaults', true),
 	);
 	const themeLoader = new class implements IExtensionResourceLoaderService {
@@ -136,10 +136,10 @@ suite('Component fixture TextMate syntax highlighting', () => {
 
 	test('uses monochrome token styles in non-Dark fixtures without affecting Dark', async () => {
 		const variants = [
-			{ name: 'Light', path: 'light_modern.json', uiTheme: ThemeTypeSelector.VS },
-			{ name: 'DarkHighContrast', path: 'hc_black.json', uiTheme: ThemeTypeSelector.HC_BLACK },
-			{ name: 'LightHighContrast', path: 'hc_light.json', uiTheme: ThemeTypeSelector.HC_LIGHT },
-			{ name: 'Dark', path: '2026-dark.json', uiTheme: ThemeTypeSelector.VS_DARK },
+			{ name: 'Light', path: 'white.json', uiTheme: ThemeTypeSelector.VS },
+			{ name: 'DarkHighContrast', path: 'black.json', uiTheme: ThemeTypeSelector.HC_BLACK },
+			{ name: 'LightHighContrast', path: 'white.json', uiTheme: ThemeTypeSelector.HC_LIGHT },
+			{ name: 'Dark', path: 'black.json', uiTheme: ThemeTypeSelector.VS_DARK },
 		];
 		const rendered = [];
 		for (const variant of variants) {

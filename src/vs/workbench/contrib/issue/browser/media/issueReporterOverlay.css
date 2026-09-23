@@ -40,7 +40,7 @@
 	overflow: auto;
 }
 
-/* VS Code styled scrollbars for any scrollable region in the wizard */
+/* tysh styled scrollbars for any scrollable region in the wizard */
 .issue-reporter-wizard *::-webkit-scrollbar,
 .issue-reporter-wizard ::-webkit-scrollbar {
 	width: 10px;
@@ -1788,6 +1788,7 @@ extension field is hidden (no fixed-width placeholder needed). */
 	font-size: 13px;
 	color: var(--vscode-descriptionForeground, #ccc);
 }
+
 .issue-reporter-wizard .wizard-issue-guidance a,
 .issue-reporter-wizard .wizard-issue-guidance a:focus,
 .issue-reporter-wizard .wizard-issue-guidance a:hover {
@@ -1798,6 +1799,7 @@ extension field is hidden (no fixed-width placeholder needed). */
 .issue-reporter-wizard .wizard-description-guidance.wizard-description-guidance-with-link {
 	white-space: normal;
 }
+
 .issue-reporter-wizard .wizard-description-guidance-link {
 	color: var(--vscode-textLink-foreground, #3794ff);
 	text-decoration: underline;
@@ -1809,23 +1811,29 @@ extension field is hidden (no fixed-width placeholder needed). */
 	align-items: center;
 	gap: 8px;
 }
+
 .issue-reporter-wizard .review-diag-master-wrap {
 	display: flex;
 	align-items: center;
 	gap: 8px;
 }
+
 .issue-reporter-wizard .review-diag-master-checkbox {
 	flex-shrink: 0;
 }
+
 .issue-reporter-wizard .review-diagnostics.all-excluded .review-diag-group {
 	display: none;
 }
+
 .issue-reporter-wizard .review-diag-group.excluded .review-diag-content {
 	opacity: 0.55;
 }
+
 .issue-reporter-wizard .review-diag-group.excluded .review-diag-title {
 	color: var(--vscode-descriptionForeground, #999);
 }
+
 .issue-reporter-wizard .review-diag-toggle-area {
 	display: inline-flex;
 	align-items: center;
@@ -1836,13 +1844,16 @@ extension field is hidden (no fixed-width placeholder needed). */
 	user-select: none;
 	flex: 1;
 }
+
 .issue-reporter-wizard .review-diag-toggle-area:hover {
 	background: var(--vscode-list-hoverBackground, rgba(255, 255, 255, 0.06));
 }
+
 .issue-reporter-wizard .review-diag-toggle-area:focus-visible {
 	outline: var(--vscode-strokeThickness) solid var(--vscode-focusBorder, #007acc);
 	outline-offset: -1px;
 }
+
 .issue-reporter-wizard .review-diag-chevron {
 	display: inline-flex;
 	align-items: center;

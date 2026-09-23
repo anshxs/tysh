@@ -1337,7 +1337,7 @@ async function renderPersistentProgressScenario(context: ComponentFixtureContext
 	const logo = iconElement?.querySelector<HTMLElement>(`.chat-working-logo[data-animation="${progressAnimation}"]`);
 	const textElement = footer.querySelector<HTMLElement>('.rendered-markdown > p');
 	if (!iconElement || !logo || !textElement) {
-		throw new Error(`Persistent progress indicator is missing its decorative ${productQuality} VS Code icon`);
+		throw new Error(`Persistent progress indicator is missing its decorative ${productQuality} tysh icon`);
 	}
 	if (logo.getClientRects().length === 0 || textElement.getClientRects().length === 0) {
 		throw new Error('The active progress icon or text is hidden');
@@ -1908,7 +1908,7 @@ const CODE_BLOCK_IN_LIST: IFixtureMessage[] = [
 					'',
 					'### Why files appear but diffs fail',
 					'',
-					'1. The session restores/caches the change-set metadata, so VS Code can display the filenames and change counts.',
+					'1. The session restores/caches the change-set metadata, so tysh can display the filenames and change counts.',
 					'2. Opening a diff requires loading its original side using a `git-blob:` URI.',
 					'3. Agent Host executes roughly:',
 					'   ```bash',

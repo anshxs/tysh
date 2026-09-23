@@ -61,7 +61,7 @@ import { DevContainerAgentHostProtocolClient } from '../common/devContainerAgent
 import type { IDevContainerAgentHostMainService } from '../common/devContainerAgentHost.js';
 
 const AHP_CLIENT_CONNECTION_CLOSED = -32000;
-// AHP 0.9 changed the automation catalog wire shape, so VS Code cannot safely negotiate 0.8.
+// AHP 0.9 changed the automation catalog wire shape, so tysh cannot safely negotiate 0.8.
 const CLIENT_SUPPORTED_PROTOCOL_VERSIONS = SUPPORTED_PROTOCOL_VERSIONS.filter(version => version !== '0.8.0');
 
 /**
@@ -1893,7 +1893,7 @@ export class AgentHostProtocolClient extends Disposable implements IAgentConnect
 			}
 			switch (msg.method) {
 				case 'action': {
-					// Protocol envelope → VS Code envelope (superset of action types)
+					// Protocol envelope → tysh envelope (superset of action types)
 					const envelope = msg.params;
 					this._serverSeq = Math.max(this._serverSeq, envelope.serverSeq);
 					this._onDidAction.fire(normalizeLegacyActionEnvelope(envelope));
@@ -2199,7 +2199,7 @@ export class AgentHostProtocolClient extends Disposable implements IAgentConnect
 		return this._dispatchRequest<CommandMap[M]['result']>(method, params);
 	}
 
-	/** Send a JSON-RPC request for a VS Code extension method (not in the protocol spec). */
+	/** Send a JSON-RPC request for a tysh extension method (not in the protocol spec). */
 	private _sendExtensionRequest<M extends keyof IAgentHostExtensionCommandMap>(method: M, params?: IAgentHostExtensionCommandMap[M]['params']): Promise<IAgentHostExtensionCommandMap[M]['result']> {
 		return this._dispatchRequest<IAgentHostExtensionCommandMap[M]['result']>(method, params);
 	}

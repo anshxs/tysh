@@ -131,7 +131,7 @@ Run via the `runTests` tool against the two test files, or `scripts/test.sh --gr
 Workspace skills available:
 
 - **Launch skill**: [`launch`](../../../../../../.agents/skills/launch/SKILL.md) — Playwright-driven Code OSS automation (open the Agents window, drive chat, screenshot).
-- **Log skill**: [`code-oss-logs`](../../../../../../.github/skills/code-oss-logs/SKILL.md) — read agent-host / renderer logs from the dev build.
+- **Log skill**: [`codetysh-logs`](../../../../../../.github/skills/codetysh-logs/SKILL.md) — read agent-host / renderer logs from the dev build.
 
 **Scenario — fork-and-continue** (mirrors [smoke.md](./smoke.md) conventions):
 
@@ -139,7 +139,7 @@ Workspace skills available:
 2. Trigger fork at turn 2 (the "banana" turn) via the workbench's fork/edit-and-resubmit affordance (keep `[0..1]` inclusive semantic) — or, if the affordance isn't wired for Claude yet, drive `createSession({ fork: { session, turnId, turnIndex } })` through the test harness against the live agent host.
 3. Confirm a **new** session appears, pre-populated with turns 0–1 (apple, banana) and **not** turn 2's follow-up (cherry). Screenshot for comparison.
 4. Send a new prompt on the forked session ("say date") and confirm it lands cleanly and the assistant responds — validates the forked session is live (`resume` worked) and accepts new turns.
-5. Use `code-oss-logs` to read the agent-host log for the run; grep for `[Claude]` warnings during fork — none expected on the happy path. Confirm the forked session's working directory matches the source (validates the `cwd`-survival risk).
+5. Use `codetysh-logs` to read the agent-host log for the run; grep for `[Claude]` warnings during fork — none expected on the happy path. Confirm the forked session's working directory matches the source (validates the `cwd`-survival risk).
 6. Quit and relaunch the agent host; re-open the forked session and confirm its transcript restores (turns 0–1 + the new turn), exercising fork ✕ Phase 13 restoration together.
 
 ### Manual
@@ -159,7 +159,7 @@ _None remaining._ All grilling-phase questions resolved — see Decisions. The o
 - Copilot fork reference (NOT directly portable — uses `getNextTurnEventId` + DB `vacuumInto` + `remapTurnIds`): [../copilot/copilotAgent.ts](../copilot/copilotAgent.ts) (`createSession` fork branch ~1108-1170)
 - Production-extension reference (NOT portable — message-index + EXCLUSIVE "fork before request"): [`extensions/copilot/src/extension/chatSessions/vscode-node/claudeChatSessionContentProvider.ts`](../../../../../../extensions/copilot/src/extension/chatSessions/vscode-node/claudeChatSessionContentProvider.ts#L387)
 - SDK contract: [`forkSession`](../../../../../../node_modules/@anthropic-ai/claude-agent-sdk/sdk.d.ts#L685) / [`ForkSessionOptions`](../../../../../../node_modules/@anthropic-ai/claude-agent-sdk/sdk.d.ts#L690) / [`ForkSessionResult`](../../../../../../node_modules/@anthropic-ai/claude-agent-sdk/sdk.d.ts#L700)
-- E2E skills: [launch](../../../../../../.agents/skills/launch/SKILL.md), [code-oss-logs](../../../../../../.github/skills/code-oss-logs/SKILL.md)
+- E2E skills: [launch](../../../../../../.agents/skills/launch/SKILL.md), [codetysh-logs](../../../../../../.github/skills/codetysh-logs/SKILL.md)
 - Council models consulted: GPT-5.5, Claude Opus 4.6, GPT-5.3-Codex (3 independent plans synthesized)
 
 ## Implementation Notes
@@ -187,7 +187,7 @@ Tests:
 
 Ran the fork-and-continue scenario against a live, authenticated Agents window
 (`launch` skill, short TMPDIR per the macOS socket gotcha) and read the
-agent-host log (`code-oss-logs`).
+agent-host log (`codetysh-logs`).
 
 1. Created a Claude (Local Agent Host) session, sent 3 turns (apple → banana →
    cherry); each turn settled with the expected one-word reply. Session

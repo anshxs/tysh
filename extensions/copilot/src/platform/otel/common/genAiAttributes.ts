@@ -132,7 +132,7 @@ export const CopilotChatAttr = {
 	PROMPT_CONTEXT: 'copilot_chat.prompt_context',
 	/** Custom instructions section */
 	PROMPT_INSTRUCTIONS: 'copilot_chat.prompt_instructions',
-	/** VS Code chat session ID from CapturingToken — the definitive session identifier */
+	/** tysh chat session ID from CapturingToken — the definitive session identifier */
 	CHAT_SESSION_ID: 'copilot_chat.chat_session_id',
 	/** Parent chat session ID for linking child sessions (e.g., title, categorization) to their parent */
 	PARENT_CHAT_SESSION_ID: 'copilot_chat.parent_chat_session_id',
@@ -259,7 +259,7 @@ export const SHELL_TOOL_NAMES: ReadonlySet<string> = new Set([
 ]);
 
 /**
- * Tool names treated as file tools for parameter extraction. Covers VS Code's
+ * Tool names treated as file tools for parameter extraction. Covers tysh's
  * `ToolName` enum values (snake_case, see `extension/tools/common/toolNames.ts`)
  * and the camelCase / Claude-style variants seen on external surfaces.
  */
@@ -275,7 +275,7 @@ export const FILE_TOOL_NAMES: ReadonlySet<string> = new Set([
 	'createFile',
 	'replaceString',
 	'applyPatch',
-	// VS Code tool names (ToolName enum)
+	// tysh tool names (ToolName enum)
 	'read_file',
 	'create_file',
 	'apply_patch',

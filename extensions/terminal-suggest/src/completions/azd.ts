@@ -2701,7 +2701,7 @@ const completionSpec: Fig.Spec = {
 								},
 								{
 									name: ['--base-model'],
-									description: 'Base model identifier (e.g., FW-GPT-OSS-120B or full azureml:// URI)',
+									description: 'Base model identifier (e.g., FW-GPTtysh-120B or full azureml:// URI)',
 									args: [
 										{
 											name: 'base-model',
@@ -2850,7 +2850,7 @@ const completionSpec: Fig.Spec = {
 										},
 										{
 											name: ['--base-model'],
-											description: 'Base model identifier (e.g., FW-GPT-OSS-120B or full azureml:// URI)',
+											description: 'Base model identifier (e.g., FW-GPTtysh-120B or full azureml:// URI)',
 											args: [
 												{
 													name: 'base-model',

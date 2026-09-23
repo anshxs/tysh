@@ -160,7 +160,7 @@ export function setup(context: TestContext) {
 			args.push('--crash-reporter-directory', crashDumpsDir);
 		}
 
-		context.log(`Starting VS Code ${entryPoint} with args ${args.join(' ')}`);
+		context.log(`Starting tysh ${entryPoint} with args ${args.join(' ')}`);
 		const app = await _electron.launch({ executablePath: entryPoint, args });
 		try {
 			const window = await context.getPage(app.firstWindow());
